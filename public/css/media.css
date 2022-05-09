@@ -1,0 +1,323 @@
+@media (max-width: 1300px) {
+    .container2 {
+      width: 970px !important;
+    }
+    .start-free-btn {
+        width: 140px;
+        height: 44px;
+        margin-left: 10px;
+        font-size: 15px;
+    }
+    .login-btn {
+        width: 115px;
+        height: 44px;
+        background-position: 15px;
+        background-size: 14px;
+        padding-left: 20px;
+        font-size: 15px;
+    }
+    .good-company-wrap h3 {
+        font-size: 32px;
+    }
+    .company-list li {
+        margin-left: 20px;
+    }
+
+    .form-wrap {
+        padding: 75px 20px 60px;
+    }
+    .tab-list-info li:not(:last-child) {
+        margin-bottom: 15px;
+    }
+    .benefits-block {
+        min-height: 325px;
+        padding: 25px 15px 20px;
+        margin-bottom: 45px;
+    }
+    .why-us-bg{
+        display:none;
+    }
+    .why-us-block {
+        width: calc(50% - 15px);
+    }
+    .why-us-icon {
+        width: 220px;
+    }
+    .why-us-block content {
+        width: calc(100% - 240px);
+    }
+    .pricing-wrap {
+        padding: 0;
+    }
+    .faq{
+        background-image:none;
+    }
+}
+@media (max-width: 991px) {
+     .container2 {
+       width: 750px !important;
+     }
+    .good-company-wrap h3{
+        margin-bottom:20px;
+    }
+    .header-menu li {
+        margin: 0 5px;
+    }
+    .good-company-wrap {
+        flex-direction: column;
+        text-align: center;
+    }
+    .company-list li {
+        margin:0 7px;
+    }
+    .form-wrap:before{
+        display:none;
+    }
+    .form-wrap content h3 {
+        font-size: 26px;
+    }
+    .form-wrap content p {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-top: 11px;
+    }
+    .met-product {
+        padding: 20px 0 40px;
+    }
+    .form-box {
+        margin-bottom: 25px;
+    }
+    .met-product sub {
+        margin: 0 auto 35px auto;
+    }
+    .benefits-block {
+        width: calc(50% - 15px);
+        padding: 25px 15px 20px;
+        margin-bottom: 25px;
+    }
+    .why-us-block {
+        width: 100%;
+    }
+    .why-us {
+        padding: 5px 0 20px;
+    }
+    .pricing-block {
+        width: calc(33.333% - 10px);
+        padding: 25px 15px 20px;
+        border-radius: 20px;
+    }
+}
+@media (max-width: 767px) {
+    .header-logo
+    {
+        width:40% !important;
+    }
+
+     .container2 {
+       width: 100%  !important;
+     }
+
+    .header-menu {
+        width: 100% !important;
+        flex-direction: column;
+        padding: 10px 10px 15px;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 10;
+        background: #ffffff;
+        transform: translateX(-100%);
+        transition: 0.3s
+    }
+ 
+    .header-menu.active {
+        transform: translateX(0);
+    }
+ 
+    .menu_mob {
+        display: block;
+    }
+    .header-block {
+        height: auto;
+        padding: 15px 0;
+        flex-wrap: wrap;
+    }
+    .header-btns{
+        width:100%;
+        justify-content:space-between;
+        margin-top:15px;
+    }
+    .header-menu li{
+        margin:5px 0;
+    }
+    .header-menu li a {
+        font-size: 18px;
+    }
+    .header{
+        background-color:#ffffff;
+        position:relative;
+    }
+    .company-list li {
+        margin: 0 5px;
+    }
+    .banner-icon{
+        display:none;
+    }
+    .banner {
+        padding:35px 0 45px;
+        background: linear-gradient(45deg, #8553C9, #3347AD);
+    }
+    .good-company{
+        top:0;
+        padding:30px 0 40px;
+    }
+    .banner-content {
+        text-align:center;
+        color:#ffffff;
+    }
+    .banner-content h1 {
+        font-size: 28px;
+    }
+    .banner-content h3 {
+        font-size: 18px;
+        line-height: 1.5;
+        margin: 22px 0 20px;
+    }
+    .banner-content p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    .banner-content .btn-blue{
+        margin:auto;
+    }
+    .form-wrap content {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .form-wrap form {
+        margin: auto;
+    }
+    .form-wrap {
+        padding: 35px 15px 33px;
+    }
+    .tab-left {
+        width: 100% !important;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .title {
+        margin-bottom: 35px;
+        font-size: 28px;
+    }
+    .met-product sub {
+        margin: 0 auto 30px auto;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .tab-right {
+        width: 100% !important;
+        padding: 0;
+    }
+    .met-info-text {
+        max-width: 1030px !important;
+        margin: 30px auto 0 auto;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .benefits-block {
+        width:100%;
+        min-height:0;
+        margin-bottom: 20px;
+    }
+    .tab-navigation li {
+        font-size: 14px;
+        padding: 3px 0 4px;
+        text-align:center;
+    }
+    .tab-navigation li:not(:last-child) {
+        margin-right: 10px;
+    }
+    .good-company {
+        margin-bottom: 0;
+    }
+    .benefits {
+        padding: 20px 0 30px;
+    }
+    .why-us-block content {
+        width: 100%;
+        text-align: center;
+    }
+    .why-us-icon {
+        width: 100%;
+        text-align: center;
+        margin-bottom:15px;
+    }
+    .pricing-wrap{
+        margin-bottom:50px;
+        justify-content:center;
+    }
+    .pricing-block {
+        width: 100%;
+        max-width: 400px;
+        margin-bottom: 25px;
+    }
+    .pricing-wrap .pricing-block .pricing-list {
+        margin-bottom: 20px;
+    }
+    .pricing-list > li ul lh{
+        margin-top:25px;
+    }
+    .select-wrap{
+        flex-direction:column;
+    }
+     .select-wrap .select-block {
+        width: 250px;
+        margin: 0 0 20px;
+    }
+    .btn-blue.btn-calculate {
+        margin: 25px auto 0 auto;
+    }
+    .pricing {
+        padding: 50px 0 60px;
+    }
+    .faq {
+        padding: 40px 0 50px;
+    }
+    .faq-title {
+        padding: 10px 45px 10px 40px;
+        font-size: 17px;
+    }
+    .faq-title:after {
+        height: 30px;
+        top: calc(50% - 15px);
+        left: 20px;
+    }
+    .faq-title:before {
+        right: 15px;
+    }
+    .footer-wrap {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+    .footer-menu li{
+        margin:7px 0;
+    }
+    .footer-menu{
+        margin: 7px 0;
+    }
+    .footer {
+        padding: 50px 0 40px;
+    }
+}
+
+.branch-container
+{
+    border: 1px solid #CCC;
+    margin-top:10px;
+    padding:3px;
+}

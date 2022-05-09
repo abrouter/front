@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>Test Laravel</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220211141804">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header header_white">
+			<div class="header__container">
+				<div class="header__body">
+					<a href="#" class="header__logo"><img src="img/logo-dark.svg?_v=1644581884261" alt="Logo"></a>
+					<button type="button" class="menu__icon icon-menu"><span></span></button>
+					<div class="header__menu menu">
+
+						<nav class="menu__body">
+							<ul class="menu__list">
+								<li class="menu__item"><a href="" class="menu__link active">Product overview</a></li>
+								<li class="menu__item"><a href="" class="menu__link">Why us</a></li>
+								<li class="menu__item"><a href="" class="menu__link">Pricing</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+
+				<div data-da=".menu,768,2" class="header__buttons">
+					<a href="" class="header__btn button button_border">
+						<svg class="header__btn-icon">
+							<use href="img/icons/icons.svg#user01"></use>
+						</svg>
+						My board
+					</a>
+
+				</div>
+			</div>
+		</header>
+		<main class="page ">
+			<section class="top">
+				<div class="top__container">
+					<div class="top__wrap">
+						<div class="top__content">
+							<h1 class="title top__title">
+								How to implement A/B | split tests on Laravel?
+							</h1>
+							<div class="top__text">
+								<p>The ABRouter is a tool for implementing managed A/B tests on Laravel with focus on startups
+									and mid-size companies. Our service providing clear web interface to manage experiments and
+									powerful API to run.</p>
+							</div>
+						</div>
+						<div class="top__image">
+							<img src="img/test/01.svg?_v=1644581884261" alt="Image">
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="need">
+				<div class="need__container">
+					<div class="need__wrap">
+						<div class="need__content">
+							<h2 class="title need__title">
+								Why we need A/B tests?
+							</h2>
+							<div class="need__subtitle">
+								Long story short - to improve conversions. The main advantage of AB-testing is making the right
+								decisions.
+							</div>
+							<div class="need__text">
+								<p>Real world example: you have a two implementations of free trials on your website. In the
+									first case, you require a card number to sign up, and for the second your user can proceed to
+									the platform without the card. What is the best choice in that case?</p>
+								<p>AB test with two branches can show you the right answer. Your decision will be based on the
+									number of completed sign-ups and the final number of the paid users in these branches. </p>
+							</div>
+							<a href="" class="need__button button-arrow">Start for free
+								<svg class="button-arrow__icon">
+									<use href="img/icons/icons.svg#arrow-button"></use>
+								</svg>
+							</a>
+						</div>
+						<div class="need__image">
+							<picture><source srcset="img/need/01.webp" type="image/webp"><img src="img/need/01.png?_v=1644581884261" alt="Image"></picture>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="example">
+				<div class="example__container">
+					<h2 class="title example__title">
+						Let's start working with a testable example
+					</h2>
+					<div class="example__content content-example">
+						<div class="content-example__title">
+							Task definition
+						</div>
+						<div class="content-example__descr">
+							Our task is testing the <a href="">most convertible</a> color of form button. For example, your
+							current color of
+							sign up button is blue, but you want to check, what if the green button will be more convertible?
+						</div>
+						<div class="content-example__items">
+							<div class="content-example__item item-example">
+								<div class="item-example__title">
+									Goal:
+								</div>
+								<div class="item-example__text">
+									to test most convertible color of form button
+								</div>
+							</div>
+							<div class="content-example__item item-example">
+								<div class="item-example__title">
+									Branches:
+								</div>
+								<div class="item-example__text">
+									red - 33%, green - 33%, blue - 33%.
+								</div>
+							</div>
+							<div class="content-example__item item-example">
+								<div class="item-example__title">
+									Technically:
+								</div>
+								<div class="item-example__text">
+									assign the color of the button: which the user got into.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="step">
+				<div class="step__container">
+					<h2 class="title step__title">
+						Get back to the work
+					</h2>
+					<div class="step__subtitle">
+						So, there are the step to be done:
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 1: Sign-up by the <a href="">link</a>
+						</div>
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 2: Create your experiment
+						</div>
+						<div class="item-step__image">
+							<picture><source srcset="img/step/01.webp" type="image/webp"><img src="img/step/01.png?_v=1644581884261" alt="Image"></picture>
+						</div>
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 3: Grab the data
+						</div>
+						<div class="item-step__subtitle">
+							After creating the A/B test you can to get the important data to run it.
+						</div>
+						<div class="item-step__image">
+							<picture><source srcset="img/step/02.webp" type="image/webp"><img src="img/step/02.png?_v=1644581884261" alt="Image"></picture>
+						</div>
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 4: Install
+						</div>
+						<div class="item-step__content">
+							<div class="item-step__row">
+								<div class="item-step__column">
+									<div class="item-step__info">
+										Install the library to your codebase on PHP:
+										<a href="https://github.com/abrouter/laravel-abtest" class="item-step__link">https://github.com/abrouter/laravel-abtest</a>
+									</div>
+								</div>
+								<div class="item-step__column">
+									<div class="item-step__info">
+										This library based on main ABRouter client:
+										<a href="https://github.com/abrouter/abrouter-php-client" class="item-step__link">https://github.com/abrouter/abrouter-php-client</a>
+									</div>
+								</div>
+							</div>
+							<div class="item-step__items">
+								<div class="item-step__block block-step">
+									<span class="block-step__number">1</span>
+									<div class="item-block__content">
+										<div class="block-step__title">
+											Install the package:
+										</div>
+										<div class="block-step__text-in-grey">
+											composer require abrouter/laravel-abtest
+										</div>
+										<div class="block-step__info info-step">
+											<div class="info-step__content">
+												<p> This package provide auto discovery for service provider. If Laravel package
+													auto-discovery is disabled, add service providers manually in your <span class="info-step__grey-text">
+														/app/app.php
+													</span> of your
+													repository.</p>
+												<p>
+												<p>There are service providers you must add:</p>
+												<div class="info-step__grey-text">
+													\Abrouter\LaravelClient\Providers\AbrouterServiceProvider::class
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<div class="item-step__block block-step">
+									<span class="block-step__number">2</span>
+									<div class="item-block__content">
+										<div class="block-step__title">
+											Publish client configuration:
+										</div>
+										<div class="block-step__text-in-grey">
+											php artisan vendor:publish --tag=abrouter
+										</div>
+									</div>
+								</div>
+								<div class="item-step__block block-step">
+									<span class="block-step__number">3</span>
+									<div class="item-block__content">
+										<div class="block-step__title">
+											Configure the client:
+										</div>
+										<div class="block-step__subtitle">
+											There you have to put your ABRouter token from your dashboard which is described in the
+											third point.
+										</div>
+										<div class="block-step__image">
+											<picture><source srcset="img/step/03.webp" type="image/webp"><img src="img/step/03.png?_v=1644581884261" alt="Image"></picture>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 5: Code
+						</div>
+						<div class="item-step__content">
+							<div class="item-step__subtitle item-step__subtitle_bottom">
+								Now we are ready to code. Also, you can check an example of fully completed code on GitHub:
+							</div>
+							<a href="https://github.com/abrouter/laravel-example" class="item-step__link">https://github.com/abrouter/laravel-example</a>
+							<div class="item-step__image">
+								<picture><source srcset="img/step/04.webp" type="image/webp"><img src="img/step/04.png?_v=1644581884261" alt="Image"></picture>
+							</div>
+						</div>
+					</div>
+					<div class="step__item item-step">
+						<div class="item-step__title">
+							Step 6: There are our results
+						</div>
+						<div class="item-step__content">
+							<div class="item-step__grid">
+								<div class="item-step__image-small">
+									<picture><source srcset="img/step/05.webp" type="image/webp"><img src="img/step/05.png?_v=1644581884261" alt="Image"></picture>
+								</div>
+								<div class="item-step__image-small">
+									<picture><source srcset="img/step/06.webp" type="image/webp"><img src="img/step/06.png?_v=1644581884261" alt="Image"></picture>
+								</div>
+								<div class="item-step__image-small">
+									<picture><source srcset="img/step/07.webp" type="image/webp"><img src="img/step/07.png?_v=1644581884261" alt="Image"></picture>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="easy">
+				<div class="easy__container">
+					<div class="easy__content">
+						<h2 class="title easy__title">
+							Getting started is easy
+						</h2>
+						<div class="easy__subtitle">
+							Find key retention drivers with ABRouter
+						</div>
+						<a href="" class="button easy__button">Create your first A/B test</a>
+					</div>
+				</div>
+			</section>
+			<section class="summary">
+				<div class="summary__container">
+					<h2 class="title summary__title">
+						Summary
+					</h2>
+					<div class="summary__block">
+						<p>I show you how to implement an A/B test via ABRouter. Looks like it's quite simple. <br>
+							Please, remember, that every change that you are making to the app should be through an A/B test.
+							It's a key to build a successful product.</p>
+						<p>If you have any questions, feel free to ask me at <a href="mailto:abrouter@proxiedmail.com">abrouter@proxiedmail.com</a></p>
+					</div>
+					<div class="summary__bottom">
+						<a href="" class="summary__avatar-ibg">
+							<picture><source srcset="img/easy/03.webp" type="image/webp"><img src="img/easy/03.jpg?_v=1644581884261" alt="Image"></picture>
+						</a>
+						<div class="summary__info">
+							<a href="" class="summary__link">Alex Yatsenko</a>
+							<span>Senior Developer at ABRouter</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="footer footer_dark">
+			<div class="footer__container">
+				<div class="footer__top top-footer">
+					<a href="#" class="top-footer__logo">
+						<picture><source srcset="img/png/logo.webp" type="image/webp"><img src="img/png/logo.png?_v=1644581884261" alt="logo"></picture>
+					</a>
+					<div class="top-footer__menu">
+						<div class="top-footer__column">
+							<div class="top-footer__title">
+								Product
+							</div>
+							<ul class="top-footer__list">
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Product overview</a>
+								</li>
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Why us</a>
+								</li>
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Pricing</a>
+								</li>
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Docs</a>
+								</li>
+							</ul>
+						</div>
+						<div class="top-footer__column">
+							<div class="top-footer__title">
+								A/B tests
+							</div>
+							<ul class="top-footer__list">
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Implement A/B tests Laravel</a>
+								</li>
+								<li class="top-footer__item">
+									<a href="" class="top-footer__link">Implement A/B tests PHP</a>
+								</li>
+							</ul>
+						</div>
+						<div class="top-footer__column">
+							<div class="top-footer__title">
+								Support
+							</div>
+							<ul class="top-footer__list">
+								<li class="top-footer__item">
+									<a href="mailto:abrouter@prixedmail.com" class="top-footer__link">abrouter@prixedmail.com</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="footer__bottom bottom-footer">
+					<div class="bottom-footer__copy">
+						© ABROUTER 2021. All rights reserved.
+					</div>
+					<ul class="bottom-footer__list">
+						<li class="bottom-footer__item">
+							<a href="" class="bottom-footer__link">Privacy Policy</a>
+						</li>
+						<li class="bottom-footer__item">
+							<a href="" class="bottom-footer__link">Terms & Conditions</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+
+	<!-- 
+<div id="popup" aria-hidden="true" class="popup">
+	<div class="popup__wrapper">
+		<div class="popup__content">
+			<button data-close type="button" class="popup__close">Закрыть</button>
+			<div class="popup__text">
+			</div>
+		</div>
+	</div>
+</div>
+ -->
+
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css?_v=20220211141804" />
+	<script src="js/app.min.js?_v=20220211141804"></script>
+</body>
+
+</html>

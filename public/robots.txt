@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /en/docs
+Allow: /en/php-how-to-launch-ab-tests-in-5-minutes
+Allow: /en/laravel-how-to-easily-run-ab-tests
