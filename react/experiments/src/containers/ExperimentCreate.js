@@ -1,5 +1,6 @@
 import React from 'react';
 import saveExperimentState from '../http/saveExperimentState';
+import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
 
 class ExperimentCreate extends React.Component {
     styleCreateExperimentBlock = {'display':'none'};
@@ -94,7 +95,7 @@ class ExperimentCreate extends React.Component {
 
     error(message) {
         setTimeout(function () {
-            document.getElementById('message').style = 'dispaly:block';
+            document.getElementById('message').style = 'display:block';
         }, 200);
         this.message = message;
     }
@@ -145,6 +146,11 @@ class ExperimentCreate extends React.Component {
         this.forceUpdate();
     }
 
+    changeUid(value) {
+        this.props.parent.changeUid(value);
+        this.forceUpdate();
+    }
+
     changePercent(e) {
         this.props.parent.changePercent(e);
         this.forceUpdate();
@@ -175,6 +181,7 @@ class ExperimentCreate extends React.Component {
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [];
         let experimentName = this.props.parent.appState.activeItem.name ?? '';
+        let experimentUid = this.props.parent.appState.activeItem.uid ?? experimentName;
 
         return (
             <>
@@ -183,11 +190,11 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title">
                             Create a new {titleCreate}
                         </div>
-                        <form class="create-setting__form">
+                        <form className="create-setting__form">
                             <div className="create-setting__item">
                                 <label className="create-setting__label">Experiment name</label>
                                 <input
-                                    autocomplete="off"
+                                    autoComplete="off"
                                     type="text"
                                     data-error="Ошибка"
                                     placeholder="Button color test"
@@ -196,13 +203,18 @@ class ExperimentCreate extends React.Component {
                                     onChange={e => this.changeName(e.target.value)}
                                 />
                             </div>
+                            <ExperimentUidInput
+                                uid = {experimentUid}
+                                mode = {this.props.parent.appState.mode}
+                                changeUid = {e => this.changeUid(e)}
+                            />
                         </form>
                     </div>
                     <div className="create-setting__block">
                         <div className="create-setting__title" style={displayAddBranch}>
                             Branches
                         </div>
-                        <form class="create-setting__form" onSubmit={this.submitHandle.bind(this)}>
+                        <form className="create-setting__form" onSubmit={this.submitHandle.bind(this)}>
                             {branches.map((branch) =>
                                 <div className="create-setting__row" style={displayAddBranch}>
                                     <div className="create-setting__item">
@@ -234,12 +246,12 @@ class ExperimentCreate extends React.Component {
                                                 <div className="quantity__buttons" onClick={this.changePercent.bind(this)}>
                                                     <div className="quantity__button quantity__button_plus">
                                                         <svg className="quantity__icon">
-                                                            <use href="/img/icons/icons.svg#arrow-quantity"></use>
+                                                            <use href="/img/icons/icons.svg#arrow-quantity"/>
                                                         </svg>
                                                     </div>
                                                     <div className="quantity__button quantity__button_minus">
                                                         <svg className="quantity__icon">
-                                                            <use href="/img/icons/icons.svg#arrow-quantity"></use>
+                                                            <use href="/img/icons/icons.svg#arrow-quantity"/>
                                                         </svg>
                                                     </div>
                                                 </div>
@@ -247,7 +259,7 @@ class ExperimentCreate extends React.Component {
                                         </div>
                                         <button className="create-setting__remove" data-id={branch.id} onClickCapture={e => this.removeBranch(e)}>
                                             <svg className="create-setting__remove-icon">
-                                                <use href="/img/icons/icons.svg#close"></use>
+                                                <use href="/img/icons/icons.svg#close"/>
                                             </svg>
                                         </button>
                                     </div>

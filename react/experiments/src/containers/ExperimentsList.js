@@ -4,6 +4,7 @@ import deleteExperimentState from '../http/deleteExperimentState';
 import LoadingOverlay from 'react-loading-overlay'
 import DontHaveExperiments from "./DontHaveExperiments";
 import {Navigation} from "./Navigation/Navigation";
+import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
 
 class ExperimentsList extends React.Component {
     experimentStyleBlock = {'display':'block'};
@@ -268,6 +269,11 @@ class ExperimentsList extends React.Component {
             branches = this.props.parent.appState.activeItem.branches ?? [];
         } else branches = [];
 
+        // let experimentUidInput = window.mode !== 'feature-toggle'
+        //     ? <ExperimentUidInput
+        //         uid = {}
+        //     />
+        //     : false;
         let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment';
         let displayLinkStats = window.mode === 'feature-toggle' ? {'display':'none'} : {'display':'block'};
         let spinnerStyle = this.state.isLoaded === 0;
@@ -390,6 +396,10 @@ class ExperimentsList extends React.Component {
                                                    onChange={this.changeName.bind(this)}
                                             />
                                         </div>
+                                        <ExperimentUidInput
+                                            uid = {item.uid}
+                                            mode = {this.props.parent.appState.mode}
+                                        />
                                     </div>
 
                                     {branches.map((branch) =>

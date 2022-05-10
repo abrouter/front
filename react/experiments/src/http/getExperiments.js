@@ -7,6 +7,7 @@ function getExperiments() {
             let link = 'https://abrouter.com/api/v1/experiment/run?token='+token+'&experimentId=' + item.id +'&userId={USER_ID}';
             const newItem = {
                 'name': item.attributes.name,
+                'uid': item.attributes.uid,
                 'alias': item.attributes.alias,
                 'branches': [],
                 'isEnabled': item.attributes.is_enabled,

@@ -41,6 +41,11 @@ class App extends React.Component {
         this.forceUpdate();
     }
 
+    changeUid(value) {
+        this.appState.activeItem.uid = value;
+        this.forceUpdate();
+    }
+
     changePercent(e) {
         let id = e.target.closest(".quantity").querySelector("input").getAttribute('data-id');
         let value = e.target.closest(".quantity").querySelector("input").value;
