@@ -397,7 +397,7 @@ class ExperimentsList extends React.Component {
                                             />
                                         </div>
                                         <ExperimentUidInput
-                                            uid = {item.uid}
+                                            uid = {item.alias}
                                             mode = {this.props.parent.appState.mode}
                                         />
                                     </div>

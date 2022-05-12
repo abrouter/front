@@ -42,7 +42,7 @@ class App extends React.Component {
     }
 
     changeUid(value) {
-        this.appState.activeItem.uid = value;
+        this.appState.activeItem.alias = value;
         this.forceUpdate();
     }
 

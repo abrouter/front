@@ -181,7 +181,7 @@ class ExperimentCreate extends React.Component {
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [];
         let experimentName = this.props.parent.appState.activeItem.name ?? '';
-        let experimentUid = this.props.parent.appState.activeItem.uid ?? experimentName;
+        let experimentUid = this.props.parent.appState.activeItem.alias ?? experimentName;
 
         return (
             <>

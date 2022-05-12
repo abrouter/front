@@ -9,7 +9,7 @@ function saveExperimentState(experiment) {
             'type': dataType,
             'attributes': {
                 'name': experiment.name,
-                'uid': experiment.uid ?? experiment.name,
+                'alias': experiment.alias ?? experiment.name,
                 'is_enabled': experiment.isEnabled ?? true,
                 'is_feature_toggle': experiment.isFeatureToggle ?? false,
                 'config': [],
