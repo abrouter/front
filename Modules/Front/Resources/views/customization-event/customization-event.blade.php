@@ -355,7 +355,7 @@ use Modules\Front\Internal\User;
                                     'class="input create-setting__input"' +
                                     'id="create_event_name">' +
                             '</div>' +
-                            '<div class="create-setting__item">' +
+                            '<div class="create-setting__item" style="margin-top: 15px">' +
                                 '<label class="create-setting__label">Type</label>' +
                                 '<select id="event_type" class="select">' +
                                     '<option value="incremental">Incremental</option>' +
