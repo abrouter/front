@@ -357,7 +357,7 @@ use Modules\Front\Internal\User;
                             '</div>' +
                             '<div class="create-setting__item">' +
                                 '<label class="create-setting__label">Type</label>' +
-                                '<select id="event_type" class="input create-setting__input">' +
+                                '<select id="event_type" class="select">' +
                                     '<option value="incremental">Incremental</option>' +
                                     '<option value="summarizable">Summarizable</option>' +
                                 '</select>' +
