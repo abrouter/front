@@ -13,7 +13,7 @@ use Modules\Front\Internal\User;
                         Making A/B tests is challenging. We make it easy with open-source A/B testing.
                     </h1>
                     <div class="main-block__text">
-                        <p> - High level of support for PHP, Laravel and Symfony</p>
+                        <p> - High level of support for <b>PHP</b>, <b>Laravel</b> and <b>Symfony</b></p>
                         <p> - Developer-oriented. Built by developers for developers to accelerate the business.</p>
                         <p> - Developer-oriented. Built by developers for developers to accelerate the business.</p>
                         <p> - Built-in statistics to track funnel and revenue depending on the experiment</p>
