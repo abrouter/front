@@ -31,6 +31,7 @@ function getFunnelStats (
 
             let percentage = response.percentage,
                 counters = response.counters,
+                summarization = counters.summarization ?? [],
                 referrersCounters = response.referrersCounters,
                 referrersPercentage = response.referrersPercentage,
                 eventCountersWithDate = response.eventCountersWithDate;
@@ -62,6 +63,7 @@ function getFunnelStats (
                     '</td>' +
                     '<td class="table__column" data-label="Persentage">' + (percentage[i] ?? 0) + '%</td>' +
                     '<td class="table__column" data-label="Counters">' + (counters[i] ?? 0) + '</td>' +
+                    '<td class="table__column" data-label="Value">' + (summarization[i] ?? 0) + '</td>' +
                     '</tr>'
                 );
             }
@@ -526,7 +528,8 @@ $(document).ready(function () {
                 $('#stats').children().remove()
 
                 let percentage = response.percentage,
-                    counters = response.counters;
+                    counters = response.counters,
+                    summarization = counters.summarization ?? [];
 
                 for(let i in percentage) {
                     $('#stats').append(
@@ -535,6 +538,7 @@ $(document).ready(function () {
                             '</td>' +
                             '<td class="table__column" data-label="Persentage">' + (percentage[i] ?? 0) + '%</td>' +
                             '<td class="table__column" data-label="Counters">' + (counters[i] ?? 0) + '</td>' +
+                            '<td class="table__column" data-label="Value">' + (summarization[i] ?? 0) + '</td>' +
                         '</tr>'
                     );
                 }

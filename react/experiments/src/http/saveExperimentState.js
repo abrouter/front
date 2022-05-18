@@ -3,13 +3,14 @@ import httpRequest from './httpRequest';
 function saveExperimentState(experiment) {
     const ownerId = experiment.ownerId === undefined ? window.userId : experiment.ownerId;
     const dataType = window.mode === 'feature-toggle' ? 'feature-toggles' : 'experiments';
+    let alias = experiment.alias ?? experiment.name.replace(/ /g, '-');
 
     let payload = {
         'data': {
             'type': dataType,
             'attributes': {
                 'name': experiment.name,
-                'alias': experiment.alias ?? experiment.name,
+                'alias': alias,
                 'is_enabled': experiment.isEnabled ?? true,
                 'is_feature_toggle': experiment.isFeatureToggle ?? false,
                 'config': [],

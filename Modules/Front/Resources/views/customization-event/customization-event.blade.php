@@ -64,7 +64,6 @@ use Modules\Front\Internal\User;
                         let value = response.data[i];
                         let eventName = value.attributes.event_name;
                         let eventId = value.id;
-                        let eventType = value.type;
 
                         $('#all-events').append('<div class="table-setting__wrap">' +
                             '<div class="table-setting__row">' +
@@ -76,7 +75,7 @@ use Modules\Front\Internal\User;
                                                 '<use href="/img/icons/icons.svg#correct"></use>' +
                                             '</svg>' +
                                         '</button>' +
-                                        '<a href="" data-id="'+ eventId +'" data-type="'+ eventType +'" data-tippy-content="Delete" class="table-setting__item">' +
+                                        '<a href="" data-id="'+ eventId +'" data-tippy-content="Delete" class="table-setting__item">' +
                                             '<svg class="table-setting__icon">' +
                                                 '<use href="/img/icons/icons.svg#delete"></use>' +
                                             '</svg>' +
@@ -93,7 +92,6 @@ use Modules\Front\Internal\User;
                                             'type="text"' +
                                             'data-error="Ошибка"' +
                                             'data-id="'+ eventId +'"' +
-                                            'data-type="'+ eventType +'"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
                                             'id="event_name">' +
@@ -134,9 +132,10 @@ use Modules\Front\Internal\User;
                     },
                     'data': JSON.stringify({
                         "data": {
-                        "type": eventType,
+                        "type": 'display_user_events',
                         "attributes": {
-                            "event_name": eventName
+                            "event_name": eventName,
+                            "event_type": eventType
                         },
                         "relationships": {
                             "user": {
@@ -154,7 +153,6 @@ use Modules\Front\Internal\User;
                         let event = response.data,
                             eventName = event.attributes.event_name,
                             eventId = event.id,
-                            eventType = event.type,
                             allEvents = $('#all-events');
 
                         allEvents.show();
@@ -172,7 +170,6 @@ use Modules\Front\Internal\User;
                                         '<a ' +
                                             'href=""' +
                                             'data-id="'+ eventId +'"' +
-                                            'data-type="'+ eventType +'"' +
                                             'data-tippy-content="Delete"' +
                                             'class="table-setting__item"' +
                                         '>' +
@@ -192,7 +189,6 @@ use Modules\Front\Internal\User;
                                             'type="text"' +
                                             'data-error="Ошибка"' +
                                             'data-id="'+ eventId +'"' +
-                                            'data-type="' + eventType + '"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
                                         '>' +
@@ -214,8 +210,7 @@ use Modules\Front\Internal\User;
                 e.preventDefault();
 
                 let eventName = e.target[0].value,
-                    dataId = e.target[0].getAttribute('data-id'),
-                    eventType = e.target[0].getAttribute('data-type');
+                    dataId = e.target[0].getAttribute('data-id');
 
                 $.ajax({
                     'method': 'PATCH',
@@ -227,7 +222,7 @@ use Modules\Front\Internal\User;
                     },
                     'data': JSON.stringify({
                         "data": {
-                            "type": eventType,
+                            "type": 'display_user_events',
                             "attributes": {
                                 "id": dataId,
                                 "event_name": eventName
@@ -275,8 +270,7 @@ use Modules\Front\Internal\User;
                 e.preventDefault();
                 let target = e.currentTarget,
                     id = target.getAttribute('data-id'),
-                    value = target.closest('.table-setting__row').children[0].innerHTML,
-                    type = target.getAttribute('data-type');
+                    value = target.closest('.table-setting__row').children[0].innerHTML;
 
                 $.ajax({
                     'method': "DELETE",
@@ -286,7 +280,7 @@ use Modules\Front\Internal\User;
                     },
                     'data': {
                         "data": {
-                        "type": type,
+                        "type": 'display_user_events',
                         "attributes": {
                             "id": id,
                             "event_name": value

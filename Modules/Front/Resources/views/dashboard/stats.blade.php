@@ -1,6 +1,3 @@
-<?php
-    use Modules\Front\Assets\Puller;
-?>
 @extends('front::layouts.settings')
 
 @section('settings')
@@ -49,6 +46,8 @@
                             <th class="table__thead-th" scope="col">Persentage
                             </th>
                             <th class="table__thead-th" scope="col">Counters
+                            </th>
+                            <th class="table__thead-th" scope="col">Summarization
                             </th>
                         </tr>
                     </thead>
