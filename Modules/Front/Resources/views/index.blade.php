@@ -431,8 +431,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -455,8 +454,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -480,8 +478,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                 </div>
@@ -497,7 +494,7 @@ use Modules\Front\Internal\User;
                 <div class="start__subtitle">
                     Start using ABRouter for free and see how it can improve your application.
                 </div>
-                <a href="/en/signup" class="start__button button">Start free trial</a>
+                <a href="/en/signup" class="start__button button">Create my first A/B test</a>
             </div>
         </section>
        @else
