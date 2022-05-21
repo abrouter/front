@@ -14,7 +14,7 @@ use Modules\Front\Internal\User;
                     </h1>
                     <div class="main-block__text">
                         <p> - High level of support for <b>PHP</b>, <b>Laravel</b> and <b>Symfony</b></p>
-                        <p> - Developer-oriented. Built by developers for developers to accelerate the business.</p>
+                        <p> - Developer-oriented. Built by developers for developers to improve the world.</p>
                         <p> - Built-in statistics to track funnel and revenue depending on the experiment</p>
                         <p> - Open-source code. It's your choice - reliable cloud solution or your own server.</p>
                         <p> - Parallel running. Run A/B test asynchronously in your code. Don't wait the server response.</p>
