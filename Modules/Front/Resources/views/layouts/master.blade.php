@@ -142,9 +142,30 @@ use Modules\Front\Internal\User;
                     <?php endif; ?>
                     <div class="top-footer__column">
                         <div class="top-footer__title">
-                            Support
+                            Community
                         </div>
                         <ul class="top-footer__list">
+
+                            <li class="top-footer__item">
+                                <a href="https://twitter.com/abrouter" target="_blank" class="top-footer__link">
+                                    Twitter
+                                </a>
+                            </li>
+
+                            <li class="top-footer__item">
+                                <a href="https://discord.gg/8hYgMAjAFw" target="_blank" class="top-footer__link">
+                                    Discord
+                                </a>
+                            </li>
+
+
+                            <li class="top-footer__item">
+                                <a href="https://github.com/abrouter" target="_blank" class="top-footer__link">
+                                    GitHub
+                                </a>
+                            </li>
+
+
                             <li class="top-footer__item">
                                 <a href="mailto:abrouter@prixedmail.com" class="top-footer__link">
                                     abrouter@prixedmail.com
