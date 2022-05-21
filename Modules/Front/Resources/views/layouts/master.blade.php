@@ -160,7 +160,7 @@ use Modules\Front\Internal\User;
 
 
                             <li class="top-footer__item">
-                                <a href="https://github.com/abrouter" target="_blank" class="top-footer__link">
+                                <a href="https://github.com/abrouter/abrouter" target="_blank" class="top-footer__link">
                                     GitHub
                                 </a>
                             </li>
