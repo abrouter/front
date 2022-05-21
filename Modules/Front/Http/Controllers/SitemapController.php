@@ -17,10 +17,6 @@ class SitemapController
                 ],
                 [
                     'date' => '2021-04-01',
-                    'url' => $domain . '/en/docs',
-                ],
-                [
-                    'date' => '2021-04-01',
                     'url' => $domain . '/en/php-how-to-launch-ab-tests-in-5-minutes',
                 ],
                 [

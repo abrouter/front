@@ -111,7 +111,7 @@ use Modules\Front\Internal\User;
                                     <a href="/#pricing" class="top-footer__link">Pricing</a>
                                 </li>
                                 <li class="top-footer__item">
-                                    <a href="/en/docs" class="top-footer__link">Docs</a>
+                                    <a href="https://docs.abrouter.com" target="_blank" class="top-footer__link">Docs</a>
                                 </li>
                             </ul>
                         </div>
