@@ -4,7 +4,12 @@ use Modules\Front\Assets\FrontConfig;use Modules\Front\Assets\Puller;use Modules
 @extends('front::layouts.master')
 
 @section('content')
-    <div style="display: block; text-align: center;margin: 0 auto; max-width: 800px;">
+
+    <div class="privacy">
+        <div class="bone">
+            <div class="privacy_wrapper">
+
+            <div style="display: block; text-align: center;margin: 0 auto; max-width: 800px;">
 
     <h1>Website Terms and Conditions of Use</h1>
 
@@ -53,5 +58,8 @@ use Modules\Front\Assets\FrontConfig;use Modules\Front\Assets\Puller;use Modules
     <h2>9. Governing Law</h2>
 
     <p>Any claim related to ABRouter's Website shall be governed by the laws of us without regards to its conflict of law provisions.</p>
+    </div>
+            </div>
+        </div>
     </div>
 @endsection
