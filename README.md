@@ -2,6 +2,8 @@
 
 Please, feel free to visit the [full documentation](https://docs.abrouter.com/docs/intro/).
 
+If you're wondering to deploy the ABRouter locally, please see the README of [main ABRouter repository](https://github.com/abrouter/abrouter). 
+
 Front-end of ABRouter is based on Laravel as the server and contain some react apps.
 
 ## React apps
