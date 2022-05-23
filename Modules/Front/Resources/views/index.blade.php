@@ -261,7 +261,7 @@ use Modules\Front\Internal\User;
                                     <div class="tabs-what__text">
                                         A/B tests are your best friend for cases when you need to optimize your customer journey, improve conversions and increase revenue. All changes, that you are making to the application, should be tested with an A/B test. It doesn't matter - some refactoring or new features. Sometimes, changes break the conversions. ABRouter provides a completed system to create, run and manage A/B tests for your app.
                                     </div>
-                                    <a href="/en/docs" class="tabs-what__button">
+                                    <a href="/en/signup" class="tabs-what__button">
                                         <span>Explore ABRouter</span>
                                         <svg class="tabs-what__icon">
                                             <use href="img/icons/icons.svg#arrow-button"></use>
