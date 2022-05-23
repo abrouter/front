@@ -30,3 +30,6 @@ This command will create new builds for each app and move it to public/js. Actua
 We're plan to move the apps to separated folders and builds via netlify.
 
 
+## Contributing
+
+Feel free to contibute. 
