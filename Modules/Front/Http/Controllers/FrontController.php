@@ -21,7 +21,9 @@ class FrontController extends Controller
     {
         $this->enforceSSL();
 
-        return view('front::index');
+        return view('front::index', [
+            'title' => 'ABRouter - Opensource A/B tests and feature flags'
+        ]);
     }
 
     public function FSIgnore()

@@ -10,11 +10,14 @@ use Modules\Front\Internal\User;
             <div class="main-block__container">
                 <div class="main-block__body">
                     <h1 class="main-block__title">
-                        Making A/B tests is challenging. We make it easy
+                        Making A/B tests is challenging. We make it easy with open-source A/B testing.
                     </h1>
                     <div class="main-block__text">
-                        <p> - Multiple clicks to create an experiment, single request to run</p>
-                        <p> - Ideal solution for startups and mid-size business</p>
+                        <p> - High level of support for <b>PHP</b>, <b>Laravel</b> and <b>Symfony</b></p>
+                        <p> - Developer-oriented. Built by developers for developers to improve the world.</p>
+                        <p> - Built-in statistics to track funnel and revenue depending on the experiment</p>
+                        <p> - Open-source code. It's your choice - reliable cloud solution or your own server.</p>
+                        <p> - Parallel running. Run A/B test asynchronously in your code. Don't wait the server response.</p>
                     </div>
                     <a href="/en/signup" class="button main-block__button">Get Started</a>
                     <div class="main-block__bottom">
@@ -258,7 +261,7 @@ use Modules\Front\Internal\User;
                                     <div class="tabs-what__text">
                                         A/B tests are your best friend for cases when you need to optimize your customer journey, improve conversions and increase revenue. All changes, that you are making to the application, should be tested with an A/B test. It doesn't matter - some refactoring or new features. Sometimes, changes break the conversions. ABRouter provides a completed system to create, run and manage A/B tests for your app.
                                     </div>
-                                    <a href="/en/docs" class="tabs-what__button">
+                                    <a href="/en/signup" class="tabs-what__button">
                                         <span>Explore ABRouter</span>
                                         <svg class="tabs-what__icon">
                                             <use href="img/icons/icons.svg#arrow-button"></use>
@@ -428,8 +431,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -452,8 +454,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -477,8 +478,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free
-                                trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
                         </div>
                     </div>
                 </div>
@@ -494,7 +494,7 @@ use Modules\Front\Internal\User;
                 <div class="start__subtitle">
                     Start using ABRouter for free and see how it can improve your application.
                 </div>
-                <a href="/en/signup" class="start__button button">Start free trial</a>
+                <a href="/en/signup" class="start__button button">Create my first A/B test</a>
             </div>
         </section>
        @else

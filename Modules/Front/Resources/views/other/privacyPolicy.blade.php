@@ -4,8 +4,12 @@ use Modules\Front\Assets\FrontConfig;use Modules\Front\Assets\Puller;use Modules
 @extends('front::layouts.master')
 
 @section('content')
-    <div style="display: block; text-align: center;margin: 0 auto; max-width: 800px;">
-    <h1>Privacy Policy</h1>
+
+    <div class="privacy">
+        <div class="bone">
+            <div class="privacy_wrapper">
+
+            <h1>Privacy Policy</h1>
     <p>Last updated: February 28, 2022</p>
     <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
     <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href="https://www.termsfeed.com/blog/sample-privacy-policy-template/" target="_blank">Privacy Policy Template</a>.</p>
@@ -171,6 +175,9 @@ use Modules\Front\Assets\FrontConfig;use Modules\Front\Assets\Puller;use Modules
     <ul>
         <li>By email: abrouter@proxiedmail.com</li>
     </ul>
+
+    </div>
+    </div>
     </div>
 
 @endsection

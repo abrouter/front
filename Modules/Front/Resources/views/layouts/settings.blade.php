@@ -111,7 +111,7 @@ use Modules\Front\Internal\User;
                                     </a>
                                 </li> -->
                                 <li class="menu-setting__item">
-                                    <a href="/en/docs" class="menu-setting__link">
+                                    <a href="https://docs.abrouter.com/docs/intro/" target="_blank" class="menu-setting__link">
                                         <svg class="menu-setting__icon">
                                             <use href="/img/icons/icons.svg#menu05"></use>
                                         </svg>

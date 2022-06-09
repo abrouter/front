@@ -111,7 +111,7 @@ use Modules\Front\Internal\User;
                                     <a href="/#pricing" class="top-footer__link">Pricing</a>
                                 </li>
                                 <li class="top-footer__item">
-                                    <a href="/en/docs" class="top-footer__link">Docs</a>
+                                    <a href="https://docs.abrouter.com/docs/intro/" target="_blank" class="top-footer__link">Docs</a>
                                 </li>
                             </ul>
                         </div>
@@ -142,9 +142,30 @@ use Modules\Front\Internal\User;
                     <?php endif; ?>
                     <div class="top-footer__column">
                         <div class="top-footer__title">
-                            Support
+                            Community
                         </div>
                         <ul class="top-footer__list">
+
+                            <li class="top-footer__item">
+                                <a href="https://twitter.com/abrouter" target="_blank" class="top-footer__link">
+                                    Twitter
+                                </a>
+                            </li>
+
+                            <li class="top-footer__item">
+                                <a href="https://discord.gg/8hYgMAjAFw" target="_blank" class="top-footer__link">
+                                    Discord
+                                </a>
+                            </li>
+
+
+                            <li class="top-footer__item">
+                                <a href="https://github.com/abrouter/abrouter" target="_blank" class="top-footer__link">
+                                    GitHub
+                                </a>
+                            </li>
+
+
                             <li class="top-footer__item">
                                 <a href="mailto:abrouter@prixedmail.com" class="top-footer__link">
                                     abrouter@prixedmail.com
