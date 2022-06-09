@@ -252,8 +252,9 @@ class ExperimentsList extends React.Component {
     }
 
     render() {
-        let showDontHaveExperiments;
-        let showExperiments = {'display':'flex'};
+        let showDontHaveExperiments,
+            showExperiments = {'display':'flex'};
+
         if (this.state.experiments.length === undefined || this.state.experiments.length === 0) {
             showDontHaveExperiments = <DontHaveExperiments
                 experimentStyleBlock = {this.experimentStyleBlock}
@@ -262,21 +263,17 @@ class ExperimentsList extends React.Component {
             showExperiments = {'display':'none'};
         }
 
-        let experimentName = this.props.parent.appState.activeItem.name;
-        let branches;
+        let experimentName = this.props.parent.appState.activeItem.name,
+            branches;
 
         if (window.mode !== 'feature-toggle') {
             branches = this.props.parent.appState.activeItem.branches ?? [];
         } else branches = [];
 
-        // let experimentUidInput = window.mode !== 'feature-toggle'
-        //     ? <ExperimentUidInput
-        //         uid = {}
-        //     />
-        //     : false;
-        let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment';
-        let displayLinkStats = window.mode === 'feature-toggle' ? {'display':'none'} : {'display':'block'};
-        let spinnerStyle = this.state.isLoaded === 0;
+        let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment',
+            displayLinkStats = window.mode === 'feature-toggle' ? {'display':'none'} : {'display':'block'},
+            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ',
+            spinnerStyle = this.state.isLoaded === 0;
 
         return (
             <>
@@ -321,9 +318,9 @@ class ExperimentsList extends React.Component {
                 <div data-edit-flags className="setting__table table-setting" style={this.experimentStyleBlock}>
                     <div className="table-setting__head" style={showExperiments}>
                         <div className=" table-setting__column1">Status</div>
-                        <div className="table-setting__column2 ">Experiment name</div>
+                        <div className="table-setting__column2 ">{nameColumn} name</div>
                         <div className="table-setting__column3">
-                            Experiment ID
+                            {nameColumn} ID
                         </div>
                         <div className="table-setting__column4">
                             Manage

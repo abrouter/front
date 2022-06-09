@@ -179,9 +179,10 @@ class ExperimentCreate extends React.Component {
     render() {
         const displayAddBranch = window.mode === 'feature-toggle' ? {'display':'none'} : {};
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
-        let branches = this.props.parent.appState.activeItem.branches ?? [];
-        let experimentName = this.props.parent.appState.activeItem.name ?? '';
-        let experimentUid = this.props.parent.appState.activeItem.alias ?? experimentName.replace(/ /g, '-');
+        let branches = this.props.parent.appState.activeItem.branches ?? [],
+            experimentName = this.props.parent.appState.activeItem.name ?? '',
+            experimentUid = this.props.parent.appState.activeItem.alias ?? experimentName.replace(/ /g, '-'),
+            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ';
 
         return (
             <>
@@ -192,7 +193,7 @@ class ExperimentCreate extends React.Component {
                         </div>
                         <form className="create-setting__form">
                             <div className="create-setting__item">
-                                <label className="create-setting__label">Experiment name</label>
+                                <label className="create-setting__label">{nameColumn} name</label>
                                 <input
                                     autoComplete="off"
                                     type="text"

@@ -47,8 +47,6 @@
                             </th>
                             <th class="table__thead-th" scope="col">Counters
                             </th>
-                            <th class="table__thead-th" scope="col">Summarization
-                            </th>
                         </tr>
                     </thead>
                     <tbody class="table__body" id="stats">
