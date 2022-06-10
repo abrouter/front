@@ -106,7 +106,7 @@ function getFunnelStats (
 
             if (eventCountersWithDate.length < 1) {
                 $('div.dashboard__grid').append(
-                    '<div class="top-setting__info">Nothing found in this date range.</div>'
+                    '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
                 )
             }
 
@@ -118,7 +118,7 @@ function getFunnelStats (
             if (referrersCounters.length < 1) {
                 $('#head_top_referrers').hide();
                 $('#top_referrers').append(
-                    '<div class="top-setting__info" id="dashboard">Nothing found in this date range.</div>'
+                    '<div class="top-setting__info" id="emptyReferrers">Nothing found in this date range.</div>'
                 )
             }
 
@@ -194,17 +194,16 @@ function getExperimentStats (
 
                 $('tbody.table__body').append(
                     '<tr class="table__row" id=' + branchName + '>' +
-                    '<td class="table__column" data-label="Variation ">' +
-                    '<div class="table__flex">' +
-                    '<span ' +
-                    'style="background:' +
-                    backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                    'class="table__color"' +
-                    '>' +
-                    '</span>' +
-                    branchName +
-                    '</div>' +
-                    '</td>' +
+                        '<td class="table__column" data-label="Variation ">' +
+                            '<div class="table__flex">' +
+                                '<span ' +
+                                'style="background:' +
+                                backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
+                                'class="table__color"' +
+                                '></span>' +
+                                branchName +
+                            '</div>' +
+                        '</td>' +
                     '</tr>'
                 );
 
@@ -610,15 +609,15 @@ $(document).ready(function () {
 
                 if (eventCountersWithDate.length < 1) {
                     $('div.dashboard__grid').append(
-                        '<div class="top-setting__info">Nothing found in this date range.</div>'
+                        '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
                     )
                 }
 
                 if (referrersCounters.length < 1) {
                     $('#head_top_referrers').hide();
-                    $('#dashboard').remove();
+                    $('#emptyReferrers').remove();
                     $('#top_referrers').append(
-                        '<div class="top-setting__info" id="dashboard">Nothing found in this date range.</div>'
+                        '<div class="top-setting__info" id="emptyReferrers">Nothing found in this date range.</div>'
                     )
                 }
 
@@ -629,7 +628,7 @@ $(document).ready(function () {
 
                 for (let i in referrersCounters) {
                     $('#head_top_referrers').show();
-                    $('div.top-setting__info').remove();
+                    $('#emptyReferrers').remove();
 
                     $('#referrers').append(
                         '<tr class="table__row">' +
