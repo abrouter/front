@@ -32,8 +32,6 @@ Route::group($group, function (Router $router) {
     $router->get('/en/stats', 'DashboardController@stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
     $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats');
-    
-    $router->get('/en/php-how-to-launch-ab-tests-in-5-minutes', 'LandingsController@abTestsPhp');
 
     $router->get('/en/php-managed-feature-toggle', 'LandingsController@featureFlagPhp');
     $router->get('/en/laravel-managed-feature-toggle', 'LandingsController@featureFlagLaravel');
@@ -41,11 +39,6 @@ Route::group($group, function (Router $router) {
 
 
     $router->get('/en/test-laravel-feature-flags', 'LandingsController@testLaravelFeatureFlags');
-
-    $router->get('/en/laravel-ab-tests', 'LandingsController@abTestsLaravel');
-    $router->get('/en/symfony-ab-tests', 'LandingsController@abTestsSymfony');
-
-    $router->get('/sitemap.xml', 'SitemapController');
 
     $router->get('/en/privacy-policy', 'LandingsController@privacyPolicy');
     $router->get('/en/terms-service', 'LandingsController@termsService');

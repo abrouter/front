@@ -32,6 +32,17 @@
     width:10.5%;
 }
 
+.select {
+    height: 50px;
+    padding: 8px 25px;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #E6E6E6;
+    border-radius: 0.625rem;
+}
+
 .privacy {
     padding: 90px 0;
     margin: auto;

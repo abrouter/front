@@ -42,6 +42,7 @@ class App extends React.Component {
     }
 
     changeUid(value) {
+        value = value.replace(/ /g, '-');
         this.appState.activeItem.alias = value;
         this.forceUpdate();
     }

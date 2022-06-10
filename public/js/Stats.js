@@ -15,6 +15,39 @@ function convertDate(date) {
     return [month, day, year].join('-');
 }
 
+function getSummarizableEvent (counters, percentage) {
+    let eventsFromCounters = Object
+        .keys(counters)
+        .filter(
+            event => percentage[event] === undefined
+        )
+
+    if (eventsFromCounters.length > 0) {
+        let filterRevenue;
+
+        for (let event in eventsFromCounters) {
+            filterRevenue = {[eventsFromCounters[event]]: 0}
+
+            for (let date in counters[eventsFromCounters[event]]) {
+                filterRevenue[eventsFromCounters[event]] += counters[eventsFromCounters[event]][date]
+            }
+        }
+
+        eventsFromCounters.forEach(
+            event => [
+                $('#stats').append(
+                    '<tr class="table__row">' +
+                    '<td class="table__column" data-label="Event name">' + event +
+                    '</td>' +
+                    '<td class="table__column" data-label="Persentage">' + 0 + '%</td>' +
+                    '<td class="table__column" data-label="Counters">' + (filterRevenue[event] ?? 0) + '</td>' +
+                    '</tr>'
+                )
+            ]
+        )
+    }
+}
+
 function getFunnelStats (
     dateFrom,
     dateTo,
@@ -66,9 +99,14 @@ function getFunnelStats (
                 );
             }
 
+            getSummarizableEvent(
+                counters,
+                percentage
+            )
+
             if (eventCountersWithDate.length < 1) {
                 $('div.dashboard__grid').append(
-                    '<div class="top-setting__info">Nothing found in this date range.</div>'
+                    '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
                 )
             }
 
@@ -80,7 +118,7 @@ function getFunnelStats (
             if (referrersCounters.length < 1) {
                 $('#head_top_referrers').hide();
                 $('#top_referrers').append(
-                    '<div class="top-setting__info" id="dashboard">Nothing found in this date range.</div>'
+                    '<div class="top-setting__info" id="emptyReferrers">Nothing found in this date range.</div>'
                 )
             }
 
@@ -156,17 +194,16 @@ function getExperimentStats (
 
                 $('tbody.table__body').append(
                     '<tr class="table__row" id=' + branchName + '>' +
-                    '<td class="table__column" data-label="Variation ">' +
-                    '<div class="table__flex">' +
-                    '<span ' +
-                    'style="background:' +
-                    backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                    'class="table__color"' +
-                    '>' +
-                    '</span>' +
-                    branchName +
-                    '</div>' +
-                    '</td>' +
+                        '<td class="table__column" data-label="Variation ">' +
+                            '<div class="table__flex">' +
+                                '<span ' +
+                                'style="background:' +
+                                backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
+                                'class="table__color"' +
+                                '></span>' +
+                                branchName +
+                            '</div>' +
+                        '</td>' +
                     '</tr>'
                 );
 
@@ -251,7 +288,6 @@ function addChartStats (
     eventCountersWithDate,
     dateIntervals
 ) {
-    console.log(eventCountersWithDate)
     for (let i in eventCountersWithDate) {
         let numberEvent = [];
 
@@ -501,9 +537,9 @@ $(document).ready(function () {
         : (
             getTags(),
             getExperimentStats(
-            experimentId,
-            dateIntervals,
-            backgroundBranchColors
+                experimentId,
+                dateIntervals,
+                backgroundBranchColors
             )
         )
 
@@ -528,16 +564,21 @@ $(document).ready(function () {
                 let percentage = response.percentage,
                     counters = response.counters;
 
-                for(let i in percentage) {
+                for (let i in percentage) {
                     $('#stats').append(
                         '<tr class="table__row">' +
                             '<td class="table__column" data-label="Event name">' + i +
                             '</td>' +
-                            '<td class="table__column" data-label="Persentage">' + (percentage[i] ?? 0) + '%</td>' +
+                            '<td class="table__column" data-label="Persentage">' + percentage[i] + '%</td>' +
                             '<td class="table__column" data-label="Counters">' + (counters[i] ?? 0) + '</td>' +
                         '</tr>'
                     );
                 }
+
+                getSummarizableEvent(
+                    counters,
+                    percentage
+                )
             }
         });
     });
@@ -568,15 +609,15 @@ $(document).ready(function () {
 
                 if (eventCountersWithDate.length < 1) {
                     $('div.dashboard__grid').append(
-                        '<div class="top-setting__info">Nothing found in this date range.</div>'
+                        '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
                     )
                 }
 
                 if (referrersCounters.length < 1) {
                     $('#head_top_referrers').hide();
-                    $('#dashboard').remove();
+                    $('#emptyReferrers').remove();
                     $('#top_referrers').append(
-                        '<div class="top-setting__info" id="dashboard">Nothing found in this date range.</div>'
+                        '<div class="top-setting__info" id="emptyReferrers">Nothing found in this date range.</div>'
                     )
                 }
 
@@ -587,7 +628,7 @@ $(document).ready(function () {
 
                 for (let i in referrersCounters) {
                     $('#head_top_referrers').show();
-                    $('div.top-setting__info').remove();
+                    $('#emptyReferrers').remove();
 
                     $('#referrers').append(
                         '<tr class="table__row">' +
@@ -646,10 +687,11 @@ $(document).ready(function () {
                     backgroundBranchColorNumber = 0;
 
                 for (let i in percentage) {
-                    let length = Object.keys(percentage[i]).length;
+                    let length = Object.keys(percentage[i]).length,
+                        branch = i.split(' ').join('_');
 
                     $('tbody.table__body').append(
-                        '<tr class="table__row" id=' + i + '>' +
+                        '<tr class="table__row" id=' + branch + '>' +
                             '<td class="table__column" data-label="Variation ">' +
                                 '<div class="table__flex">' +
                                     '<span ' +
@@ -666,23 +708,23 @@ $(document).ready(function () {
 
                     backgroundBranchColorNumber++;
 
-                    for (let branchName in percentage[i]) {
-                        let branch = branchName.split('_').join(' '),
-                            upperCaseBranch = branch[0].toUpperCase() + branch.substring(1)
+                    for (let eventName in percentage[i]) {
+                        let event = eventName.split('_').join(' '),
+                            upperCaseEventName = event[0].toUpperCase() + event.substring(1);
 
                         if (n < length) {
                             n++;
 
                             $('.table__thead-tr').append(
                                 '<th class="table__thead-th" scope="col">' +
-                                upperCaseBranch +
+                                upperCaseEventName +
                                 '</th>'
                             );
                         }
-
-                        $('#' + i).append(
-                            '<td class="table__column" data-label="' + branchName + '">' +
-                            percentage[i][branchName] + '%' +
+                        console.log(event)
+                        $('#' + branch).append(
+                            '<td class="table__column" data-label="' + event + '">' +
+                            percentage[i][eventName] + '%' +
                             '</td>'
                         );
                     }
@@ -787,10 +829,11 @@ $(document).ready(function () {
                     backgroundBranchColorNumber = 0;
 
                 for (let i in percentage) {
-                    let length = Object.keys(percentage[i]).length;
+                    let length = Object.keys(percentage[i]).length,
+                        branch = i.split(' ').join('_');
 
                     $('tbody.table__body').append(
-                        '<tr class="table__row" id=' + i + '>' +
+                        '<tr class="table__row" id=' + branch + '>' +
                             '<td class="table__column" data-label="Variation ">' +
                                 '<div class="table__flex">' +
                                     '<span ' +
@@ -807,23 +850,23 @@ $(document).ready(function () {
 
                     backgroundBranchColorNumber++;
 
-                    for (let branchName in percentage[i]) {
-                        let branch = branchName.split('_').join(' '),
-                            upperCaseBranch = branch[0].toUpperCase() + branch.substring(1);
+                    for (let eventName in percentage[i]) {
+                        let event = eventName.split('_').join(' '),
+                            upperCaseEventName = event[0].toUpperCase() + event.substring(1);
 
                         if (n < length) {
                             n++;
 
                             $('.table__thead-tr').append(
                                 '<th class="table__thead-th" scope="col">' +
-                                upperCaseBranch +
+                                upperCaseEventName +
                                 '</th>'
                             );
                         }
 
-                        $('#' + i).append(
-                            '<td class="table__column" data-label="' + branchName + '">' +
-                            percentage[i][branchName] + '%' +
+                        $('#' + branch).append(
+                            '<td class="table__column" data-label="' + eventName + '">' +
+                            percentage[i][eventName] + '%' +
                             '</td>'
                         );
                     }

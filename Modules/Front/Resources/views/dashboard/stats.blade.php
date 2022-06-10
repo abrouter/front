@@ -1,6 +1,3 @@
-<?php
-    use Modules\Front\Assets\Puller;
-?>
 @extends('front::layouts.settings')
 
 @section('settings')

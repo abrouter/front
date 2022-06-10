@@ -84,14 +84,21 @@ use Modules\Front\Internal\User;
                                 '</div>' +
                             '</div>' +
                             '<div class="table-setting__row table-setting__row_edit">' +
-                                '<form action="#" class="create-setting__form">' +
+                                '<form id="edit" action="#" class="create-setting__form">' +
                                     '<div class="create-setting__item">' +
                                         '<label class="create-setting__label">Edit name</label>' +
-                                        '<input autocomplete="off" type="text" data-error="Ошибка" data-id="'+ eventId +'" placeholder="'+ eventName +'" class="input create-setting__input">' +
+                                        '<input ' +
+                                            'autocomplete="off"' +
+                                            'type="text"' +
+                                            'data-error="Ошибка"' +
+                                            'data-id="'+ eventId +'"' +
+                                            'placeholder="'+ eventName +'"' +
+                                            'class="input create-setting__input"' +
+                                            'id="event_name">' +
                                     '</div>' +
                                     '<div class="create-setting__bottom">' +
                                         '<button class="create-setting__cancel">Cancel</button>' +
-                                        '<button class="create-setting__update button">Update</button>' +
+                                        '<button type="submit" class="create-setting__update button">Update</button>' +
                                     '</div>' +
                                 '</form>' +
                             '</div>' +
@@ -108,19 +115,16 @@ use Modules\Front\Internal\User;
                     }
                 }
             });
-            $(document).change('.input', function(e){
+            $(document).on('submit', '#create', function(e){
+                e.preventDefault();
                 $('.loader').show();
-                let method = "PATCH";
-                let dataId = e.target.getAttribute('data-id') ?? '';
-                let value = e.target.value;
 
-                if(dataId === '') {
-                    method = "POST";
-                }
+                let eventName = $('#create_event_name')[0].value,
+                    eventType = $('#event_type')[0].value;
 
                 $.ajax({
-                    'method': method,
-                    'url': "/api/v1/user-events/" + dataId,
+                    'method': 'POST',
+                    'url': "/api/v1/user-events",
                     'headers': {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
@@ -128,10 +132,10 @@ use Modules\Front\Internal\User;
                     },
                     'data': JSON.stringify({
                         "data": {
-                        "type": "display_user_events",
+                        "type": 'display_user_events',
                         "attributes": {
-                            "id": dataId,
-                            "event_name": value
+                            "event_name": eventName,
+                            "event_type": eventType
                         },
                         "relationships": {
                             "user": {
@@ -145,81 +149,128 @@ use Modules\Front\Internal\User;
                     }),
                     'success': function(response) {
                         $('.loader').hide();
-                        if(method === "PATCH"){
-                            for(let i in response.data){
-                                let event = response.data[i];
-                                let eventName = event.attributes.event_name;
-                                let setEditName = $('.table-setting__name.table-setting__column2');
 
-                                for(let n = 0; n < setEditName.length; n++) {
-                                    if(setEditName[n].getAttribute('data-id') === dataId) {
-                                        setEditName[n].innerHTML = eventName;
-                                    }
-                                }
+                        let event = response.data,
+                            eventName = event.attributes.event_name,
+                            eventId = event.id,
+                            allEvents = $('#all-events');
 
-                                let getChildrenTag = $('.table-setting__wrap.edit');
-
-                                getChildrenTag.each(function() {
-                                    let getDataId = $(this).children()[0].children[0].getAttribute('data-id');
-                                        if(getDataId === dataId) {
-                                            $(this).removeClass('edit')
-                                        }
-                                })
-                            }
-                            toastr.options.positionClass = 'toast-top-left';
-                            toastr.success('Event updated');
-                        } else if(method === "POST"){
-                            let event = response.data;
-                            let eventName = event.attributes.event_name;
-                            let eventId = event.id;
-                            let allEvents = $('#all-events');
-
-                            allEvents.show();
-                            $('.setting__create.create-setting').remove();
-                            allEvents.append('<div class="table-setting__wrap">' +
-                                '<div class="table-setting__row">' +
-                                    '<div class="table-setting__name table-setting__column2" data-id="'+ eventId +'">' + eventName + '</div>' +
-                                    '<div class="table-setting__manage table-setting__column4 table-setting__column4_small">' +
-                                        '<div class="table-setting__items">' +
-                                            '<button data-correct data-tippy-content="Edit" class="table-setting__item">' +
-                                                '<svg class="table-setting__icon">' +
-                                                    '<use href="/img/icons/icons.svg#correct"></use>' +
-                                                '</svg>' +
-                                            '</button>' +
-                                            '<a href="" data-id="'+ eventId +'" data-tippy-content="Delete" class="table-setting__item">' +
-                                                '<svg class="table-setting__icon">' +
-                                                    '<use href="/img/icons/icons.svg#delete"></use>' +
-                                                '</svg>' +
-                                            '</a>' +
-                                        '</div>' +
+                        allEvents.show();
+                        $('.setting__create.create-setting').remove();
+                        allEvents.append('<div class="table-setting__wrap">' +
+                            '<div class="table-setting__row">' +
+                                '<div class="table-setting__name table-setting__column2" data-id="'+ eventId +'">' + eventName + '</div>' +
+                                '<div class="table-setting__manage table-setting__column4 table-setting__column4_small">' +
+                                    '<div class="table-setting__items">' +
+                                        '<button data-correct data-tippy-content="Edit" class="table-setting__item">' +
+                                            '<svg class="table-setting__icon">' +
+                                                '<use href="/img/icons/icons.svg#correct"></use>' +
+                                            '</svg>' +
+                                        '</button>' +
+                                        '<a ' +
+                                            'href=""' +
+                                            'data-id="'+ eventId +'"' +
+                                            'data-tippy-content="Delete"' +
+                                            'class="table-setting__item"' +
+                                        '>' +
+                                            '<svg class="table-setting__icon">' +
+                                                '<use href="/img/icons/icons.svg#delete"></use>' +
+                                            '</svg>' +
+                                        '</a>' +
                                     '</div>' +
                                 '</div>' +
-                                '<div class="table-setting__row table-setting__row_edit">' +
-                                    '<form action="#" class="create-setting__form">' +
-                                        '<div class="create-setting__item">' +
-                                            '<label class="create-setting__label">Edit name</label>' +
-                                            '<input autocomplete="off" type="text" data-error="Ошибка" data-id="'+ eventId +'" placeholder="'+ eventName +'" class="input create-setting__input">' +
-                                        '</div>' +
-                                        '<div class="create-setting__bottom">' +
-                                            '<button class="create-setting__cancel">Cancel</button>' +
-                                            '<button class="create-setting__update button">Update</button>' +
-                                        '</div>' +
-                                    '</form>' +
-                                '</div>' +
-                            '</div>');
+                            '</div>' +
+                            '<div class="table-setting__row table-setting__row_edit">' +
+                                '<form id="edit" action="#" class="create-setting__form">' +
+                                    '<div class="create-setting__item">' +
+                                        '<label class="create-setting__label">Edit name</label>' +
+                                        '<input ' +
+                                            'autocomplete="off"' +
+                                            'type="text"' +
+                                            'data-error="Ошибка"' +
+                                            'data-id="'+ eventId +'"' +
+                                            'placeholder="'+ eventName +'"' +
+                                            'class="input create-setting__input"' +
+                                        '>' +
+                                    '</div>' +
+                                    '<div class="create-setting__bottom">' +
+                                        '<button class="create-setting__cancel">Cancel</button>' +
+                                        '<button class="create-setting__update button">Update</button>' +
+                                    '</div>' +
+                                '</form>' +
+                            '</div>' +
+                        '</div>');
 
-                            toastr.options.positionClass = 'toast-top-left';
-                            toastr.success('Event created');
-                        }
+                        toastr.options.positionClass = 'toast-top-left';
+                        toastr.success('Event created');
                     }
                 });
             });
+            $(document).on('submit', '#edit', function (e) {
+                e.preventDefault();
+
+                let eventName = e.target[0].value,
+                    dataId = e.target[0].getAttribute('data-id');
+
+                $.ajax({
+                    'method': 'PATCH',
+                    'url': "/api/v1/user-events/" + dataId,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': window.token,
+                    },
+                    'data': JSON.stringify({
+                        "data": {
+                            "type": 'display_user_events',
+                            "attributes": {
+                                "id": dataId,
+                                "event_name": eventName
+                            },
+                            "relationships": {
+                                "user": {
+                                    "data": {
+                                        "id": window.userId,
+                                        "type": "users"
+                                    }
+                                }
+                            }
+                        }
+                    }),
+                    'success': function(response) {
+                        $('.loader').hide();
+
+                        for(let i in response.data){
+                            let event = response.data,
+                                eventName = event.attributes.event_name,
+                                setEditName = $('.table-setting__name.table-setting__column2');
+
+                            for(let n = 0; n < setEditName.length; n++) {
+                                if(setEditName[n].getAttribute('data-id') === dataId) {
+                                    setEditName[n].innerHTML = eventName;
+                                }
+                            }
+
+                            let getChildrenTag = $('.table-setting__wrap.edit');
+
+                            getChildrenTag.each(function() {
+                                let getDataId = $(this).children()[0].children[0].getAttribute('data-id');
+                                if(getDataId === dataId) {
+                                    $(this).removeClass('edit')
+                                }
+                            })
+                        }
+                        toastr.options.positionClass = 'toast-top-left';
+                        toastr.success('Event updated');
+                    }
+                });
+            })
             $(document).on('click', 'a.table-setting__item', function(e) {
                 $('.loader').show();
                 e.preventDefault();
-                let target = e.currentTarget;
-                let id = target.getAttribute('data-id');
-                let value = target.closest('.table-setting__row').children[0].innerHTML
+                let target = e.currentTarget,
+                    id = target.getAttribute('data-id'),
+                    value = target.closest('.table-setting__row').children[0].innerHTML;
 
                 $.ajax({
                     'method': "DELETE",
@@ -229,7 +280,7 @@ use Modules\Front\Internal\User;
                     },
                     'data': {
                         "data": {
-                        "type": "display_user_events",
+                        "type": 'display_user_events',
                         "attributes": {
                             "id": id,
                             "event_name": value
@@ -287,14 +338,27 @@ use Modules\Front\Internal\User;
                 let createEventForm = ('<div class="setting__create create-setting">' +
                     '<div class="create-setting__block">' +
                         '<div class="create-setting__title">Сreate a new event</div>' +
-                        '<form action="#" class="create-setting__form">' +
+                        '<form id="create" action="#" class="create-setting__form">' +
                             '<div class="create-setting__item">' +
                                 '<label class="create-setting__label">Event name</label>' +
-                                '<input autocomplete="off" type="text" data-error="Ошибка" placeholder="open_contact_form" class="input create-setting__input">' +
+                                '<input ' +
+                                    'autocomplete="off" ' +
+                                    'type="text" ' +
+                                    'data-error="Ошибка" ' +
+                                    'placeholder="open_contact_form" ' +
+                                    'class="input create-setting__input"' +
+                                    'id="create_event_name">' +
+                            '</div>' +
+                            '<div class="create-setting__item" style="margin-top: 15px">' +
+                                '<label class="create-setting__label">Type</label>' +
+                                '<select id="event_type" class="select">' +
+                                    '<option value="incremental">Incremental</option>' +
+                                    '<option value="summarizable">Summarizable</option>' +
+                                '</select>' +
                             '</div>' +
                             '<div class="create-setting__bottom">' +
                                 '<button class="create-setting__cancel">Cancel</button>' +
-                                '<button class="create-setting__update button">Create</button>' +
+                                '<button type="submit" class="create-setting__update button" id="create">Create</button>' +
                             '</div>' +
                         '</form>' +
                     '</div>' +
