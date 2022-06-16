@@ -13,21 +13,29 @@ use Modules\Front\Internal\User;
                         Making A/B tests is challenging. We make it easy with open-source A/B testing.
                     </h1>
                     <div class="main-block__text">
-                        <p> - High level of support for <b>PHP</b>, <b>Laravel</b> and <b>Symfony</b></p>
+                        <p> - High level of support for <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a></p>
                         <p> - Developer-oriented. Built by developers for developers to improve the world.</p>
                         <p> - Built-in statistics to track funnel and revenue depending on the experiment</p>
                         <p> - Open-source code. It's your choice - reliable cloud solution or your own server.</p>
-                        <p> - Parallel running. Run A/B test asynchronously in your code. Don't wait the server response.</p>
+                        <p> - <b>Parallel running</b>. Run A/B test <b>asynchronously</b> in your code. Don't wait the server response.</p>
+                        <br/>
+
+                        <a class="github-button" href="https://github.com/abrouter/abrouter" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Star abrouter/abrouter on GitHub">Star</a>
+
+
                     </div>
-                    <a href="/en/signup" class="button main-block__button">Get Started</a>
+                    <a href="/en/signup" class="button main-block__button">Get Started for free</a>
+
+
+
                     <div class="main-block__bottom">
                         <div class="main-block__label">You are in good company:</div>
                         <div class="main-block__partners">
                             <a href="https://holyeat.com/" target="_blank" class="main-block__link">
-                                <picture><source srcset="/img/png/partner01.webp" type="image/webp"><img src="/img/png/partner01.png?_v=1641102802883" alt=""></picture>
+                                <picture><source srcset="/img/png/partner01.png" type="image/webp"><img src="/img/png/partner01.png?_v=1641102802883" alt=""></picture>
                             </a>
                             <a href="https://proxiedmail.com/" target="_blank" class="main-block__link">
-                                <picture><source srcset="/img/png/partner02.webp" type="image/webp"><img src="/img/png/partner02.png?_v=1641102802883" alt=""></picture>
+                                <picture><source srcset="/img/png/partner02.png" type="image/webp"><img src="/img/png/partner02.png?_v=1641102802883" alt=""></picture>
                             </a>
                         </div>
                     </div>
@@ -51,7 +59,7 @@ use Modules\Front\Internal\User;
                                             Meet the product
                                         </div>
                                         <h2 class="head__title">
-                                            The single place for all your product experiments
+                                            Your experiments and feature flags are in the good hands
                                         </h2>
                                     </div>
                                     <div class="tabs-meet__items">
@@ -59,33 +67,31 @@ use Modules\Front\Internal\User;
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet01.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>Run experiment by passing your internal user id.</p>
+                                            <p>Create and manage in few clicks: A/B tests and feature flags.</p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet02.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>ABRouter will define a branch based on branches percentage.</p>
+                                            <p>Easily integrate ABR into your system, then run experiments in a few lines of code and get the branch with the right distribution.</p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet03.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>The system will remember the branch for further requests.</p>
+                                            <p>The system will remember the branch for further requests and keep it into account for statistics.</p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet04.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>Curl and postman collection included</p>
+                                            <p>Open-source product. Feel free to use as you want. Life is good without vendor-lock</p>
                                         </div>
                                         <div class="tabs-meet__item tabs-meet__item_big">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet05.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>We will show you insights for every experiment based on data that you allow us to
-                                                use.
-                                            </p>
+                                            <p>Easy-to-setup built-in statistics will help you to make decisions by experiments.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +110,7 @@ use Modules\Front\Internal\User;
                                             Meet the product
                                         </div>
                                         <h2 class="head__title">
-                                            The single place for all your product experiments
+                                            Ready-to-use Laravel, Symfony, PHP packages
                                         </h2>
                                     </div>
                                     <div class="tabs-meet__items">
@@ -112,39 +118,37 @@ use Modules\Front\Internal\User;
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet01.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>Run experiment by passing your internal user id.</p>
+                                            <p>Best packages. Run composer install and relax. We already did everything. </p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet02.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>ABRouter will define a branch based on branches percentage.</p>
+                                            <p>Directly integrated to your language and framework. Built by developers for developers.</p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet03.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>The system will remember the branch for further requests.</p>
+                                            <p>Focus on the core of your product, not on the A/B tests and feature-flags</p>
                                         </div>
                                         <div class="tabs-meet__item">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet04.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>Curl and postman collection included</p>
+                                            <p>Parallel running. Use built-in non-blocking running to run the experiments and feature flags.</p>
                                         </div>
                                         <div class="tabs-meet__item tabs-meet__item_big">
                                             <div class="tabs-meet__img">
                                                 <img src="img/svg/meet05.svg?_v=1641102802883" alt="">
                                             </div>
-                                            <p>We will show you insights for every experiment based on data that you allow us to
-                                                use.
-                                            </p>
+                                            <p>Open-source. Useful documentation and great support. Take cloud version, deploy locally or on the remote server</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tabs-meet__right">
                                     <div class="tabs-meet__img">
-                                        <picture><source srcset="/img/examples/postman-screen.png" type="image/webp"><img src="/img/examples/postman-screen.png" alt=""></picture>
+                                        <picture><source srcset="/img/examples/integration.png" type="image/webp"><img src="/img/examples/postman-screen.png" alt=""></picture>
                                     </div>
                                 </div>
                             </div>
@@ -153,14 +157,14 @@ use Modules\Front\Internal\User;
                     </div>
                     <div class="tabs-meet__bottom">
                         <a href="/en/signup" class="tabs meet__button">
-                            <span>Explore ABRouter</span>
+                            <span>Get started for free</span>
                             <svg class="tabs-meet__icon">
                                 <use href="img/icons/icons.svg#arrow-button"></use>
                             </svg>
                         </a>
                         <nav data-tabs-titles class="tabs-meet__navigation">
-                            <button type="submit" class="tabs-meet__title _tab-active">Management interface</button>
-                            <button type="submit" class="tabs-meet__title">API Interface</button>
+                            <button type="submit" class="tabs-meet__title _tab-active">Managing</button>
+                            <button type="submit" class="tabs-meet__title">Integration</button>
                         </nav>
                     </div>
                 </div>
@@ -177,41 +181,40 @@ use Modules\Front\Internal\User;
                     </h2>
                 </div>
                 <div class="benefit__subtitle">
-                    Customize your project using the ABRouter
+                    Improve your product using the ABRouter open-source platform
                 </div>
                 <div class="benefit__items">
                     <div class="benefit__item item-benefit">
                         <div class="item-benefit__img">
                             <img src="img/svg/benefit01.svg?_v=1641102802883" alt="">
                         </div>
-                        <div class="item-benefit__title">Automation</div>
+                        <div class="item-benefit__title">Built for your product</div>
                         <div class="item-benefit__text">
-                            No one line code needs to create new experiments except request to run experiment.
+                            No one line code needed to create new experiments except request to run experiment. Wire our packages for: <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a>.
                         </div>
                     </div>
                     <div class="benefit__item item-benefit">
                         <div class="item-benefit__img">
-                            <img src="img/svg/benefit02.svg?_v=1641102802883" alt="">
+                            <img src="img/svg/parallelRunning.png?_v=1641102802883" alt="">
                         </div>
-                        <div class="item-benefit__title">One place</div>
+                        <div class="item-benefit__title">Parallel(non-blocking) running</div>
                         <div class="item-benefit__text">
-                            Manage all your experiments <br> anytime on any device.
-
-
+                            Our packages has support for running A/B tests and feature flags locally, then sync the result with ABRouter server in the scheduled job.
                         </div>
                     </div>
+
                     <div class="benefit__item item-benefit">
                         <div class="item-benefit__img">
                             <img src="img/svg/benefit03.svg?_v=1641102802883" alt="">
                         </div>
-                        <div class="item-benefit__title">Reporting</div>
+                        <div class="item-benefit__title">Built-in statistics</div>
                         <div class="item-benefit__text">
-                            The system will create reports for every branch of your experiment to help you make the right
-                            decision.
+                            Set up the statistics, wait a couple of weeks and you're ready to make the decision on your next experiment.
 
 
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -231,10 +234,10 @@ use Modules\Front\Internal\User;
                                         </h2>
                                     </div>
                                     <div class="tabs-what__text">
-                                        ABRouter provides the system to run ab-tests/experiments on the back-end side of your product.
+                                        ABRouter is the open-source platform for running and tracking A/B tests, implementing and managing feature-flags with high level of support of <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a>.
                                     </div>
                                     <a href="/en/signup" class="tabs-what__button">
-                                        <span>Explore ABRouter</span>
+                                        <span>Create a free account</span>
                                         <svg class="tabs-what__icon">
                                             <use href="img/icons/icons.svg#arrow-button"></use>
                                         </svg>
@@ -425,13 +428,26 @@ use Modules\Front\Internal\User;
                                 </div>
                                 <ul class="item-price__list">
                                     <li>
+                                        Built-in server-side statistics
+                                    </li>
+                                    <li>
+                                        Parallel(non-blocking) running
+                                    </li>
+                                    <li>
+                                        Unlimited a/b tests
+                                    </li>
+                                    <li>
+                                        Laravel, Symfony, PHP packages
+                                    </li>
+
+                                    <li>Unlimited feature flags</li>
+                                    <li>
                                         Up to 20 000 unique users id's in experiments
                                     </li>
-                                    <li>Unlimited feature flags</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started for free</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -442,6 +458,7 @@ use Modules\Front\Internal\User;
                             <div class="item-price__cost">
                                 20 USD / month
                             </div>
+
                             <div class="item-price__block">
                                 <div class="item-price__question">
                                     What you can do?
@@ -454,7 +471,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free trial</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -473,14 +490,21 @@ use Modules\Front\Internal\User;
                                     <li>
                                         All from the previous plan
                                     </li>
-                                    <li>Up to 3M unique users id's in experiments</li>
+                                    <li>Up to 10M unique users id's in experiments</li>
                                     <li>Experiments health and alerting</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free trial</a>
                         </div>
                     </div>
+
+                    <a href="https://github.com/abrouter/abrouter" target="_blank" class="tabs-what__button">
+                        <span>Or see GitHub to deploy it locally or on remote server for free forever</span>
+                        <svg class="tabs-what__icon">
+                            <use href="img/icons/icons.svg#arrow-button"></use>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -494,7 +518,7 @@ use Modules\Front\Internal\User;
                 <div class="start__subtitle">
                     Start using ABRouter for free and see how it can improve your application.
                 </div>
-                <a href="/en/signup" class="start__button button">Create my first A/B test</a>
+                <a href="/en/signup" class="start__button button">Create A/B test</a>
             </div>
         </section>
        @else
@@ -526,7 +550,8 @@ use Modules\Front\Internal\User;
             </div>
             </section>
 
-
         @endif
     </main>
 @endsection
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
