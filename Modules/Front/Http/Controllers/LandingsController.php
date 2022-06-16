@@ -60,4 +60,9 @@ class LandingsController
     {
         return view('front::landings/testFeatureFlagsLaravel');
     }
+
+    public function laravelFeatureFlags()
+    {
+        return view('front::landings/featureFlagsLaravel');
+    }
 }

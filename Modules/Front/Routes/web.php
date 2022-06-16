@@ -40,6 +40,8 @@ Route::group($group, function (Router $router) {
 
     $router->get('/en/test-laravel-feature-flags', 'LandingsController@testLaravelFeatureFlags');
 
+    $router->get('/en/laravel-feature-flags', 'LandingsController@laravelFeatureFlags');
+
     $router->get('/en/privacy-policy', 'LandingsController@privacyPolicy');
     $router->get('/en/terms-service', 'LandingsController@termsService');
 
