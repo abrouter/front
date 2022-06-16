@@ -5,9 +5,11 @@ import LoadingOverlay from 'react-loading-overlay'
 import DontHaveExperiments from "./DontHaveExperiments";
 import {Navigation} from "./Navigation/Navigation";
 import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 class ExperimentsList extends React.Component {
-    experimentStyleBlock = {'display':'block'};
+    experimentStyleBlock = {'display': 'block'};
 
     constructor(props) {
         super(props);
@@ -24,6 +26,7 @@ class ExperimentsList extends React.Component {
         this.props.parent.experimentList = this;
 
     }
+
 
     componentDidMount() {
 
@@ -103,7 +106,7 @@ class ExperimentsList extends React.Component {
             this.props.parent.experimentCreate.showNotifications();
             this.props.parent.refreshState();
             this.forceUpdate();
-            this.props.parent.appState.adding=false;
+            this.props.parent.appState.adding = false;
         });
     }
 
@@ -142,7 +145,7 @@ class ExperimentsList extends React.Component {
     createExperiment(e) {
         this.deleteClassActive(e)
         this.props.parent.refreshState();
-        this.experimentStyleBlock = {'display':'none'};
+        this.experimentStyleBlock = {'display': 'none'};
         this.props.parent.experimentCreate.createExperiment(e);
         this.forceUpdate();
     }
@@ -153,8 +156,8 @@ class ExperimentsList extends React.Component {
     }
 
     addClassNameActive(e) {
-        this.experimentStyleBlock = {'display':'block'};
-        this.props.parent.experimentCreate.styleCreateExperimentBlock = {'display':'none'};
+        this.experimentStyleBlock = {'display': 'block'};
+        this.props.parent.experimentCreate.styleCreateExperimentBlock = {'display': 'none'};
         this.deleteClassActive(e);
         e.currentTarget.classList.add("active");
         this.props.parent.experimentCreate.forceUpdate()
@@ -164,7 +167,7 @@ class ExperimentsList extends React.Component {
     deleteClassActive() {
         let link = document.getElementsByClassName('top-setting__item');
 
-        for(let i = 0; i < link.length; i++) {
+        for (let i = 0; i < link.length; i++) {
             link[i].classList.remove('active');
         }
     }
@@ -172,7 +175,7 @@ class ExperimentsList extends React.Component {
     deleteClassEdit() {
         let link = document.getElementsByClassName('table-setting__wrap');
 
-        for(let i = 0; i < link.length; i++) {
+        for (let i = 0; i < link.length; i++) {
             link[i].classList.remove('edit');
         }
     }
@@ -220,7 +223,7 @@ class ExperimentsList extends React.Component {
         let experiments = this.state.experiments;
         let length = this.state.experiments.length;
 
-        for(let i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             if (experiments[i].isEnabled === true) {
                 activeExperiments++;
             } else notActiveExperiments++;
@@ -253,14 +256,14 @@ class ExperimentsList extends React.Component {
 
     render() {
         let showDontHaveExperiments,
-            showExperiments = {'display':'flex'};
+            showExperiments = {'display': 'flex'};
 
         if (this.state.experiments.length === undefined || this.state.experiments.length === 0) {
             showDontHaveExperiments = <DontHaveExperiments
-                experimentStyleBlock = {this.experimentStyleBlock}
-                createExperiment = {(e) => this.createExperiment(e)}
+                experimentStyleBlock={this.experimentStyleBlock}
+                createExperiment={(e) => this.createExperiment(e)}
             />
-            showExperiments = {'display':'none'};
+            showExperiments = {'display': 'none'};
         }
 
         let experimentName = this.props.parent.appState.activeItem.name,
@@ -271,7 +274,7 @@ class ExperimentsList extends React.Component {
         } else branches = [];
 
         let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment',
-            displayLinkStats = window.mode === 'feature-toggle' ? {'display':'none'} : {'display':'block'},
+            displayLinkStats = window.mode === 'feature-toggle' ? {'display': 'none'} : {'display': 'block'},
             nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ',
             spinnerStyle = this.state.isLoaded === 0;
 
@@ -300,10 +303,10 @@ class ExperimentsList extends React.Component {
                 {showDontHaveExperiments}
                 <div className="setting__top top-setting" style={showExperiments}>
                     <Navigation
-                        showActiveExperiments = {(e) =>this.showActiveExperiment(e)}
-                        showNotActiveExperiments = {(e) => this.showNotActiveExperiment(e)}
-                        showAllExperiments = {(e) => this.showAllExperiment(e)}
-                        experiments ={this.state.experiments}
+                        showActiveExperiments={(e) => this.showActiveExperiment(e)}
+                        showNotActiveExperiments={(e) => this.showNotActiveExperiment(e)}
+                        showAllExperiments={(e) => this.showAllExperiment(e)}
+                        experiments={this.state.experiments}
                     />
                     <button className="top-setting__btn" onClick={this.createExperiment.bind(this)}>
                         <svg className="top-setting__icon">
@@ -360,21 +363,30 @@ class ExperimentsList extends React.Component {
                                 </div>
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
-                                        <a href={"/en/board/experiment-stats?experimentId="+item.id} data-tippy-content="View stats" className="table-setting__item" style={displayLinkStats}>
-                                            <svg className="table-setting__icon">
-                                                <use href="/img/icons/icons.svg#stat"/>
-                                            </svg>
-                                        </a>
-                                        <a href="" data-correct data-tippy-content="View stats" className="table-setting__item" onClick={e => this.edit(item, e)}>
+                                        <Tippy content="View stats">
+                                            <a href={"/en/board/experiment-stats?experimentId=" + item.id}
+                                               className="table-setting__item" style={displayLinkStats}>
+                                                <svg className="table-setting__icon">
+                                                    <use href="/img/icons/icons.svg#stat"/>
+                                                </svg>
+                                            </a>
+                                        </Tippy>
+                                        <Tippy content="Edit">
+                                        <a href="" data-correct
+                                           className="table-setting__item" onClick={e => this.edit(item, e)}>
                                             <svg className="table-setting__icon">
                                                 <use href="/img/icons/icons.svg#correct"/>
                                             </svg>
                                         </a>
-                                        <a href="" data-tippy-content="View stats" className="table-setting__item" onClick={e => this.removeExperiment(item, e)}>
-                                            <svg className="table-setting__icon">
-                                                <use href="/img/icons/icons.svg#delete"/>
-                                            </svg>
-                                        </a>
+                                        </Tippy>
+                                        <Tippy content="Remove">
+                                            <a href="" className="table-setting__item"
+                                               onClick={e => this.removeExperiment(item, e)}>
+                                                <svg className="table-setting__icon">
+                                                    <use href="/img/icons/icons.svg#delete"/>
+                                                </svg>
+                                            </a>
+                                        </Tippy>
                                     </div>
                                 </div>
                             </div>
@@ -394,8 +406,8 @@ class ExperimentsList extends React.Component {
                                             />
                                         </div>
                                         <ExperimentUidInput
-                                            uid = {item.alias}
-                                            mode = {this.props.parent.appState.mode}
+                                            uid={item.alias}
+                                            mode={this.props.parent.appState.mode}
                                         />
                                     </div>
 
@@ -453,12 +465,14 @@ class ExperimentsList extends React.Component {
                                                 </button>
                                             </div>
                                         </div>
-
                                     )}
 
                                     <div className="create-setting__bottom">
-                                        <button className="create-setting__cancel" onClickCapture={e => this.cancelEdit(e)}>Cancel</button>
-                                        <button className="create-setting__update button" onClickCapture={e => this.submitHandle(e)}>
+                                        <button className="create-setting__cancel"
+                                                onClickCapture={e => this.cancelEdit(e)}>Cancel
+                                        </button>
+                                        <button className="create-setting__update button"
+                                                onClickCapture={e => this.submitHandle(e)}>
                                             Update
                                         </button>
                                     </div>
@@ -471,4 +485,5 @@ class ExperimentsList extends React.Component {
         );
     }
 }
+
 export default ExperimentsList;
