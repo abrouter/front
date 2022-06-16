@@ -371,7 +371,7 @@ class ExperimentsList extends React.Component {
                                                 </svg>
                                             </a>
                                         </Tippy>
-                                        <Tippy content="View stats">
+                                        <Tippy content="Edit">
                                         <a href="" data-correct
                                            className="table-setting__item" onClick={e => this.edit(item, e)}>
                                             <svg className="table-setting__icon">
@@ -379,7 +379,7 @@ class ExperimentsList extends React.Component {
                                             </svg>
                                         </a>
                                         </Tippy>
-                                        <Tippy content="View stats">
+                                        <Tippy content="Remove">
                                             <a href="" className="table-setting__item"
                                                onClick={e => this.removeExperiment(item, e)}>
                                                 <svg className="table-setting__icon">

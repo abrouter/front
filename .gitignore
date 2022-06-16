@@ -16,3 +16,8 @@ bootstrap/cache/packages.php
 bootstrap/cache/front_module.php
 bootstrap/cache/core_module.php
 .idea
+react/experiments/build
+react/signup/build
+public/js/experiments
+public/js/signup
+front-config
