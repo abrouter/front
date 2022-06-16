@@ -15,3 +15,4 @@ bootstrap/cache/services.php
 bootstrap/cache/packages.php
 bootstrap/cache/front_module.php
 bootstrap/cache/core_module.php
+.idea
