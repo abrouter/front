@@ -18,6 +18,3 @@ bootstrap/cache/core_module.php
 .idea
 react/experiments/build
 react/signup/build
-public/js/experiments
-public/js/signup
-front-config
