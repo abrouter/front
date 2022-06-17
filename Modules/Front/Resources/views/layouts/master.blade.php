@@ -72,7 +72,7 @@ use Modules\Front\Internal\User;
     <?php endif;?>
 </head>
 <body>
-    <div class="wrapper">
+<div class="wrapper @yield('wrapper_class')">
 
         @hasSection('header')
             @yield('header')
@@ -206,4 +206,5 @@ use Modules\Front\Internal\User;
 
 <!--require toastr-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+@yield('js')
 </body>
