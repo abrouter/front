@@ -677,6 +677,14 @@ $(document).ready(function () {
                 let percentage = response.percentage,
                     counters = response.counters;
 
+                if (counters.length < 1) {
+                    $('.table__thead').hide();
+                    $('.table__body').hide();
+                    $('#stats_info').append(
+                        '<div class="top-setting__info" id="emptyStats">Nothing found in this date range.</div>'
+                    )
+                }
+
                 for (let i in counters) {
                     if (counters[i] instanceof Object) {
                         continue;
