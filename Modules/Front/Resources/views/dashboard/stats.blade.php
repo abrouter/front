@@ -38,7 +38,7 @@
                     </a>
                 </div>
 
-                <table class="table table_info">
+                <table class="table table_info" id="stats_info">
                     <thead class="table__thead">
                         <tr class="table__thead-tr">
                             <th class="table__thead-th" scope="col">Event name
