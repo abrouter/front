@@ -36,4 +36,10 @@ class DashboardController
         $this->enforceAuth();
         return view('front::dashboard/experiment-stats');
     }
+
+    public function userPage()
+    {
+        $this->enforceAuth();
+        return view('front::dashboard/userPage');
+    }
 }

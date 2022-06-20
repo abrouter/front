@@ -32,6 +32,7 @@ Route::group($group, function (Router $router) {
     $router->get('/en/stats', 'DashboardController@stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
     $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats');
+    $router->get('/en/user-page', 'DashboardController@userPage');
 
     $router->get('/en/php-managed-feature-toggle', 'LandingsController@featureFlagPhp');
     $router->get('/en/laravel-managed-feature-toggle', 'LandingsController@featureFlagLaravel');
