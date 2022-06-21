@@ -413,11 +413,18 @@ use Modules\Front\Internal\User;
                         Plans scale with your growth
                     </h2>
                 </div>
+                <a class="github-button" href="https://github.com/abrouter/abrouter" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Star abrouter/abrouter on GitHub">Deploy ABRouter to your own server (free forever)</a>
+                <br/>
+                <br/>
+
+
                 <div class="price__items">
+
+
                     <div class="price__item item-price">
                         <div class="item-price__top">
                             <div class="item-price__title">
-                                Free
+                                Free Cloud
                             </div>
                             <div class="item-price__cost">
                                 0 USD / month
@@ -453,7 +460,7 @@ use Modules\Front\Internal\User;
                     <div class="price__item item-price">
                         <div class="item-price__top">
                             <div class="item-price__title">
-                                Team
+                                Team Cloud
                             </div>
                             <div class="item-price__cost">
                                 20 USD / month
@@ -477,7 +484,7 @@ use Modules\Front\Internal\User;
                     <div class="price__item item-price">
                         <div class="item-price__top">
                             <div class="item-price__title">
-                                Premium
+                                Premium Cloud
                             </div>
                             <div class="item-price__cost">
                                 119 USD / month
