@@ -363,9 +363,17 @@ class ExperimentsList extends React.Component {
                                 </div>
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
+                                        <Tippy content="Run experiment">
+                                            <a href={"/en/board/run-experiment"}
+                                               className="table-setting__item">
+                                                <svg className="table-setting__icon">
+                                                    <use href="/img/icons/icons.svg#code"/>
+                                                </svg>
+                                            </a>
+                                        </Tippy>
                                         <Tippy content="View stats">
                                             <a href={"/en/board/experiment-stats?experimentId=" + item.id}
-                                               className="table-setting__item" style={displayLinkStats}>
+                                               className="table-setting__item">
                                                 <svg className="table-setting__icon">
                                                     <use href="/img/icons/icons.svg#stat"/>
                                                 </svg>
