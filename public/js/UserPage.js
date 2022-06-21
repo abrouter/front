@@ -6,6 +6,18 @@ $(document).ready(function () {
     })
 })
 
-function createDate(date) {
+$('#event_date_from').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    locale: {
+        format: 'MMMM DD, YYYY'
+    }
+})
 
-}
+$('#event_date_to').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    locale: {
+        format: 'MMMM DD, YYYY'
+    }
+})
