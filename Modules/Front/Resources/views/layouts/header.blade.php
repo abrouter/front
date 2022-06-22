@@ -27,9 +27,10 @@ use Modules\Front\Internal\User;
                 <nav class="menu__body">
                     <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
                     <ul class="menu__list">
+
                         <li class="menu__item">
                             <a href="/#owerview" class="menu__link active">
-                                Product overview
+                                Product tour
                             </a>
                         </li>
                         <li class="menu__item">
@@ -39,9 +40,16 @@ use Modules\Front\Internal\User;
                         </li>
                         <li class="menu__item">
                             <a href="/#pricing" class="menu__link">
-                                Pricing
+                                Cloud Pricing
                             </a>
                         </li>
+                        <li class="menu__item">
+                            <a href="https://github.com/abrouter/abrouter" target="_blank" class="menu__link">
+                                Deploy now
+                            </a>
+                        </li>
+
+
                     </ul>
                     <?php endif;?>
                 </nav>
