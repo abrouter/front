@@ -102,23 +102,23 @@ use Modules\Front\Internal\User;
                         </div>
                             <ul class="top-footer__list">
 
-                                <li class="menu__item">
-                                    <a href="/#owerview" class="menu__link active">
+                                <li class="top-footer__item">
+                                    <a href="/#owerview" class="top-footer__link">
                                         Product tour
                                     </a>
                                 </li>
-                                <li class="menu__item">
-                                    <a href="/#why_us" class="menu__link">
+                                <li class="top-footer__item">
+                                    <a href="/#why_us" class="top-footer__link">
                                         Why us
                                     </a>
                                 </li>
-                                <li class="menu__item">
-                                    <a href="/#pricing" class="menu__link">
+                                <li class="top-footer__item">
+                                    <a href="/#pricing" class="top-footer__link">
                                         Cloud Pricing
                                     </a>
                                 </li>
-                                <li class="menu__item">
-                                    <a href="https://github.com/abrouter/abrouter" target="_blank" class="menu__link">
+                                <li class="top-footer__item">
+                                    <a href="https://github.com/abrouter/abrouter" target="_blank" class="top-footer__link">
                                         Deploy now
                                     </a>
                                 </li>
