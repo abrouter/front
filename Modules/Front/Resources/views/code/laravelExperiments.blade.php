@@ -12,4 +12,5 @@ class ExampleController
             'color' => $buttonColor->getBranchId(),
         ]);
     }
+
 }
