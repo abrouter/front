@@ -24,7 +24,7 @@ class DashboardController
     {
         return view('front::dashboard/docs');
     }
-    
+
     public function stats()
     {
         $this->enforceAuth();
@@ -41,5 +41,11 @@ class DashboardController
     {
         $this->enforceAuth();
         return view('front::dashboard/run-experiment');
+    }
+
+    public function runFeatureFlag()
+    {
+        $this->enforceAuth();
+        return view('front::dashboard/run-feature-flag');
     }
 }

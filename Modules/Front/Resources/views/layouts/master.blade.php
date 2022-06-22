@@ -137,6 +137,11 @@ use Modules\Front\Internal\User;
                                             Implement A/B tests with PHP
                                         </a>
                                     </li>
+                                    <li class="top-footer__item">
+                                        <a href="/en/laravel-feature-flags" class="top-footer__link">
+                                            Implement feature flags with Laravel
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                     <?php endif; ?>
@@ -206,5 +211,4 @@ use Modules\Front\Internal\User;
 
 <!--require toastr-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-@yield('js')
 </body>

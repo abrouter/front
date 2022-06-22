@@ -10,13 +10,13 @@
     <div class="setting__right">
         <div class="setting__content">
             <div class="code">
-                <a class="global__back" href="/en/board">
+                <a class="global__back" href="/en/feature-toggle">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M21 11H6.83L10.41 7.41L9 6L3 12L9 18L10.41 16.59L6.83 13H21V11Z" fill="var(--color)"/>
                     </svg>
-                    Back to Experiments
+                    Back to Feature flags
                 </a>
-                <div class="global__subtitle">Run experiment</div>
+                <div class="global__subtitle">Run feature flag</div>
 
                 <div class="setting__top top-setting code_tabs">
                     <div class="top-setting__filters">
@@ -40,7 +40,7 @@
                                 Copy
                             </div>
                         </div>
-                        <textarea readonly>@include('front::code.phpExperiments')</textarea>
+                        <textarea readonly>@include('front::code.phpFeatureFlags')</textarea>
                     </div>
                     <div class="code_step">
                         <div class="code_step_copy">
@@ -54,7 +54,7 @@
                                 Copy
                             </div>
                         </div>
-                        <textarea readonly>@include('front::code.laravelExperiments')</textarea>
+                        <textarea readonly>@include('front::code.laravelFeatureFlags')</textarea>
                     </div>
                     <div class="code_step">
                         <div class="code_step_copy">
@@ -68,7 +68,7 @@
                                 Copy
                             </div>
                         </div>
-                        <textarea readonly>@include('front::code.laravelExperiments')</textarea>
+                        <textarea readonly>@include('front::code.symfonyFeatureFlags')</textarea>
                     </div>
                 </div>
             </div>

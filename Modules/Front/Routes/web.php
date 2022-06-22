@@ -28,6 +28,7 @@ Route::group($group, function (Router $router) {
     $router->get('/en/resetpassword/{hash}', 'ResetPasswordController@reset');
     $router->get('/en/board', 'DashboardController@dashboard');
     $router->get('/en/feature-toggle', 'DashboardController@featureToggle');
+    $router->get('/en/feature-toggle/run-feature-flag', 'DashboardController@runFeatureFlag');
     $router->get('/en/docs', 'DashboardController@docs');
     $router->get('/en/stats', 'DashboardController@stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
