@@ -363,7 +363,7 @@ class ExperimentsList extends React.Component {
                                 </div>
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
-                                        {(window.location.pathname  === '/en/board') ? (
+                                        {(window.mode  === 'proxiesList') ? (
                                         <Tippy content="Run experiment">
                                             <a href={"/en/board/run-experiment?id=" + item.id}
                                                className="table-setting__item">

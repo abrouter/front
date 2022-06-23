@@ -1,12 +1,6 @@
 @extends('front::layouts.settings')
 
 @section('settings')
-    <link rel="stylesheet" href="/css/loader.css">
-    <div class="loader">
-        <svg class="spinner" viewBox="0 0 50 50">
-            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="2"></circle>
-        </svg>
-    </div>
     <div class="setting__right">
         <div class="setting__content">
             <div class="code">
@@ -74,22 +68,5 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js">
-    </script>
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.2/moment-range.js"
-            integrity="sha512-XKgbGNDruQ4Mgxt7026+YZFOqHY6RsLRrnUJ5SVcbWMibG46pPAC97TJBlgs83N/fqPTR0M89SWYOku6fQPgyw=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-    >
-    </script>
-    <script>
-        window['moment-range'].extendMoment(moment);
-        window.token = 'Bearer <?=request()->cookie('token')?>';
-        window.onload = $('.loader').show();
-        window.mode = 'stats';
-    </script>
-    <script src="/js/Stats.js"></script>
     <script src="/js/RunExperiment.js"></script>
 @endsection
