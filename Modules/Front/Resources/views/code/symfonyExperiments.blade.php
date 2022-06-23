@@ -6,7 +6,7 @@ class ExampleController
 {
     public function __invoke(Client $client)
     {
-        $experimentId = '<?=request('id')?>';
+        $experimentId = '{{ $requestId }}';
 
         return new Response(json_encode([
             'button_color' => $client

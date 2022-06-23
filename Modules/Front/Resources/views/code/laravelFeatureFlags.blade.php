@@ -6,7 +6,7 @@ class ExampleController
 {
     public function __invoke(Client $client)
     {
-        $isEnabledButton = $client->featureFlags()->run('<?=request('id')?>');
+        $isEnabledButton = $client->featureFlags()->run('{{ $requestId }}');
 
         return view('featureFlags', [
             'enabledButtonFeatureFlag' => $isEnabledButton,

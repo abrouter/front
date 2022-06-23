@@ -18,7 +18,7 @@ $di->set(Config::class, new Config($token, 'https://abrouter.com'));
 /** @var Client $client */
 $client = $di->make(Abrouter\Client\Client::class);
 $userSignature = uniqid();
-$featureFlagId = '<?=request('id')?>';
+$featureFlagId = '{{ $requestId }}';
 
 $isEnabledButton = $client->featureFlags()->run($featureFlagId);
 

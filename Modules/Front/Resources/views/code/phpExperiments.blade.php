@@ -18,7 +18,7 @@ $di->set(Config::class, new Config($token, 'https://abrouter.com'));
 /** @var Client $client */
 $client = $di->make(Abrouter\Client\Client::class);
 $userSignature = uniqid();
-$experimentId = '<?=request('id')?>';
+$experimentId = '{{ $requestId }}';
 
 $runExperimentResult = $client->experiments()->run($userSignature, $experimentId);
 $experimentId = $runExperimentResult->getExperimentId();

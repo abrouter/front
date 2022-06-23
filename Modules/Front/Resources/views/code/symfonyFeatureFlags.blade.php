@@ -6,7 +6,7 @@ class ExampleController
 {
     public function __invoke(Client $client)
     {
-        $featureFlagId = '<?=request('id')?>';
+        $featureFlagId = '{{ $requestId }}';
 
         return new Response(json_encode([
             'enabled_button_feature_flag' => $client
