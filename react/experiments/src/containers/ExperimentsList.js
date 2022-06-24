@@ -364,7 +364,7 @@ class ExperimentsList extends React.Component {
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
                                         {(window.mode  === 'proxiesList') ? (
-                                        <Tippy content="Run experiment">
+                                        <Tippy content="Code to run">
                                             <a href={"/en/board/run-experiment?id=" + item.id}
                                                className="table-setting__item">
                                                 <svg className="table-setting__icon">
@@ -373,7 +373,7 @@ class ExperimentsList extends React.Component {
                                             </a>
                                         </Tippy>
                                         ) : (
-                                        <Tippy content="Run feature flag">
+                                        <Tippy content="Code to run">
                                             <a href={"/en/feature-toggle/run-feature-flag?id=" + item.alias}
                                                className="table-setting__item">
                                                 <svg className="table-setting__icon">
