@@ -363,9 +363,9 @@ class ExperimentsList extends React.Component {
                                 </div>
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
-                                        {(window.mode  === 'proxiesList') ? (
+                                        {(window.mode  !== 'feature-toggle') ? (
                                         <Tippy content="Code to run">
-                                            <a href={"/en/board/run-experiment?id=" + item.id}
+                                            <a href={"/en/board/run-experiment?id=" + item.alias ?? item.id}
                                                className="table-setting__item">
                                                 <svg className="table-setting__icon">
                                                     <use href="/img/icons/icons.svg#code"/>
