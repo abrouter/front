@@ -205,22 +205,22 @@ use Modules\Front\Internal\User;
                                 <div class="ask_form_title">Let us help you. Explain your problem and we will contact you to solve it.</div>
                                 <div class="ask_form_wrapper">
                                     <div class="ask_form_label">Name</div>
-                                    <input type="text" class="input" name="name" id="name"  placeholder="Enter your name">
+                                    <input type="text" class="input" name="name" id="name"  placeholder="Enter your name" required>
                                 </div>
                                 <div class="ask_form_wrapper">
                                     <div class="ask_form_label">Email Adress</div>
-                                    <input type="text" class="input" name="email" id="email" placeholder="example@gmail.com">
+                                    <input type="email" class="input" name="email" id="email" placeholder="example@gmail.com" required>
                                 </div>
                                 <div class="ask_form_wrapper">
                                     <div class="ask_form_label">Message</div>
-                                    <textarea class="input" name="message" id="message" placeholder="Please, explain your problem"></textarea>
+                                    <textarea class="input" name="message" id="message" placeholder="Please, explain your problem" required></textarea>
                                 </div>
-                                <div class="ask_form_button button">
-                                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1.61974 8.26213C1.18474 8.11713 1.18057 7.88296 1.62807 7.73379L17.5339 2.43213C17.9747 2.28546 18.2272 2.53213 18.1039 2.96379L13.5589 18.8688C13.4339 19.3096 13.1797 19.3246 12.9931 18.9063L9.99808 12.1663L14.9981 5.49963L8.33141 10.4996L1.61974 8.26213Z" fill="white"/>
-                                    </svg>
-                                    <button type="submit" name="submit" id="submit">Send</button>
-                                </div>
+                                    <button type="submit" name="submit" class="ask_form_button button">
+                                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.61974 8.26213C1.18474 8.11713 1.18057 7.88296 1.62807 7.73379L17.5339 2.43213C17.9747 2.28546 18.2272 2.53213 18.1039 2.96379L13.5589 18.8688C13.4339 19.3096 13.1797 19.3246 12.9931 18.9063L9.99808 12.1663L14.9981 5.49963L8.33141 10.4996L1.61974 8.26213Z" fill="white"/>
+                                        </svg>
+                                        Send
+                                    </button>
                             </form>
                             <div class="ask_thank">
                                 <div class="ask_thank_icon">

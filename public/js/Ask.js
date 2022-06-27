@@ -1,33 +1,12 @@
 // Ask
-var a = 'active';
-var ask_out;
+const a = 'active';
+const $ = jQuery.noConflict();
+const form = $('#askForm');
+const askSection = $('.ask');
 
-$(document).on('click', '.ask_button', function () {
-    $('.ask').toggleClass(a);
+let askOut;
 
-    if (!$('.ask').hasClass(a)) {
-        $('.ask').removeClass('_thank');
-
-        clearTimeout(ask_out);
-    }
-})
-
-$(document).on('click', function (event) {
-    if ($(event.target).closest('.ask').length === 0) {
-        $('.ask').removeClass('active _thank');
-        clearTimeout(ask_out);
-    }
-});
-
-$(document).on('click', '.ask_form_button', function () {
-    $('.ask').addClass('_thank');
-
-    ask_out = setTimeout(function () {
-        $('.ask').removeClass('active _thank');
-    }, 3000);
-})
-
-$('#askForm').on('submit', function (event) {
+form.on('submit', function (event) {
     event.preventDefault();
 
     const name = $('#name').val();
@@ -42,6 +21,30 @@ $('#askForm').on('submit', function (event) {
             name: name,
             email: email,
             message: message,
+        },
+        success: () => {
+            form[0].reset();
+
+            if ($(event.target).closest('.ask').length === 0) {
+                askSection.removeClass('active _thank');
+                clearTimeout(askOut);
+            }
+
+            askSection.addClass('_thank');
+
+            askOut = setTimeout(function () {
+                askSection.removeClass('active _thank');
+            }, 3000);
         }
     });
-});
+})
+
+$(document).on('click', '.ask_button', function () {
+    askSection.toggleClass(a);
+
+    if (!askSection.hasClass(a)) {
+
+        askSection.removeClass('_thank');
+        clearTimeout(askOut);
+    }
+})
