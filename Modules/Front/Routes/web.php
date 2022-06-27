@@ -28,10 +28,12 @@ Route::group($group, function (Router $router) {
     $router->get('/en/resetpassword/{hash}', 'ResetPasswordController@reset');
     $router->get('/en/board', 'DashboardController@dashboard');
     $router->get('/en/feature-toggle', 'DashboardController@featureToggle');
+    $router->get('/en/feature-toggle/run-feature-flag', 'DashboardController@runFeatureFlag');
     $router->get('/en/docs', 'DashboardController@docs');
     $router->get('/en/stats', 'DashboardController@stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
     $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats');
+    $router->get('/en/board/run-experiment', 'DashboardController@runExperiment');
 
     $router->get('/en/php-managed-feature-toggle', 'LandingsController@featureFlagPhp');
     $router->get('/en/laravel-managed-feature-toggle', 'LandingsController@featureFlagLaravel');
