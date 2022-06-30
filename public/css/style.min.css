@@ -32,6 +32,12 @@
     width:10.5%;
 }
 
+@media (max-width: 61.99875em) {
+    .header__logo {
+        width: 30% !important;
+    }
+}
+
 .select {
     height: 50px;
     padding: 8px 25px;
