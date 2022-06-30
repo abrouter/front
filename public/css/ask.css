@@ -2,7 +2,7 @@
 
 .ask {
     position: fixed;
-    right: 60px;
+    right: 20px;
     bottom: 64px;
 
     z-index: 9999;
@@ -60,7 +60,7 @@
     right: 0;
     bottom: calc(100% + 20px);
 
-    width: calc(100vw - 120px);
+    width: calc(100vw - 50px);
     max-width: 466px;
     max-height: calc(100vh - 200px);
     padding: 40px;
