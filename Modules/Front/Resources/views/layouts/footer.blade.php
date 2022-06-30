@@ -126,8 +126,7 @@ use Modules\Front\Internal\User;
                         Ask us
                     </button>
                     <form id="askForm" class="ask_form">
-                        <div class="ask_form_title">Let us help you. Explain your problem, and we will contact you to
-                            solve it.
+                        <div class="ask_form_title">Let us help you. Ask a question or if you need a help
                         </div>
                         <div class="ask_form_wrapper">
                             <div class="ask_form_label">Name</div>
@@ -142,7 +141,7 @@ use Modules\Front\Internal\User;
                         <div class="ask_form_wrapper">
                             <div class="ask_form_label">Message</div>
                             <textarea class="input" name="message" id="message"
-                                      placeholder="Please, explain your problem" required></textarea>
+                                      placeholder="Please, leave a message" required></textarea>
                         </div>
                         <button type="submit" name="submit" class="ask_form_button button">
                             <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
