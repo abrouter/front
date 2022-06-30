@@ -1,0 +1,141 @@
+/* Ask. */
+
+.ask {
+    position: fixed;
+    right: 60px;
+    bottom: 64px;
+
+    z-index: 9999;
+}
+
+.ask_button {
+    display: flex;
+    align-items: center;
+
+    min-width: 56px;
+    border-radius: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.ask_button svg:not(._close) {
+    margin-right: 8px;
+
+    transition: all .23s;
+}
+
+.ask_button ._close {
+    --size: 24px;
+    position: absolute;
+    top: calc(50% - var(--size) / 2);
+    left: calc(50% - var(--size) / 2);
+
+    opacity: 0;
+    transform: rotate(200grad) scale(.5);
+    transition: transform .43s, opacity .43s;
+}
+
+.ask.active .ask_button {
+    font-size: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    transition: all .43s;
+}
+
+.ask.active .ask_button svg {
+    opacity: 0;
+}
+
+.ask.active .ask_button ._close {
+    opacity: 1;
+
+    transform: scale(1);
+}
+
+.ask_form,
+.ask_thank {
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 20px);
+
+    width: calc(100vw - 120px);
+    max-width: 466px;
+    max-height: calc(100vh - 200px);
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 34px 80px rgba(11, 5, 47, 0.07);
+
+    transition: all .43s;
+}
+
+.ask:not(.active) .ask_form,
+.ask._thank .ask_form {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.ask_form_title,
+.ask_thank_title {
+    margin-bottom: 24px;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.ask_form_wrapper {
+    margin-top: 24px;
+}
+
+.ask_form_label {
+    margin-bottom: 5px;
+    line-height: 20px;
+}
+
+.ask_form_wrapper textarea {
+    padding: 15px 12px;
+    height: 86px;
+}
+
+.ask_form_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 28px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.ask_form_button svg {
+    margin-right: 8px;
+}
+
+.ask_thank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ask:not(._thank) .ask_thank {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.ask_thank_icon {
+    margin-bottom: 16px;
+}
+
+.ask_thank_title {
+    margin-bottom: 4px;
+}
+
+.ask_thank_text {
+    color: #9699AB;
+    line-height: 1.55;
+}
+
+/* Ask. */
