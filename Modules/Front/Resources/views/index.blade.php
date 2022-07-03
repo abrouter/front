@@ -10,17 +10,24 @@ use Modules\Front\Internal\User;
             <div class="main-block__container">
                 <div class="main-block__body">
                     <h1 class="main-block__title">
-                        Making A/B tests is challenging. We make it easy with open-source A/B testing.
+                        Making A/B tests is challenging. We make it easy with open-source tool.
                     </h1>
                     <div class="main-block__text">
                         <p> - High level of support for <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a></p>
-                        <p> - Developer-oriented. Built by developers for developers to improve the world.</p>
+                        <p> - Developer-oriented. </p>
                         <p> - Built-in statistics to track funnel and revenue depending on the experiment</p>
                         <p> - Open-source code. It's your choice - reliable cloud solution or your own server.</p>
                         <p> - <b>Parallel running</b>. Run A/B test <b>asynchronously</b> in your code. Don't wait the server response.</p>
                         <br/>
+                        <div class="main-block__bottom">
+                            <div class="main-block__partners">
+                                <b>✓ A/B tests</b>
+                                <b>✓ Feature flags</b>
+                                <b>✓ Built-in statistics</b>
+                            </div>
+                        </div>
 
-                        <a class="github-button" href="https://github.com/abrouter/abrouter" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Star abrouter/abrouter on GitHub">Star</a>
+{{--                        <a class="github-button" href="https://github.com/abrouter/abrouter" data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" aria-label="Star abrouter/abrouter on GitHub">Star</a>--}}
 
 
                     </div>
@@ -28,17 +35,17 @@ use Modules\Front\Internal\User;
 
 
 
-                    <div class="main-block__bottom">
-                        <div class="main-block__label">You are in good company:</div>
-                        <div class="main-block__partners">
-                            <a href="https://holyeat.com/" target="_blank" class="main-block__link">
-                                <picture><source srcset="/img/png/partner01.png" type="image/webp"><img src="/img/png/partner01.png?_v=1641102802883" alt=""></picture>
-                            </a>
-                            <a href="https://proxiedmail.com/" target="_blank" class="main-block__link">
-                                <picture><source srcset="/img/png/partner02.png" type="image/webp"><img src="/img/png/partner02.png?_v=1641102802883" alt=""></picture>
-                            </a>
-                        </div>
-                    </div>
+{{--                    <div class="main-block__bottom">--}}
+{{--                        <div class="main-block__label">You are in good company:</div>--}}
+{{--                        <div class="main-block__partners">--}}
+{{--                            <a href="https://holyeat.com/" target="_blank" class="main-block__link">--}}
+{{--                                <picture><source srcset="/img/png/partner01.png" type="image/webp"><img src="/img/png/partner01.png?_v=1641102802883" alt=""></picture>--}}
+{{--                            </a>--}}
+{{--                            <a href="https://proxiedmail.com/" target="_blank" class="main-block__link">--}}
+{{--                                <picture><source srcset="/img/png/partner02.png" type="image/webp"><img src="/img/png/partner02.png?_v=1641102802883" alt=""></picture>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="main-block__right">
                     <div class="main-block__image">
@@ -424,10 +431,10 @@ use Modules\Front\Internal\User;
                     <div class="price__item item-price">
                         <div class="item-price__top">
                             <div class="item-price__title">
-                                Free Cloud
+                                Self-hosted
                             </div>
                             <div class="item-price__cost">
-                                0 USD / month
+                                Free
                             </div>
                             <div class="item-price__block">
                                 <div class="item-price__question">
@@ -435,26 +442,26 @@ use Modules\Front\Internal\User;
                                 </div>
                                 <ul class="item-price__list">
                                     <li>
-                                        Built-in server-side statistics
-                                    </li>
-                                    <li>
-                                        Parallel(non-blocking) running
-                                    </li>
-                                    <li>
                                         Unlimited a/b tests
-                                    </li>
-                                    <li>
-                                        Laravel, Symfony, PHP packages
                                     </li>
 
                                     <li>Unlimited feature flags</li>
                                     <li>
-                                        Up to 20 000 unique users id's in experiments
+                                        Built-in server-side statistics
+                                    </li>
+                                    <li>
+                                        Built-in Parallel(non-blocking) running for PHP stack
+                                    </li>
+                                    <li>
+                                        Laravel, Symfony, PHP packages
+                                    </li>
+                                    <li>
+                                        Unlimited users in the experiments
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started for free</a>
+                        <div class="item-price__bottom"> <a href="https://github.com/abrouter/abrouter" class="item-price__btn button button_grey">Deploy now</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -463,7 +470,8 @@ use Modules\Front\Internal\User;
                                 Team Cloud
                             </div>
                             <div class="item-price__cost">
-                                20 USD / month
+                                <b>Free</b> up to 10 000 active users<br/> then
+                                <b>19 USD</b> / month
                             </div>
 
                             <div class="item-price__block">
@@ -474,11 +482,20 @@ use Modules\Front\Internal\User;
                                     <li>
                                         All from the previous plan
                                     </li>
-                                    <li>Up to 50 000 unique users id's in experiments</li>
+                                    <li>
+                                        99.9% level SLA
+                                    </li>
+                                    <li>Up to 100 000 unique users id's in experiments</li>
+                                    <li>
+                                        Don't need to manage by your-self
+                                    </li>
+                                    <li>
+                                        Priority support within 24 hours
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started for free</a>
                         </div>
                     </div>
                     <div class="price__item item-price">
@@ -487,7 +504,7 @@ use Modules\Front\Internal\User;
                                 Premium Cloud
                             </div>
                             <div class="item-price__cost">
-                                119 USD / month
+                                99 USD / month
                             </div>
                             <div class="item-price__block">
                                 <div class="item-price__question">
@@ -502,7 +519,7 @@ use Modules\Front\Internal\User;
                                 </ul>
                             </div>
                         </div>
-                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Start free trial</a>
+                        <div class="item-price__bottom"> <a href="/en/signup" class="item-price__btn button button_grey">Get started for free</a>
                         </div>
                     </div>
 
