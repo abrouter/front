@@ -177,54 +177,6 @@ use Modules\Front\Internal\User;
                 </div>
             </div>
         </section>
-        <section class="page_benefit benefit">
-            <div class="benefit__container">
-                <div class="benefit__head head">
-                    <div class="head__top">
-                        Features
-                    </div>
-                    <h2 class="head__title">
-                        Benefits from using ABRouter
-                    </h2>
-                </div>
-                <div class="benefit__subtitle">
-                    Improve your product using the ABRouter open-source platform
-                </div>
-                <div class="benefit__items">
-                    <div class="benefit__item item-benefit">
-                        <div class="item-benefit__img">
-                            <img src="img/svg/benefit01.svg?_v=1641102802883" alt="">
-                        </div>
-                        <div class="item-benefit__title">Built for your product</div>
-                        <div class="item-benefit__text">
-                            No one line code needed to create new experiments except request to run experiment. Wire our packages for: <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a>.
-                        </div>
-                    </div>
-                    <div class="benefit__item item-benefit">
-                        <div class="item-benefit__img">
-                            <img src="img/svg/parallelRunning.png?_v=1641102802883" alt="">
-                        </div>
-                        <div class="item-benefit__title">Parallel(non-blocking) running</div>
-                        <div class="item-benefit__text">
-                            Our packages has support for running A/B tests and feature flags locally, then sync the result with ABRouter server in the scheduled job.
-                        </div>
-                    </div>
-
-                    <div class="benefit__item item-benefit">
-                        <div class="item-benefit__img">
-                            <img src="img/svg/benefit03.svg?_v=1641102802883" alt="">
-                        </div>
-                        <div class="item-benefit__title">Built-in statistics</div>
-                        <div class="item-benefit__text">
-                            Set up the statistics, wait a couple of weeks and you're ready to make the decision on your next experiment.
-
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
         <section class="what page_what">
             <div class="what__container" id="why_us">
                 <div data-tabs class="what__tabs tabs-what">
@@ -410,7 +362,57 @@ use Modules\Front\Internal\User;
                 </div>
             </div>
         </section>
-        <section class="start page_start">
+            <section class="page_benefit benefit">
+                <div class="benefit__container">
+                    <div class="benefit__head head">
+                        <div class="head__top">
+                            Features
+                        </div>
+                        <h2 class="head__title">
+                            Benefits from using ABRouter
+                        </h2>
+                    </div>
+                    <div class="benefit__subtitle">
+                        Improve your product using the ABRouter open-source platform
+                    </div>
+                    <div class="benefit__items">
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/svg/benefit01.svg?_v=1641102802883" alt="">
+                            </div>
+                            <div class="item-benefit__title">Built for your product</div>
+                            <div class="item-benefit__text">
+                                No one line code needed to create new experiments except request to run experiment. Wire our packages for: <a href="https://github.com/abrouter/abrouter-php-client"><b>PHP</b></a>, <a href="https://github.com/abrouter/laravel-abtest"><b>Laravel</b></a>, <a href="https://github.com/abrouter/symfony-abtest"><b>Symfony</b></a>.
+                            </div>
+                        </div>
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/svg/parallelRunning.png?_v=1641102802883" alt="">
+                            </div>
+                            <div class="item-benefit__title">Parallel(non-blocking) running</div>
+                            <div class="item-benefit__text">
+                                Our packages has support for running A/B tests and feature flags locally, then sync the result with ABRouter server in the scheduled job.
+                            </div>
+                        </div>
+
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/svg/benefit03.svg?_v=1641102802883" alt="">
+                            </div>
+                            <div class="item-benefit__title">Built-in statistics</div>
+                            <div class="item-benefit__text">
+                                Set up the statistics, wait a couple of weeks and you're ready to make the decision on your next experiment.
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="start page_start">
             <div class="start__container">
                 <div class="start__head head">
                     <h2 class="head__title">
