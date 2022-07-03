@@ -36,7 +36,7 @@ use Modules\Front\Internal\User;
                         </li>
                         <li class="top-footer__item">
                             <a href="/#pricing" class="top-footer__link">
-                                Cloud Pricing
+                                Pricing
                             </a>
                         </li>
                         <li class="top-footer__item">

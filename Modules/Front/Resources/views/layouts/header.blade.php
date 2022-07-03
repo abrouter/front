@@ -40,7 +40,7 @@ use Modules\Front\Internal\User;
                         </li>
                         <li class="menu__item">
                             <a href="/#pricing" class="menu__link">
-                                Cloud Pricing
+                                Pricing
                             </a>
                         </li>
                         <li class="menu__item">
