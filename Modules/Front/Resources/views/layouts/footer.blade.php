@@ -35,7 +35,7 @@ use Modules\Front\Internal\User;
                             </a>
                         </li>
                         <li class="top-footer__item">
-                            <a href="/#pricing" class="top-footer__link">
+                            <a href="/en/pricing" class="top-footer__link">
                                 Pricing
                             </a>
                         </li>

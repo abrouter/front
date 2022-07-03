@@ -39,7 +39,7 @@ use Modules\Front\Internal\User;
                             </a>
                         </li>
                         <li class="menu__item">
-                            <a href="/#pricing" class="menu__link">
+                            <a href="/en/pricing" class="menu__link">
                                 Pricing
                             </a>
                         </li>
