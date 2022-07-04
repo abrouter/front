@@ -54,7 +54,57 @@ use Modules\Front\Internal\User;
                 </div>
             </div>
         </section>
-        <section class="meet page_meet">
+
+            <section class="page_benefit benefit">
+                <div class="benefit__container">
+                    <div class="benefit__head head">
+                        <h2 class="head__title">
+                            Open-source platform to improve your product
+                        </h2>
+                    </div>
+                    <div class="benefit__items">
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/icons/deploy-conf.png" alt="">
+                            </div>
+                            <div class="item-benefit__title">Deploy confidently</div>
+                            <div class="item-benefit__text">
+                                Deploy new code anytime under the feature flags.
+                                It's important to merge the code from feature branch to your master branch as soon as possible.
+                                Turn it on when everything ready.
+                                <br/>If it's new to users make it via A/B test.
+                            </div>
+                        </div>
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/icons/metric.png" alt="">
+                            </div>
+                            <div class="item-benefit__title">See the impact of your changes</div>
+                            <div class="item-benefit__text">
+                                Track the new features via A/B tests.
+                                You need to understand how new feature impact your user flow and revenue. <br/>
+                                Make sure you're going in the right direction with matching the statistics with experiment branch.
+                            </div>
+                        </div>
+
+                        <div class="benefit__item item-benefit">
+                            <div class="item-benefit__img">
+                                <img src="img/icons/circle.png" alt="">
+                            </div>
+                            <div class="item-benefit__title">Set up once</div>
+                            <div class="item-benefit__text">
+                                Set up ABRouter and metrics to track once and scale your A/B tests within the multiple lines of code for every A/B test.
+                                Delegate the experiments preparing to the product manager role.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="meet page_meet">
             <div class="meet__container" id="owerview">
                 <div data-tabs class="meet__tabs tabs-meet">
                     <div data-tabs-body class="tabs-meet__content">
@@ -369,7 +419,7 @@ use Modules\Front\Internal\User;
                             Features
                         </div>
                         <h2 class="head__title">
-                            Benefits from using ABRouter
+                            Bring ABRouter to your product
                         </h2>
                     </div>
                     <div class="benefit__subtitle">
@@ -422,7 +472,7 @@ use Modules\Front\Internal\User;
                 <div class="start__subtitle">
                     Start using ABRouter for free and see how it can improve your application.
                 </div>
-                <a href="/en/signup" class="start__button button">Create A/B test</a>
+                <a href="/en/signup" class="start__button button">Get started for free</a>
             </div>
         </section>
        @else
