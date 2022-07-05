@@ -385,9 +385,9 @@ use Modules\Front\Internal\User;
             <section class="page_benefit benefit">
                 <div class="benefit__container">
                     <div class="benefit__head head">
-                        <div class="head__top">
-                            Features
-                        </div>
+{{--                        <div class="head__top">--}}
+{{--                            Features--}}
+{{--                        </div>--}}
                         <h2 class="head__title">
                             Bring ABRouter to your product
                         </h2>
