@@ -10,7 +10,10 @@ use Modules\Front\Assets\Puller;
 
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                 <h1 class="display-4">Sign up</h1>
-                <p>Please, sign up to continue in your A/B tests dashboard. We're respecting your privacy</p>
+                <p>
+                    Please, sign up to continue in your A/B tests dashboard. We're respecting your privacy. <br/>
+                </p>
+
             </div>
 
             <div class="container">
@@ -25,6 +28,8 @@ use Modules\Front\Assets\Puller;
 
                 <?=Puller::injectBuild('signup')?>
                 <br>
+                <p>If you have any questions about the product we will glad to help. Use the Ask Us button.</p>
+
                 <p style="font-size: 13px;">Already have an account? <a href="/en/signin">Sign in</a></p>
             </div>
         </div>
