@@ -421,7 +421,7 @@ use Modules\Front\Internal\User;
                             </div>
                             <div class="item-benefit__title">Built-in statistics</div>
                             <div class="item-benefit__text">
-                                Set up the statistics, wait a couple of weeks and you're ready to make the decision on your A/B test.
+                                Set up the statistics, wait a couple of weeks and you're ready to make the right decision on your A/B test.
 
 
                             </div>
