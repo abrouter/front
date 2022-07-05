@@ -219,4 +219,13 @@
     margin-right: 8px;
 }
 
-/* Code. */
+.tabs-meet__items
+{
+    grid-template-columns: none;
+}
+.tabs-meet__right {
+    display: none;
+}
+.tabs-meet__img img {
+    border-radius: 11px;
+}
