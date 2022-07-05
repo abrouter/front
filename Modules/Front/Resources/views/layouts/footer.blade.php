@@ -24,14 +24,14 @@ use Modules\Front\Internal\User;
                     </div>
                     <ul class="top-footer__list">
 
+{{--                        <li class="top-footer__item">--}}
+{{--                            <a href="/#owerview" class="top-footer__link">--}}
+{{--                                Product tour--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                         <li class="top-footer__item">
-                            <a href="/#owerview" class="top-footer__link">
-                                Product tour
-                            </a>
-                        </li>
-                        <li class="top-footer__item">
-                            <a href="/#why_us" class="top-footer__link">
-                                Why us
+                            <a href="https://docs.abrouter.com" target="_blank" class="top-footer__link">
+                                Docs
                             </a>
                         </li>
                         <li class="top-footer__item">
@@ -41,7 +41,7 @@ use Modules\Front\Internal\User;
                         </li>
                         <li class="top-footer__item">
                             <a href="https://github.com/abrouter/abrouter" target="_blank" class="top-footer__link">
-                                Deploy now
+                                GitHub
                             </a>
                         </li>
 

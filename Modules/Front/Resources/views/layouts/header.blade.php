@@ -28,14 +28,14 @@ use Modules\Front\Internal\User;
                     <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
                     <ul class="menu__list">
 
+{{--                        <li class="menu__item">--}}
+{{--                            <a href="/#owerview" class="menu__link active">--}}
+{{--                                Product tour--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                         <li class="menu__item">
-                            <a href="/#owerview" class="menu__link active">
-                                Product tour
-                            </a>
-                        </li>
-                        <li class="menu__item">
-                            <a href="/#why_us" class="menu__link">
-                                Why us
+                            <a href="https://docs.abrouter.com" target="_blank" class="top-footer__link">
+                                Docs
                             </a>
                         </li>
                         <li class="menu__item">
@@ -45,7 +45,7 @@ use Modules\Front\Internal\User;
                         </li>
                         <li class="menu__item">
                             <a href="https://github.com/abrouter/abrouter" target="_blank" class="menu__link">
-                                Deploy now
+                                GitHub
                             </a>
                         </li>
 
