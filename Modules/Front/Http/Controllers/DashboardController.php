@@ -23,7 +23,7 @@ class DashboardController
 
     public function docs()
     {
-        return view('front::dashboard/docs');
+        return response()->redirectTo('https://docs.abrouter.com')->send();
     }
 
     public function stats()

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
-use Modules\Front\Http\Controllers\LandingsController;
 
 $group = [
     'middleware' => [
