@@ -34,7 +34,7 @@ use Modules\Front\Internal\User;
 {{--                            </a>--}}
 {{--                        </li>--}}
                         <li class="menu__item">
-                            <a href="https://docs.abrouter.com" target="_blank" class="top-footer__link">
+                            <a href="https://docs.abrouter.com" target="_blank" class="menu__link">
                                 Docs
                             </a>
                         </li>
