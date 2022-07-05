@@ -10,6 +10,7 @@ use Modules\Front\Assets\Puller;
 
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                 <h1 class="display-4">Sign up</h1>
+                <p>Please, sign up to continue in your A/B tests dashboard. We're respecting your privacy</p>
             </div>
 
             <div class="container">
