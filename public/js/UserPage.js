@@ -431,7 +431,7 @@ $(document).ready(function () {
                                 '<span>Got into the experiment at</span>' +
                                 date +
                             '</div>' +
-                            '<div class="new_user_experiment_col _del" id="remove" ' +
+                            '<div class="new_user_experiment_col _del" id="remove_user_from_experiment" ' +
                                 'data-user-id="' + userId + '" ' +
                                 'data-experiment-branch-id="' + branchId + '" ' +
                                 'data-experiment-id="' + experimentId +
@@ -467,12 +467,13 @@ $(document).ready(function () {
         $('#experiment_branches .select .select_dropdown ul').empty()
     })
 
-    $(document).on('click', '#remove', function (event) {
+    $(document).on('click', '#remove_user_from_experiment', function (event) {
         $('.loader').show()
 
         let userId = event.currentTarget.getAttribute('data-user-id'),
             experimentId = event.currentTarget.getAttribute('data-experiment-id'),
-            branchId = event.currentTarget.getAttribute('data-experiment-branch-id');
+            branchId = event.currentTarget.getAttribute('data-experiment-branch-id'),
+            experimentItem = event.currentTarget.closest('.new_user_experiment_item');
 
         $.ajax({
             'method': "DELETE",
@@ -503,7 +504,7 @@ $(document).ready(function () {
                 }
             },
             'success': function () {
-                event.currentTarget.closest('.new_user_experiment_item').remove();
+                experimentItem.remove();
 
                 $('.loader').hide();
 
