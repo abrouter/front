@@ -85,6 +85,14 @@ use Modules\Front\Internal\User;
                                     </a>
                                 </li>
                                 <li class="menu-setting__item">
+                                    <a href="/en/user-page" class="menu-setting__link">
+                                        <svg class="menu-setting__icon">
+                                            <use href="/img/icons/icons.svg#user"></use>
+                                        </svg>
+                                        <span>User page</span>
+                                    </a>
+                                </li>
+                                <li class="menu-setting__item">
                                     <a href="/en/stats" class="menu-setting__link">
                                         <svg class="menu-setting__icon">
                                             <use href="/img/icons/icons.svg#menu02"></use>

@@ -1,20 +1,3 @@
-function convertDate(date) {
-    let dateObject = new Date(date),
-        day = '' + dateObject.getDate(),
-        month = '' + (dateObject.getMonth() + 1),
-        year = dateObject.getFullYear()
-
-    if (month.length < 2) {
-        month = '0' + month
-    }
-
-    if (day.length < 2) {
-        day = '0' + day
-    }
-
-    return [month, day, year].join('-');
-}
-
 function getSummarizableEvent (counters, percentage) {
     let eventsFromCounters = Object
         .keys(counters)

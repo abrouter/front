@@ -15,6 +15,7 @@ bootstrap/cache/services.php
 bootstrap/cache/packages.php
 bootstrap/cache/front_module.php
 bootstrap/cache/core_module.php
+bootstrap/cache/config.php
 .idea
 react/experiments/build
 react/signup/build

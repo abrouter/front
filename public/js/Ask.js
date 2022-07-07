@@ -1,5 +1,5 @@
 // Ask
-const a = 'active';
+const ask = 'active';
 const $ = jQuery.noConflict();
 const form = $('#askForm');
 const askSection = $('.ask');
@@ -40,9 +40,9 @@ form.on('submit', function (event) {
 })
 
 $(document).on('click', '.ask_button', function () {
-    askSection.toggleClass(a);
+    askSection.toggleClass(ask);
 
-    if (!askSection.hasClass(a)) {
+    if (!askSection.hasClass(ask)) {
 
         askSection.removeClass('_thank');
         clearTimeout(askOut);
