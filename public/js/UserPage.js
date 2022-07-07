@@ -30,6 +30,8 @@ $(document).ready(function () {
         $('#new_user_experiment').remove();
         $('#new_user_event').remove();
         $('#empty_user_info').remove();
+        $('#user_id').removeAttr('style');
+        $('#error').remove();
 
         userId = $('#user_id').val();
 

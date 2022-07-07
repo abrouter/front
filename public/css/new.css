@@ -1027,7 +1027,8 @@
 }
 
 .new_user_form_button {
-	align-self: end;
+	/*align-self: end;*/
+	margin-top: 24px;
 	height: 55px;
 
 	padding-top: 18px;
