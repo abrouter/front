@@ -8,6 +8,19 @@ use Modules\Front\Internal\User;
     <title><?=$title ?? 'ABRouter - AB-tests on backend service'?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
+    <!-- Twitter universal website tag code -->
+    <script>
+        !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+        },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+            a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+        // Insert Twitter Pixel ID and Standard Event data below
+        twq('init','o9awu');
+        twq('track','PageView');
+    </script>
+    <!-- End Twitter universal website tag code -->
+    <?php endif;?>
+
     <script>
         window['_fs_debug'] = false;
         window['_fs_host'] = 'fullstory.com';
@@ -40,6 +53,7 @@ use Modules\Front\Internal\User;
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="/css/ask.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css?_v=20220211141804" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 
@@ -85,121 +99,17 @@ use Modules\Front\Internal\User;
 
         @yield('content')
 
-    <footer <?php if (!User::isAuthorized()):?>
-                class="footer"
-            <?php else: ?>
-                class="footer footer_dark"
-            <?php endif; ?>
-    >
-        <div class="footer__container">
-            <div class="footer__top top-footer">
-                <a href="#" class="top-footer__logo">
-                    <picture><source srcset="<?=User::isAuthorized() ? '/img/logo-white.svg' : '/img/logo.svg'?>" type="image/webp"><img src="<?=User::isAuthorized() ? '/img/logo-white.svg' : '/img/logo.svg'?>" alt="logo"></picture>
-                </a>
-                <div class="top-footer__menu">
-                    <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
-
-                    <div class="top-footer__column">
-                        <div class="top-footer__title">
-                            Product
-                        </div>
-                            <ul class="top-footer__list">
-                                <li class="top-footer__item">
-                                    <a href="/#owerview" class="top-footer__link">Product overview</a>
-                                </li>
-                                <li class="top-footer__item">
-                                    <a href="/#why_us" class="top-footer__link">Why us</a>
-                                </li>
-                                <li class="top-footer__item">
-                                    <a href="/#pricing" class="top-footer__link">Pricing</a>
-                                </li>
-                                <li class="top-footer__item">
-                                    <a href="https://docs.abrouter.com/docs/intro/" target="_blank" class="top-footer__link">Docs</a>
-                                </li>
-                            </ul>
-                        </div>
-                     <?php endif; ?>
-                        <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
-                            <div class="top-footer__column">
-                                <div class="top-footer__title">
-                                    Guides
-                                </div>
-                                <ul class="top-footer__list">
-                                    <li class="top-footer__item">
-                                        <a href="/en/laravel-ab-tests" class="top-footer__link">
-                                            Implement A/B tests with Laravel
-                                        </a>
-                                    </li>
-                                    <li class="top-footer__item">
-                                        <a href="/en/symfony-ab-tests" class="top-footer__link">
-                                            Implement A/B tests with Symfony
-                                        </a>
-                                    </li>
-                                    <li class="top-footer__item">
-                                        <a href="/en/php-how-to-launch-ab-tests-in-5-minutes" class="top-footer__link">
-                                            Implement A/B tests with PHP
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                    <?php endif; ?>
-                    <div class="top-footer__column">
-                        <div class="top-footer__title">
-                            Community
-                        </div>
-                        <ul class="top-footer__list">
-
-                            <li class="top-footer__item">
-                                <a href="https://twitter.com/abrouter" target="_blank" class="top-footer__link">
-                                    Twitter
-                                </a>
-                            </li>
-
-                            <li class="top-footer__item">
-                                <a href="https://discord.gg/8hYgMAjAFw" target="_blank" class="top-footer__link">
-                                    Discord
-                                </a>
-                            </li>
-
-
-                            <li class="top-footer__item">
-                                <a href="https://github.com/abrouter/abrouter" target="_blank" class="top-footer__link">
-                                    GitHub
-                                </a>
-                            </li>
-
-
-                            <li class="top-footer__item">
-                                <a href="mailto:abrouter@prixedmail.com" class="top-footer__link">
-                                    abrouter@prixedmail.com
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer__bottom bottom-footer">
-                <div class="bottom-footer__copy">
-                    © ABROUTER 2022. All rights reserved.
-                </div>
-                <ul class="bottom-footer__list">
-                    <li class="bottom-footer__item">
-                        <a href="/en/privacy-policy" class="bottom-footer__link">Privacy Policy</a>
-                    </li>
-                    <li class="bottom-footer__item">
-                        <a href="/en/terms-service" class="bottom-footer__link">Terms & Conditions</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
+            @include('front::layouts.footer')
+    </div>
     <?php if (User::isAuthorized()):
     ?>
         <script>
             window.shortToken = '<?=User::getShortToken()?>'
         </script>
     <?php endif; ?>
+
+<script src="/js/Ask.js"></script>
+
 <!-- build:js js/main.js -->
 <script src="/js/JavaScript.js"></script>
 <script src="/js/app.min.js?_v=20220211141804"></script>

@@ -3,7 +3,6 @@
   array (
     'name' => 'PM Frontend app',
     'api_host' => 'http://localhost:930',
-    'api_internal_host' => 'http://abr-app-api',
     'env' => 'production',
     'debug' => false,
     'url' => 'http://localhost',

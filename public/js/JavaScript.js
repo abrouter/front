@@ -18,6 +18,14 @@ $(document).ready(function () {
         toastr.success('Token has been successfully copied');
     });
 
+    /* Copy code */
+    $(".code_step_copy").click(function () {
+        toastr.options.positionClass = 'toast-top-left';
+        toastr.options.showMethod = 'slideDown';
+        toastr.options.hideMethod = 'slideUp';
+        toastr.success('Code has been successfully copied');
+    });
+
     /* Add class active */
     $(".menu-setting__link").click(function () {
         $(".menu-setting__link").removeClass("active");
@@ -39,6 +47,7 @@ $(document).ready(function () {
             $(".menu__link").removeClass("active");
         }
     });
+
 });
 
 function convertDate(date) {

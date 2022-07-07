@@ -363,9 +363,28 @@ class ExperimentsList extends React.Component {
                                 </div>
                                 <div className="table-setting__manage table-setting__column4">
                                     <div className="table-setting__items">
+                                        {(window.mode  !== 'feature-toggle') ? (
+                                        <Tippy content="Code to run">
+                                            <a href={"/en/board/run-experiment?id=" + item.alias ?? item.id}
+                                               className="table-setting__item">
+                                                <svg className="table-setting__icon">
+                                                    <use href="/img/icons/icons.svg#code"/>
+                                                </svg>
+                                            </a>
+                                        </Tippy>
+                                        ) : (
+                                        <Tippy content="Code to run">
+                                            <a href={"/en/feature-toggle/run-feature-flag?id=" + item.alias}
+                                               className="table-setting__item">
+                                                <svg className="table-setting__icon">
+                                                    <use href="/img/icons/icons.svg#code"/>
+                                                </svg>
+                                            </a>
+                                        </Tippy>
+                                            )}
                                         <Tippy content="View stats">
                                             <a href={"/en/board/experiment-stats?experimentId=" + item.id}
-                                               className="table-setting__item" style={displayLinkStats}>
+                                               className="table-setting__item">
                                                 <svg className="table-setting__icon">
                                                     <use href="/img/icons/icons.svg#stat"/>
                                                 </svg>

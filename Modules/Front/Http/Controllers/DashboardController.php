@@ -2,6 +2,7 @@
 
 namespace Modules\Front\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\Front\Http\Traits\EnforceAuthTrait;
 
 class DashboardController
@@ -22,9 +23,9 @@ class DashboardController
 
     public function docs()
     {
-        return view('front::dashboard/docs');
+        return response()->redirectTo('https://docs.abrouter.com')->send();
     }
-    
+
     public function stats()
     {
         $this->enforceAuth();
@@ -41,5 +42,21 @@ class DashboardController
     {
         $this->enforceAuth();
         return view('front::dashboard/userPage');
+    }
+
+    public function runExperiment(Request $request)
+    {
+        $this->enforceAuth();
+        return view('front::dashboard/run-experiment', [
+            'requestId' => $request->query->get('id')
+        ]);
+    }
+
+    public function runFeatureFlag(Request $request)
+    {
+        $this->enforceAuth();
+        return view('front::dashboard/run-feature-flag',[
+            'requestId' => $request->query->get('id')
+        ]);
     }
 }
