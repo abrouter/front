@@ -4,7 +4,7 @@ import deleteExperimentState from '../http/deleteExperimentState';
 import LoadingOverlay from 'react-loading-overlay'
 import DontHaveExperiments from "./DontHaveExperiments";
 import {Navigation} from "./Navigation/Navigation";
-import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
+import ExperimentInput from "./Inputs/ExperimentInput";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
@@ -232,8 +232,7 @@ class ExperimentsList extends React.Component {
         return {activeExperiments, notActiveExperiments};
     }
 
-    changeName(e) {
-        let value = e.target.value;
+    changeName(value) {
         this.props.parent.changeName(value);
         this.forceUpdate();
     }
@@ -413,19 +412,25 @@ class ExperimentsList extends React.Component {
                                 <div className="table-setting__column1"/>
                                 <form className="create-setting__form">
                                     <div className="create-setting__row">
-                                        <div className="create-setting__item">
-                                            <label className="create-setting__label">Experiment name</label>
-                                            <input autoComplete="off"
-                                                   type="text"
-                                                   data-error="Ошибка"
-                                                   placeholder="Button"
-                                                   className="input create-setting__input"
-                                                   value={experimentName}
-                                                   onChange={this.changeName.bind(this)}
-                                            />
-                                        </div>
-                                        <ExperimentUidInput
-                                            uid={item.alias}
+                                        {/*<div className="create-setting__item">*/}
+                                        {/*    <label className="create-setting__label">Experiment name</label>*/}
+                                        {/*    <input autoComplete="off"*/}
+                                        {/*           type="text"*/}
+                                        {/*           data-error="Ошибка"*/}
+                                        {/*           placeholder="Button"*/}
+                                        {/*           className="input create-setting__input"*/}
+                                        {/*           value={experimentName}*/}
+                                        {/*           onChange={this.changeName.bind(this)}*/}
+                                        {/*    />*/}
+                                        {/*</div>*/}
+                                        <ExperimentInput
+                                            title={'Experiment name'}
+                                            value={experimentName}
+                                            onChange = {e => this.changeName(e)}
+                                        />
+                                        <ExperimentInput
+                                            title={'Experiment uid'}
+                                            value={item.alias}
                                             mode={this.props.parent.appState.mode}
                                         />
                                     </div>

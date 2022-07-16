@@ -32,7 +32,6 @@ class App extends React.Component {
         this.appState.mode = 'edit';
         this.appState.activeItem = item;
 
-        console.log(this.appState);
         this.forceUpdate();
     }
 

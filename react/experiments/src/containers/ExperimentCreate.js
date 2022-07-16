@@ -1,6 +1,6 @@
 import React from 'react';
 import saveExperimentState from '../http/saveExperimentState';
-import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
+import ExperimentInput from './Inputs/ExperimentInput';
 
 class ExperimentCreate extends React.Component {
     styleCreateExperimentBlock = {'display':'none'};
@@ -8,6 +8,10 @@ class ExperimentCreate extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            experimentName: null,
+            experimentUid: null,
+        };
         this.parent = props.parent;
         this.props.parent.experimentCreate = this;
         this.submitHandle = this.submitHandle.bind(this);
@@ -143,12 +147,19 @@ class ExperimentCreate extends React.Component {
 
     changeName(value) {
         this.props.parent.changeName(value);
-        this.forceUpdate();
+
+        this.setState({
+            experimentName: value,
+            experimentUid: this.props.parent.appState.activeItem.alias ?? value.replace(/ /g, '-')
+        })
     }
 
     changeUid(value) {
         this.props.parent.changeUid(value);
-        this.forceUpdate();
+
+        this.setState({
+            experimentUid: value.replace(/ /g, '-')
+        })
     }
 
     changePercent(e) {
@@ -180,9 +191,7 @@ class ExperimentCreate extends React.Component {
         const displayAddBranch = window.mode === 'feature-toggle' ? {'display':'none'} : {};
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [],
-            experimentName = this.props.parent.appState.activeItem.name ?? '',
-            experimentUid = this.props.parent.appState.activeItem.alias ?? experimentName.replace(/ /g, '-'),
-            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ';
+            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name';
 
         return (
             <>
@@ -192,22 +201,19 @@ class ExperimentCreate extends React.Component {
                             Create a new {titleCreate}
                         </div>
                         <form className="create-setting__form">
-                            <div className="create-setting__item">
-                                <label className="create-setting__label">{nameColumn} name</label>
-                                <input
-                                    autoComplete="off"
-                                    type="text"
-                                    data-error="Ошибка"
-                                    placeholder="Button color test"
-                                    className="input create-setting__input"
-                                    value={experimentName}
-                                    onChange={e => this.changeName(e.target.value)}
-                                />
-                            </div>
-                            <ExperimentUidInput
-                                uid = {experimentUid}
-                                mode = {this.props.parent.appState.mode}
-                                changeUid = {e => this.changeUid(e)}
+                            <ExperimentInput
+                                title={nameColumn}
+                                value={this.state.experimentName}
+                                placeholder={'Button color test'}
+                                mode={this.props.parent.appState.mode}
+                                onChange={e => this.changeName(e)}
+                            />
+                            <ExperimentInput
+                                title={'Experiment uid'}
+                                value={this.state.experimentUid}
+                                placeholder={'Button'}
+                                mode={this.props.parent.appState.mode}
+                                onChange={e => this.changeUid(e)}
                             />
                         </form>
                     </div>
