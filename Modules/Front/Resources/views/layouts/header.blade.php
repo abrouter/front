@@ -27,12 +27,6 @@ use Modules\Front\Internal\User;
                 <nav class="menu__body">
                     <?php if (env('MARKETING_ENABLED') === 'enabled'): ?>
                     <ul class="menu__list">
-
-{{--                        <li class="menu__item">--}}
-{{--                            <a href="/#owerview" class="menu__link active">--}}
-{{--                                Product tour--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
                         <li class="menu__item">
                             <a href="https://docs.abrouter.com" target="_blank" class="menu__link">
                                 Docs
@@ -48,6 +42,12 @@ use Modules\Front\Internal\User;
                                 GitHub
                             </a>
                         </li>
+                        <li class="menu__item">
+                            <a href="/en/demo" class="menu__link">
+                                Demo
+                            </a>
+                        </li>
+
 
 
                     </ul>
