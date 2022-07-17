@@ -10,7 +10,7 @@ class FrontConfig
         $host = (string) config('app.api_host');
         $proto = request()->server('HTTP_X_FORWARDED_PROTO');
         $host = $proto === 'https' ? strtr($host, [
-            'http' => 'https',
+            'http://' => 'https://',
         ]) : $host;
         
         return $host;
