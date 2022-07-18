@@ -197,7 +197,7 @@ class ExperimentCreate extends React.Component {
                                 <input
                                     autoComplete="off"
                                     type="text"
-                                    data-error="Ошибка"
+                                    data-error="Error"
                                     placeholder="Button color test"
                                     className="input create-setting__input"
                                     value={experimentName}
