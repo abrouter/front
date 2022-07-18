@@ -7,6 +7,7 @@ import {Navigation} from "./Navigation/Navigation";
 import ExperimentInput from "./Inputs/ExperimentInput";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import Branch from "./Branch/Branch";
 
 class ExperimentsList extends React.Component {
     experimentStyleBlock = {'display': 'block'};
@@ -37,6 +38,10 @@ class ExperimentsList extends React.Component {
                 isLoaded: 1
             });
         }
+    }
+
+    componentWillUnmount() {
+
     }
 
     load() {
@@ -123,8 +128,8 @@ class ExperimentsList extends React.Component {
         this.deleteClassEdit();
         document.getElementById('experiment-' + item.id).classList.add('edit')
         e.preventDefault();
-        this.forceUpdate();
         this.props.parent.edit(item);
+        this.forceUpdate();
     }
 
     editCheckbox(item) {
@@ -232,8 +237,8 @@ class ExperimentsList extends React.Component {
         return {activeExperiments, notActiveExperiments};
     }
 
-    changeName(value) {
-        this.props.parent.changeName(value);
+    changeName(e) {
+        this.props.parent.changeName(e);
         this.forceUpdate();
     }
 
@@ -255,7 +260,8 @@ class ExperimentsList extends React.Component {
 
     render() {
         let showDontHaveExperiments,
-            showExperiments = {'display': 'flex'};
+            showExperiments = {'display': 'flex'},
+            branch;
 
         if (this.state.experiments.length === undefined || this.state.experiments.length === 0) {
             showDontHaveExperiments = <DontHaveExperiments
@@ -265,18 +271,12 @@ class ExperimentsList extends React.Component {
             showExperiments = {'display': 'none'};
         }
 
-        let experimentName = this.props.parent.appState.activeItem.name,
-            branches;
-
-        if (window.mode !== 'feature-toggle') {
-            branches = this.props.parent.appState.activeItem.branches ?? [];
-        } else branches = [];
+        let experimentName = this.props.parent.appState.activeItem.name;
 
         let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment',
             displayLinkStats = window.mode === 'feature-toggle' ? {'display': 'none'} : {'display': 'block'},
             nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ',
             spinnerStyle = this.state.isLoaded === 0;
-
         return (
             <>
                 <LoadingOverlay
@@ -412,21 +412,10 @@ class ExperimentsList extends React.Component {
                                 <div className="table-setting__column1"/>
                                 <form className="create-setting__form">
                                     <div className="create-setting__row">
-                                        {/*<div className="create-setting__item">*/}
-                                        {/*    <label className="create-setting__label">Experiment name</label>*/}
-                                        {/*    <input autoComplete="off"*/}
-                                        {/*           type="text"*/}
-                                        {/*           data-error="Ошибка"*/}
-                                        {/*           placeholder="Button"*/}
-                                        {/*           className="input create-setting__input"*/}
-                                        {/*           value={experimentName}*/}
-                                        {/*           onChange={this.changeName.bind(this)}*/}
-                                        {/*    />*/}
-                                        {/*</div>*/}
                                         <ExperimentInput
                                             title={'Experiment name'}
                                             value={experimentName}
-                                            onChange = {e => this.changeName(e)}
+                                            onChange={e => this.changeName(e.target.value)}
                                         />
                                         <ExperimentInput
                                             title={'Experiment uid'}
@@ -434,63 +423,13 @@ class ExperimentsList extends React.Component {
                                             mode={this.props.parent.appState.mode}
                                         />
                                     </div>
-
-                                    {branches.map((branch) =>
-
-                                        <div className="create-setting__row">
-                                            <div className="create-setting__item2">
-                                                <div className="create-setting__item">
-                                                    <label className="create-setting__label">Branch name</label>
-                                                    <input autoComplete="off"
-                                                           type="text"
-                                                           data-error="Ошибка"
-                                                           placeholder="Button color test"
-                                                           className="input create-setting__input"
-                                                           id={'branch-' + branch.name}
-                                                           data-id={branch.id}
-                                                           value={branch.uid}
-                                                           onChange={this.changeBranchName.bind(this)}
-                                                    />
-                                                </div>
-                                                <div className="create-setting__item-digit">
-                                                    <label className="create-setting__label">Split</label>
-                                                    <div className="quantity">
-                                                        <span className="quantity__label">%</span>
-                                                        <div className="quantity__input">
-                                                            <input autoComplete="off"
-                                                                   type="text"
-                                                                   name="form[]"
-                                                                   data-id={branch.id}
-                                                                   id={'branch-percent-' + branch.id}
-                                                                   value={branch.percent ?? 0}
-                                                                   onChange={this.changePercent.bind(this)}
-                                                            />
-                                                        </div>
-                                                        <div className="quantity__buttons"
-                                                             onClick={this.changePercent.bind(this)}>
-                                                            <div className="quantity__button quantity__button_plus ">
-                                                                <svg className="quantity__icon">
-                                                                    <use href="/img/icons/icons.svg#arrow-quantity"/>
-                                                                </svg>
-                                                            </div>
-                                                            <div className="quantity__button quantity__button_minus ">
-                                                                <svg className="quantity__icon">
-                                                                    <use href="/img/icons/icons.svg#arrow-quantity"/>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <button className="create-setting__remove" data-id={branch.id}
-                                                        onClickCapture={(e) => this.removeBranch(e)}>
-                                                    <svg className="create-setting__remove-icon">
-                                                        <use href="/img/icons/icons.svg#close"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
-
+                                    <Branch
+                                        branches={this.props.parent.appState.activeItem.branches ?? []}
+                                        onChangeBranchName={e => this.changeBranchName(e)}
+                                        onChangePercent={e => this.changePercent(e)}
+                                        onClickPercent={e => this.changePercent(e)}
+                                        onClickRemoveBranch={e => this.removeBranch(e)}
+                                    />
                                     <div className="create-setting__bottom">
                                         <button className="create-setting__cancel"
                                                 onClickCapture={e => this.cancelEdit(e)}>Cancel

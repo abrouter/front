@@ -10,7 +10,11 @@ class ExperimentInput extends React.Component {
         }
     }
 
-    change(value) {
+    change(e) {
+        this.props.onChange(e);
+    }
+
+    showError(value) {
         if (value.length === 0) {
             this.setState({
                 error: true,
@@ -22,8 +26,6 @@ class ExperimentInput extends React.Component {
                 inputError: {},
             })
         }
-
-        this.props.onChange(value)
     }
 
     render() {
@@ -42,7 +44,11 @@ class ExperimentInput extends React.Component {
                     className="input create-setting__input"
                     value={this.props.value}
                     disabled={this.props.mode === 'edit'}
-                    onChange={e => this.change(e.target.value)}
+                    data-id={this.props.dataId}
+                    onChange={e => {
+                        this.showError(e.target.value)
+                        this.props.onChange(e)
+                    }}
                 />
                 <Error
                     showError = {this.state.error}
