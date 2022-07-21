@@ -1,12 +1,10 @@
 import React from "react";
-import {Error} from "./Error";
 
 class ExperimentInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             error: false,
-            inputError: {},
         }
     }
 
@@ -14,17 +12,17 @@ class ExperimentInput extends React.Component {
         this.props.onChange(e);
     }
 
-    showError(value) {
+    showError(e, value) {
         if (value.length === 0) {
-            this.setState({
-                error: true,
-                inputError: {'box-shadow': 'inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'},
-            })
+            e.target.setAttribute('style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9');
+            e.target.closest('.create-setting__item').children[2].setAttribute(
+                'style', 'display:block'
+            );
         } else {
-            this.setState({
-                error: false,
-                inputError: {},
-            })
+            e.target.removeAttribute('style');
+            e.target.closest('.create-setting__item').children[2].setAttribute(
+                'style', 'display:none'
+            )
         }
     }
 
@@ -37,7 +35,6 @@ class ExperimentInput extends React.Component {
                 <input
                     id="input_uid"
                     autoComplete="off"
-                    style={this.state.inputError}
                     type="text"
                     data-error="Ошибка"
                     placeholder={this.props.placeholder}
@@ -46,15 +43,17 @@ class ExperimentInput extends React.Component {
                     disabled={this.props.mode === 'edit'}
                     data-id={this.props.dataId}
                     onChange={e => {
-                        this.showError(e.target.value)
+                        this.showError(e, e.target.value)
                         this.props.onChange(e)
                     }}
                 />
-                <Error
-                    showError = {this.state.error}
-                    id = {'error_' + title.toLowerCase()}
-                    errorText = {'Please enter ' + title.toLowerCase() + '.'}
-                />
+                <div
+                    className="input_error"
+                    style={{'display':'none'}}
+                    id={'error_' + title.toLowerCase()}
+                >
+                    {'Please enter ' + title.toLowerCase() + '.'}
+                </div>
             </div>
         )
     }

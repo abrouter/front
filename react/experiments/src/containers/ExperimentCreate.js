@@ -2,6 +2,7 @@ import React from 'react';
 import saveExperimentState from '../http/saveExperimentState';
 import ExperimentInput from './Inputs/ExperimentInput';
 import Branch from "./Branch/Branch";
+import experimentValidation from "../validation/validation";
 
 class ExperimentCreate extends React.Component {
     styleCreateExperimentBlock = {'display':'none'};
@@ -19,11 +20,10 @@ class ExperimentCreate extends React.Component {
         this.map = {};
     }
 
-    componentDidMount() {
-        this.forceUpdate();
-    }
-
     submitHandle(event) {
+        event.preventDefault();
+        experimentValidation(event.target.children);
+
         this.props.parent.appState.adding=true;
         this.forceUpdate();
 
@@ -31,7 +31,6 @@ class ExperimentCreate extends React.Component {
             this.createFeatureToggle()
         }
 
-        event.preventDefault();
         saveExperimentState(this.props.parent.appState.activeItem).then(response => {
             this.props.parent.experimentList.load();
             this.showNotifications();
@@ -201,7 +200,7 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title">
                             Create a new {titleCreate}
                         </div>
-                        <form className="create-setting__form">
+                        <form className="create-setting__form" id="create_experiment">
                             <ExperimentInput
                                 title={nameColumn}
                                 value={this.state.experimentName}
@@ -222,7 +221,7 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title" style={displayAddBranch}>
                             Branches
                         </div>
-                        <form className="create-setting__form" onSubmit={this.submitHandle.bind(this)}>
+                        <form className="create-setting__form" id="create_branch" onSubmit={this.submitHandle.bind(this)}>
                             <Branch
                                 branches={branches}
                                 onChangeBranchName={e => this.changeBranchName(e)}
@@ -241,7 +240,6 @@ class ExperimentCreate extends React.Component {
                         </form>
                     </div>
                 </div>
-
             </>
 
         );
