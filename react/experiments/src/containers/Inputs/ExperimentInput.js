@@ -33,7 +33,7 @@ class ExperimentInput extends React.Component {
             <div className="create-setting__item">
                 <label className="create-setting__label">{title}</label>
                 <input
-                    id="input_uid"
+                    id={this.props.dataId}
                     autoComplete="off"
                     type="text"
                     data-error="Ошибка"

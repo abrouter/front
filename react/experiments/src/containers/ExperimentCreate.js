@@ -201,6 +201,7 @@ class ExperimentCreate extends React.Component {
                             Create a new {titleCreate}
                         </div>
                         <form className="create-setting__form" id="create_experiment">
+                            <div/>
                             <ExperimentInput
                                 title={nameColumn}
                                 value={this.state.experimentName}

@@ -8,6 +8,7 @@ import ExperimentInput from "./Inputs/ExperimentInput";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import Branch from "./Branch/Branch";
+import experimentValidation from "../validation/validation";
 
 class ExperimentsList extends React.Component {
     experimentStyleBlock = {'display': 'block'};
@@ -156,8 +157,88 @@ class ExperimentsList extends React.Component {
     }
 
     submitHandle(e) {
+        e.preventDefault();
+        let div = document.querySelector('.alert');
+
+        if (div) {
+            div.className = '';
+            div.innerText = '';
+        }
+
+        let countPercent = 0,
+            allBranchName = [],
+            experimentForm = e.target.children[0],
+            error = false,
+            textError;
+
+        if (e.target[0].value.length === 0) {
+            error = true;
+        }
+
+        for (let i in this.props.parent.appState.activeItem.branches) {
+            let percent = document.getElementById('branch-percent-' +
+                this.props.parent.appState.activeItem.branches[i].id
+                ).value,
+                branchName = document.getElementById(
+                    this.props.parent.appState.activeItem.branches[i].id
+                ).value;
+
+            countPercent += Number(percent);
+
+            if (branchName.length !== 0) {
+                allBranchName.push(branchName);
+            }
+
+            if (branchName.length === 0 && countPercent === 100) {
+                error = true;
+                textError = 'Please, delete the empty branches to make sure everything filled correctly.';
+
+                this.showError(experimentForm, textError)
+            }
+        }
+
+        for (let i = 0; i < allBranchName.length; i++) {
+            let n = 0;
+
+            allBranchName.find(item => {
+                if (item === allBranchName[i]) {
+                    n++;
+                }
+            })
+
+            if (experimentForm
+                .innerHTML === '<p>The branch name must be unique.</p>'
+            ) {
+                break;
+            }
+
+            if (n > 1) {
+                error = true;
+                textError = 'The branch name must be unique.';
+
+                this.showError(experimentForm, textError)
+            }
+        }
+
+        if (countPercent !== 99 && countPercent !== 100) {
+            textError = 'The sum of the branch percentages must be 100 or 99.';
+            error = true;
+
+            this.showError(experimentForm, textError)
+        }
+
+        if(error) {
+            throw new Error('Error')
+        }
+
         this.deleteClassEdit();
         this.props.parent.experimentCreate.submitHandle(e);
+    }
+
+    showError (e, textError) {
+        e.className = 'alert';
+
+        e.innerHTML += '<p>' + textError + '</p>';
     }
 
     addClassNameActive(e) {
@@ -165,7 +246,7 @@ class ExperimentsList extends React.Component {
         this.props.parent.experimentCreate.styleCreateExperimentBlock = {'display': 'none'};
         this.deleteClassActive(e);
         e.currentTarget.classList.add("active");
-        this.props.parent.experimentCreate.forceUpdate()
+        this.props.parent.experimentCreate.forceUpdate();
         this.forceUpdate();
     }
 
@@ -260,8 +341,7 @@ class ExperimentsList extends React.Component {
 
     render() {
         let showDontHaveExperiments,
-            showExperiments = {'display': 'flex'},
-            branch;
+            showExperiments = {'display': 'flex'};
 
         if (this.state.experiments.length === undefined || this.state.experiments.length === 0) {
             showDontHaveExperiments = <DontHaveExperiments
@@ -274,7 +354,6 @@ class ExperimentsList extends React.Component {
         let experimentName = this.props.parent.appState.activeItem.name;
 
         let buttonCreate = window.mode === 'feature-toggle' ? 'Add new flag' : 'Create new experiment',
-            displayLinkStats = window.mode === 'feature-toggle' ? {'display': 'none'} : {'display': 'block'},
             nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ',
             spinnerStyle = this.state.isLoaded === 0;
         return (
@@ -410,7 +489,8 @@ class ExperimentsList extends React.Component {
                             </div>
                             <div className="table-setting__row table-setting__row_edit">
                                 <div className="table-setting__column1"/>
-                                <form className="create-setting__form">
+                                <form className="create-setting__form" onSubmit={e => this.submitHandle(e)}>
+                                    <div/>
                                     <div className="create-setting__row">
                                         <ExperimentInput
                                             title={'Experiment name'}
@@ -434,8 +514,7 @@ class ExperimentsList extends React.Component {
                                         <button className="create-setting__cancel"
                                                 onClickCapture={e => this.cancelEdit(e)}>Cancel
                                         </button>
-                                        <button className="create-setting__update button"
-                                                onClickCapture={e => this.submitHandle(e)}>
+                                        <button type="submit" className="create-setting__update button">
                                             Update
                                         </button>
                                     </div>

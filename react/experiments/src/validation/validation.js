@@ -1,37 +1,56 @@
 function experimentValidation (item) {
-    let countPercentage = 0,
-        experimentForm = document.getElementById('create_experiment'),
-        experimentName = experimentForm.children[0].children[1].value,
-        exprimentUid = experimentForm.children[1].children[1].value;
+    let div = document.querySelector('.alert');
 
-    if (experimentName.length === 0) {
-        experimentForm.children[0].children[1].setAttribute(
-            'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
-        );
-
-        experimentForm.children[0].children[2].setAttribute(
-            'style', 'display:block'
-        );
+    if (div) {
+        div.className = '';
+        div.innerText = '';
     }
 
-    if (exprimentUid.length === 0) {
+    let countPercentage = 0,
+        experimentForm = document.getElementById('create_experiment'),
+        experimentName = experimentForm.children[1].children[1].value,
+        experimentUid = experimentForm.children[2].children[1].value,
+        error = false;
+
+    if (experimentName.length === 0) {
+        error = true;
+
         experimentForm.children[1].children[1].setAttribute(
             'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
         );
 
         experimentForm.children[1].children[2].setAttribute(
             'style', 'display:block'
+        );
+    }
+
+    if (experimentUid.length === 0) {
+        error = true;
+
+        experimentForm.children[2].children[1].setAttribute(
+            'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
+        );
+
+        experimentForm.children[2].children[2].setAttribute(
+            'style', 'display:block'
         )
     }
 
+    let allBranchName = [];
 
     for (let i = 0; i < item.length - 2; i++) {
         let branchName = item[i].children[0].children[1].value,
             percent = item[i].children[1].children[0].children[1].children[1].children[0].value;
 
+        if(branchName.length !== 0) {
+            allBranchName.push(branchName);
+        }
+
         countPercentage += Number(percent);
 
         if (branchName.length === 0) {
+            error = true;
+
             item[i].children[0].children[1].setAttribute(
                 'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
             );
@@ -39,12 +58,59 @@ function experimentValidation (item) {
         }
 
         if (branchName.length === 0 && countPercentage === 100) {
-            console.log('Please, delete the empty branches to make sure everything filled correctly')
+            experimentForm
+                .children[0]
+                .className = 'alert';
+
+            experimentForm
+                .children[0]
+                .innerHTML += '<p>Please, delete the empty branches to make sure everything filled correctly.</p>';
         }
     }
 
-    if (countPercentage !== 100 || countPercentage !== 99) {
-        console.log('The sum of the branch percentages must be 100 or 99')
+    for (let i = 0; i < allBranchName.length; i++) {
+        let n = 0;
+
+        allBranchName.find(item => {
+            if (item === allBranchName[i]) {
+                n++;
+            }
+        })
+
+        if (experimentForm
+            .children[0]
+            .innerHTML === '<p>The branch name must be unique.</p>'
+        ) {
+            break;
+        }
+
+        if (n > 1) {
+            error = true;
+
+            experimentForm
+                .children[0]
+                .className = 'alert';
+
+            experimentForm
+                .children[0]
+                .innerHTML += '<p>The branch name must be unique.</p>';
+        }
+    }
+
+    if (countPercentage !== 99 && countPercentage !== 100) {
+        error = true;
+
+        experimentForm
+            .children[0]
+            .className = 'alert';
+
+        experimentForm
+            .children[0]
+            .innerHTML += '<p>The sum of the branch percentages must be 100 or 99.</p>';
+    }
+
+    if (error) {
+        throw new Error('Data validation error. Check the correctness of the entered data');
     }
 }
 
