@@ -228,7 +228,7 @@ class ExperimentsList extends React.Component {
         }
 
         if(error) {
-            throw new Error('Error')
+            throw new Error('Data validation error. Check the correctness of the entered data')
         }
 
         this.deleteClassEdit();
@@ -339,9 +339,15 @@ class ExperimentsList extends React.Component {
         })
     }
 
+    addBranch(e) {
+        this.props.parent.experimentCreate.addBranch(e);
+        this.forceUpdate();
+    }
+
     render() {
         let showDontHaveExperiments,
-            showExperiments = {'display': 'flex'};
+            showExperiments = {'display': 'flex'},
+            displayAddBranch = window.mode !== 'feature-toggle' ? {'display':'block'} : {'display':'none'};
 
         if (this.state.experiments.length === undefined || this.state.experiments.length === 0) {
             showDontHaveExperiments = <DontHaveExperiments
@@ -510,6 +516,9 @@ class ExperimentsList extends React.Component {
                                         onClickPercent={e => this.changePercent(e)}
                                         onClickRemoveBranch={e => this.removeBranch(e)}
                                     />
+                                    <button onClick={e => this.addBranch(e)} className="create-setting__button" style={displayAddBranch}>
+                                        + Add another branch
+                                    </button>
                                     <div className="create-setting__bottom">
                                         <button className="create-setting__cancel"
                                                 onClickCapture={e => this.cancelEdit(e)}>Cancel

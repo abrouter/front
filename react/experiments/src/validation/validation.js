@@ -49,7 +49,7 @@ function experimentValidation (item) {
         countPercentage += Number(percent);
 
         if (branchName.length === 0) {
-            error = true;
+            window.mode !== 'feature-toggle' ? error = true : error = false;
 
             item[i].children[0].children[1].setAttribute(
                 'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
@@ -95,6 +95,9 @@ function experimentValidation (item) {
                 .children[0]
                 .innerHTML += '<p>The branch name must be unique.</p>';
         }
+    }
+    if (window.mode === 'feature-toggle') {
+        countPercentage = 100;
     }
 
     if (countPercentage !== 99 && countPercentage !== 100) {

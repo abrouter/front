@@ -20,16 +20,20 @@ class ExperimentCreate extends React.Component {
         this.map = {};
     }
 
-    submitHandle(event) {
+    checkSendData(event) {
         event.preventDefault();
-        experimentValidation(event.target.children);
-
-        this.props.parent.appState.adding=true;
-        this.forceUpdate();
 
         if (window.mode === 'feature-toggle' && this.props.parent.appState.mode !== 'edit') {
             this.createFeatureToggle()
         }
+
+        experimentValidation(event.target.children);
+        this.submitHandle(event);
+    }
+
+    submitHandle(event) {
+        this.props.parent.appState.adding=true;
+        this.forceUpdate();
 
         saveExperimentState(this.props.parent.appState.activeItem).then(response => {
             this.props.parent.experimentList.load();
@@ -191,7 +195,8 @@ class ExperimentCreate extends React.Component {
         const displayAddBranch = window.mode === 'feature-toggle' ? {'display':'none'} : {};
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [],
-            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name';
+            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name',
+            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid'
 
         return (
             <>
@@ -210,7 +215,7 @@ class ExperimentCreate extends React.Component {
                                 onChange={e => this.changeName(e.target.value)}
                             />
                             <ExperimentInput
-                                title={'Experiment uid'}
+                                title={nameUidColumn}
                                 value={this.state.experimentUid}
                                 placeholder={'Button'}
                                 mode={this.props.parent.appState.mode}
@@ -222,7 +227,7 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title" style={displayAddBranch}>
                             Branches
                         </div>
-                        <form className="create-setting__form" id="create_branch" onSubmit={this.submitHandle.bind(this)}>
+                        <form className="create-setting__form" id="create_branch" onSubmit={this.checkSendData.bind(this)}>
                             <Branch
                                 branches={branches}
                                 onChangeBranchName={e => this.changeBranchName(e)}
