@@ -22,6 +22,8 @@ class PercentInput extends React.Component {
             e.target.value = 100
         }
 
+        e.target.value = e.target.value.replace( /[^0123456789]/, '' );
+
         this.setState({
             percent: e.target.value.replace( /[^0123456789]/, '' )
         })

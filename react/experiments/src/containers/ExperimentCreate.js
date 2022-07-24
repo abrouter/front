@@ -171,9 +171,12 @@ class ExperimentCreate extends React.Component {
         this.forceUpdate();
     }
 
-    changeBranchName(id, value) {
-        this.props.parent.changeBranchName(id, value);
-        this.forceUpdate();
+    changeBranchName(e) {
+        this.props.parent.changeBranchName(e);
+    }
+
+    changeBranchUid(e) {
+        this.props.parent.changeBranchUid(e);
     }
 
     redirectToExperiments() {
@@ -231,6 +234,7 @@ class ExperimentCreate extends React.Component {
                             <Branch
                                 branches={branches}
                                 onChangeBranchName={e => this.changeBranchName(e)}
+                                onChangeBranchUid={e => this.changeBranchUid(e)}
                                 onChangePercent={e => this.changePercent(e)}
                                 onClickPercent={e => this.changePercent(e)}
                                 onClickRemoveBranch={e => this.removeBranch(e)}

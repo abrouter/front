@@ -3,19 +3,28 @@ import ExperimentInput from "../Inputs/ExperimentInput";
 import PercentInput from "../Inputs/PercentInput";
 
 class Branch extends React.Component {
-    error = false;
-
     constructor(props) {
         super(props);
+
+        this.state = {
+            branches: this.props.branches ?? []
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.branches !== this.props.branches) {
+            this.setState({
+                branches: this.props.branches
+            })
+        }
     }
 
     render () {
         const displayAddBranch = window.mode === 'feature-toggle' ? {'display':'none'} : {};
-        let branches = this.props.branches ?? [];
 
         return (
             <>
-                {branches.map((item) =>
+                {this.state.branches.map((item) =>
                     <>
                         <div className="create-setting__row" style={displayAddBranch}>
                             <ExperimentInput
@@ -25,6 +34,13 @@ class Branch extends React.Component {
                                 placeholder={'Branch name'}
                                 onChange={e => this.props.onChangeBranchName(e)}
                             />
+                            {/*<ExperimentInput*/}
+                            {/*    title={'Branch uid'}*/}
+                            {/*    dataId={item.id}*/}
+                            {/*    value={item.uid}*/}
+                            {/*    placeholder={'Branch uid'}*/}
+                            {/*    onChange={e => this.changeBranchUid(e)}*/}
+                            {/*/>*/}
                             <div className="create-setting__item2">
                                 <div className="create-setting__item-digit">
                                     <label className="create-setting__label">Split</label>
