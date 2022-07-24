@@ -44,6 +44,12 @@ use Modules\Front\Internal\User;
                                 GitHub
                             </a>
                         </li>
+                        <li class="top-footer__item">
+                            <a href="/en/demo" class="top-footer__link">
+                                Demo
+                            </a>
+                        </li>
+
 
 
                     </ul>

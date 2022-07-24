@@ -35,6 +35,11 @@ class ExperimentCreate extends React.Component {
         this.props.parent.appState.adding=true;
         this.forceUpdate();
 
+        if (window.mode === 'feature-toggle' && this.props.parent.appState.mode !== 'edit') {
+            this.createFeatureToggle()
+        }
+
+        event.preventDefault();
         saveExperimentState(this.props.parent.appState.activeItem).then(response => {
             this.props.parent.experimentList.load();
             this.showNotifications();
