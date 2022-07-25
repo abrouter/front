@@ -73,8 +73,7 @@ $(document).ready(function () {
                     $('.new_user').append(
                         '<div class="new_user_label" id="results">Results:</div>' +
                         '<div class="new_user_title" id="user_info_title">User info</div>' +
-                        '<div class="new_user_info" id="user_info">' +
-                        '</div>' +
+                        '<div class="new_user_info" id="user_info"></div>' +
                         '<div class="new_user_title" id="experiments_title">Experiments</div>' +
                         '<div class="new_user_experiment" id="new_user_experiment"></div>' +
                         '<div class="new_user_title" id="user_events_title">User events</div>' +
@@ -572,6 +571,7 @@ $(document).ready(function () {
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]);
 
+        $('.new_user_event_button').remove();
         $('#empty_events').remove();
         $('#events_table').remove();
 
@@ -672,7 +672,7 @@ function getUserStats (response, userId) {
                         '<th>Event name</th>' +
                         '<th>IP</th>' +
                         '<th>Country</th>' +
-                        '<th>Date</th>'+
+                        '<th>Date</th>' +
                     '</tr>' +
                 '</thead>' +
                 '<tbody id="events"></tbody>' +
