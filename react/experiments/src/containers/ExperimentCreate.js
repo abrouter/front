@@ -1,6 +1,8 @@
 import React from 'react';
 import saveExperimentState from '../http/saveExperimentState';
-import {ExperimentUidInput} from "./Inputs/ExperimentUidInput";
+import ExperimentInput from './Inputs/ExperimentInput';
+import Branch from "./Branch/Branch";
+import experimentValidation from "../validation/validation";
 
 class ExperimentCreate extends React.Component {
     styleCreateExperimentBlock = {'display':'none'};
@@ -8,25 +10,31 @@ class ExperimentCreate extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            experimentName: null,
+            experimentUid: null,
+        };
         this.parent = props.parent;
         this.props.parent.experimentCreate = this;
         this.submitHandle = this.submitHandle.bind(this);
         this.map = {};
     }
 
-    componentDidMount() {
-        this.forceUpdate();
+    checkSendData(event) {
+        event.preventDefault();
+
+        if (window.mode === 'feature-toggle' && this.props.parent.appState.mode !== 'edit') {
+            this.createFeatureToggle()
+        }
+
+        experimentValidation(event.target.children);
+        this.submitHandle(event);
     }
 
     submitHandle(event) {
         this.props.parent.appState.adding=true;
         this.forceUpdate();
 
-        if (window.mode === 'feature-toggle' && this.props.parent.appState.mode !== 'edit') {
-            this.createFeatureToggle()
-        }
-
-        event.preventDefault();
         saveExperimentState(this.props.parent.appState.activeItem).then(response => {
             this.props.parent.experimentList.load();
             this.showNotifications();
@@ -143,12 +151,19 @@ class ExperimentCreate extends React.Component {
 
     changeName(value) {
         this.props.parent.changeName(value);
-        this.forceUpdate();
+
+        this.setState({
+            experimentName: value,
+            experimentUid: this.props.parent.appState.activeItem.alias ?? value.replace(/ /g, '-')
+        })
     }
 
     changeUid(value) {
         this.props.parent.changeUid(value);
-        this.forceUpdate();
+
+        this.setState({
+            experimentUid: value.replace(/ /g, '-')
+        })
     }
 
     changePercent(e) {
@@ -159,6 +174,10 @@ class ExperimentCreate extends React.Component {
     changeBranchName(e) {
         this.props.parent.changeBranchName(e);
         this.forceUpdate();
+    }
+
+    changeBranchUid(e) {
+        this.props.parent.changeBranchUid(e);
     }
 
     redirectToExperiments() {
@@ -180,9 +199,8 @@ class ExperimentCreate extends React.Component {
         const displayAddBranch = window.mode === 'feature-toggle' ? {'display':'none'} : {};
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [],
-            experimentName = this.props.parent.appState.activeItem.name ?? '',
-            experimentUid = this.props.parent.appState.activeItem.alias ?? experimentName.replace(/ /g, '-'),
-            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags ' : 'Experiment ';
+            nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name',
+            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid'
 
         return (
             <>
@@ -191,23 +209,21 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title">
                             Create a new {titleCreate}
                         </div>
-                        <form className="create-setting__form">
-                            <div className="create-setting__item">
-                                <label className="create-setting__label">{nameColumn} name</label>
-                                <input
-                                    autoComplete="off"
-                                    type="text"
-                                    data-error="Error"
-                                    placeholder="Button color test"
-                                    className="input create-setting__input"
-                                    value={experimentName}
-                                    onChange={e => this.changeName(e.target.value)}
-                                />
-                            </div>
-                            <ExperimentUidInput
-                                uid = {experimentUid}
-                                mode = {this.props.parent.appState.mode}
-                                changeUid = {e => this.changeUid(e)}
+                        <form className="create-setting__form" id="create_experiment">
+                            <div/>
+                            <ExperimentInput
+                                title={nameColumn}
+                                value={this.state.experimentName}
+                                placeholder={'Button color test'}
+                                mode={this.props.parent.appState.mode}
+                                onChange={e => this.changeName(e.target.value)}
+                            />
+                            <ExperimentInput
+                                title={nameUidColumn}
+                                value={this.state.experimentUid}
+                                placeholder={'Button'}
+                                mode={this.props.parent.appState.mode}
+                                onChange={e => this.changeUid(e.target.value)}
                             />
                         </form>
                     </div>
@@ -215,57 +231,15 @@ class ExperimentCreate extends React.Component {
                         <div className="create-setting__title" style={displayAddBranch}>
                             Branches
                         </div>
-                        <form className="create-setting__form" onSubmit={this.submitHandle.bind(this)}>
-                            {branches.map((branch) =>
-                                <div className="create-setting__row" style={displayAddBranch}>
-                                    <div className="create-setting__item">
-                                        <label className="create-setting__label">Branch name</label>
-                                        <input autocomplete="off"
-                                               type="text"
-                                               data-error="Ошибка"
-                                               placeholder="Branch name"
-                                               className="input create-setting__input"
-                                               onChange={this.changeBranchName.bind(this)}
-                                               data-id={branch.id}
-                                        />
-                                    </div>
-                                    <div className="create-setting__item2">
-                                        <div className="create-setting__item-digit">
-                                            <label className="create-setting__label">Split</label>
-                                            <div className="quantity">
-                                                <span className="quantity__label">%</span>
-                                                <div className="quantity__input">
-                                                    <input autocomplete="off"
-                                                           type="text"
-                                                           name="form[]"
-                                                           data-id={branch.id}
-                                                           id={"branch-percent-" + branch.id}
-                                                           value={branch.percent ?? '0'}
-                                                           onChange={this.changePercent.bind(this)}
-                                                    />
-                                                </div>
-                                                <div className="quantity__buttons" onClick={this.changePercent.bind(this)}>
-                                                    <div className="quantity__button quantity__button_plus">
-                                                        <svg className="quantity__icon">
-                                                            <use href="/img/icons/icons.svg#arrow-quantity"/>
-                                                        </svg>
-                                                    </div>
-                                                    <div className="quantity__button quantity__button_minus">
-                                                        <svg className="quantity__icon">
-                                                            <use href="/img/icons/icons.svg#arrow-quantity"/>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button className="create-setting__remove" data-id={branch.id} onClickCapture={e => this.removeBranch(e)}>
-                                            <svg className="create-setting__remove-icon">
-                                                <use href="/img/icons/icons.svg#close"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+                        <form className="create-setting__form" id="create_branch" onSubmit={this.checkSendData.bind(this)}>
+                            <Branch
+                                branches={branches}
+                                onChangeBranchName={e => this.changeBranchName(e)}
+                                onChangeBranchUid={e => this.changeBranchUid(e)}
+                                onChangePercent={e => this.changePercent(e)}
+                                onClickPercent={e => this.changePercent(e)}
+                                onClickRemoveBranch={e => this.removeBranch(e)}
+                            />
                             <button onClick={this.addBranch.bind(this)} className="create-setting__button" style={displayAddBranch}>
                                 + Add another branch
                             </button>
@@ -277,7 +251,6 @@ class ExperimentCreate extends React.Component {
                         </form>
                     </div>
                 </div>
-
             </>
 
         );

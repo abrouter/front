@@ -64,7 +64,6 @@ $(document).ready(function () {
                     browser = entry['browser'] ?? '',
                     platform = entry['platform'] ?? '',
                     countryName = entry['country_name'] ?? '',
-                    experimentsIds = entry['experiments_ids'] ?? '',
                     date = getFullDate(createdAt);
 
                 if (createdAt !== null) {
@@ -74,12 +73,7 @@ $(document).ready(function () {
                     $('.new_user').append(
                         '<div class="new_user_label" id="results">Results:</div>' +
                         '<div class="new_user_title" id="user_info_title">User info</div>' +
-                        '<div class="new_user_info" id="user_info">' +
-                            '<div class="new_user_info_li">' +
-                                '<span>Experiment ID</span>' +
-                                '<p class="code" id="code"></p>'+
-                            '</div>' +
-                        '</div>' +
+                        '<div class="new_user_info" id="user_info"></div>' +
                         '<div class="new_user_title" id="experiments_title">Experiments</div>' +
                         '<div class="new_user_experiment" id="new_user_experiment"></div>' +
                         '<div class="new_user_title" id="user_events_title">User events</div>' +
@@ -98,12 +92,6 @@ $(document).ready(function () {
                             '</label>' +
                         '</div>'
                     )
-
-                    for (let id in experimentsIds) {
-                        $('#code').append(
-                            '<span class="code">' + experimentsIds[id] + '</span>'
-                        )
-                    }
 
                     $('.new_user_info').append(
                         '<div class="new_user_info_li">' +
@@ -539,7 +527,7 @@ $(document).ready(function () {
             let entry = events[i],
                 user = entry['attributes']['user_id'] ?? '',
                 event = entry['attributes']['event'] ?? '',
-                tag = entry['attributes']['tag'] ?? '',
+                date = getFullDate(entry['attributes']['created_at']) ?? '',
                 ip = entry['attributes']['ip'] ?? '',
                 country = entry['attributes']['meta']['country_name']
                     ?? entry['attributes']['country_code']
@@ -560,16 +548,16 @@ $(document).ready(function () {
                         event +
                     '</td>' +
                     '<td>' +
-                        '<span class="mobile">Tag</span>' +
-                        '<span class="tag">'+ tag +'</span>' +
-                    '</td>' +
-                    '<td>' +
                         '<span class="mobile">IP</span>' +
                         ip +
                     '</td>' +
                     '<td>' +
                         '<span class="mobile">Country</span>' +
                         country +
+                    '</td>' +
+                    '<td>' +
+                        '<span class="mobile">Date</span>' +
+                        date +
                     '</td>' +
                 '</tr>'
             )
@@ -583,6 +571,7 @@ $(document).ready(function () {
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]);
 
+        $('.new_user_event_button').remove();
         $('#empty_events').remove();
         $('#events_table').remove();
 
@@ -607,6 +596,7 @@ $(document).ready(function () {
 $('#event_date_from').daterangepicker({
     singleDatePicker: true,
     showDropdowns: true,
+    startDate: getStartDate(),
     locale: {
         format: 'MMMM DD, YYYY'
     }
@@ -615,10 +605,39 @@ $('#event_date_from').daterangepicker({
 $('#event_date_to').daterangepicker({
     singleDatePicker: true,
     showDropdowns: true,
+    startDate: getEndDate(),
     locale: {
         format: 'MMMM DD, YYYY'
     }
 })
+
+function getStartDate() {
+    let dateNow = Date.now(),
+        date = new Date(dateNow),
+        month = date.getMonth();
+
+    date.setMonth(month - 1);
+
+    return String(
+        date.toLocaleString('en',{month: 'short' }) + '/' +
+        date.getDate() + '/' +
+        date.getFullYear()
+    );
+}
+
+function getEndDate() {
+    let dateNow = Date.now(),
+        date = new Date(dateNow),
+        day = date.getDate();
+
+    date.setDate(day + 1);
+
+    return String(
+        date.toLocaleString('en',{month: 'short' }) + '/' +
+        date.getDate() + '/' +
+        date.getFullYear()
+    );
+}
 
 function getFullDate (dateCreation) {
     let date = new Date(dateCreation),
@@ -651,9 +670,9 @@ function getUserStats (response, userId) {
                     '<tr>' +
                         '<th>User ID</th>' +
                         '<th>Event name</th>' +
-                        '<th>Tag</th>'+
                         '<th>IP</th>' +
                         '<th>Country</th>' +
+                        '<th>Date</th>' +
                     '</tr>' +
                 '</thead>' +
                 '<tbody id="events"></tbody>' +
@@ -668,7 +687,7 @@ function getUserStats (response, userId) {
             let entry = response.data[i],
                 user = entry['attributes']['user_id'] ?? '',
                 event = entry['attributes']['event'] ?? '',
-                tag = entry['attributes']['tag'] ?? '',
+                date = getFullDate(entry['attributes']['created_at']) ?? '',
                 ip = entry['attributes']['ip'] ?? '',
                 country = entry['attributes']['meta']['country_name']
                     ?? entry['attributes']['country_code']
@@ -689,16 +708,16 @@ function getUserStats (response, userId) {
                         event +
                     '</td>' +
                     '<td>' +
-                        '<span class="mobile">Tag</span>' +
-                        '<span class="tag">'+ tag +'</span>' +
-                    '</td>' +
-                    '<td>' +
                         '<span class="mobile">IP</span>' +
                         ip +
                     '</td>' +
                     '<td>' +
                         '<span class="mobile">Country</span>' +
                         country +
+                    '</td>' +
+                    '<td>' +
+                        '<span class="mobile">Date</span>' +
+                        date +
                     '</td>' +
                 '</tr>'
             )

@@ -23,28 +23,18 @@ class App extends React.Component {
         };
     }
 
-    rerender(proxyBindings) {
-        this.state.proxyBindings.push(proxyBindings);
-        this.forceUpdate();
-    }
-
     edit(item) {
         this.appState.mode = 'edit';
         this.appState.activeItem = item;
-
-        console.log(this.appState);
-        this.forceUpdate();
     }
 
     changeName(value) {
         this.appState.activeItem.name = value;
-        this.forceUpdate();
     }
 
     changeUid(value) {
         value = value.replace(/ /g, '-');
         this.appState.activeItem.alias = value;
-        this.forceUpdate();
     }
 
     changePercent(e) {
@@ -65,27 +55,38 @@ class App extends React.Component {
 
             return acc;
         }, []);
-        this.forceUpdate();
-
 
         return false;
     }
 
     changeBranchName(e) {
-        let id = e.target.getAttribute('data-id');
+        let id = e.target.getAttribute('data-id'),
+            value = e.target.value;
 
         this.appState.activeItem.branches = this.appState.activeItem.branches.reduce(function (acc, branch) {
             if (branch.id === id) {
-                branch.uid = e.target.value;
+                branch.uid = value;
             }
 
             acc.push(branch);
 
             return acc;
         }, []);
-        this.forceUpdate();
+    }
 
-        return false;
+    changeBranchUid(e) {
+        let id = e.target.getAttribute('data-id'),
+            value = e.target.value;
+
+        this.appState.activeItem.branches = this.appState.activeItem.branches.reduce(function (acc, branch) {
+            if (branch.id === id) {
+                branch.uid = value;
+            }
+
+            acc.push(branch);
+
+            return acc;
+        }, []);
     }
 
     render() {
