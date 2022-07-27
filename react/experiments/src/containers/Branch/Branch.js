@@ -7,7 +7,7 @@ class Branch extends React.Component {
         super(props);
 
         this.state = {
-            branches: this.props.branches ?? []
+            branches: this.props.branches ?? [],
         }
     }
 
@@ -17,6 +17,19 @@ class Branch extends React.Component {
                 branches: this.props.branches
             })
         }
+    }
+
+    changeBranchUid(e) {
+        this.props.onChangeBranchUid(e)
+        this.forceUpdate()
+    }
+
+    addDash(name) {
+        if (name !== undefined) {
+            return name.replace(/ /g, '-')
+        }
+
+        return name;
     }
 
     render () {
@@ -30,17 +43,18 @@ class Branch extends React.Component {
                             <ExperimentInput
                                 title={'Branch name'}
                                 dataId={item.id}
-                                value={item.uid}
+                                value={item.name}
                                 placeholder={'Branch name'}
                                 onChange={e => this.props.onChangeBranchName(e)}
                             />
-                            {/*<ExperimentInput*/}
-                            {/*    title={'Branch uid'}*/}
-                            {/*    dataId={item.id}*/}
-                            {/*    value={item.uid}*/}
-                            {/*    placeholder={'Branch uid'}*/}
-                            {/*    onChange={e => this.changeBranchUid(e)}*/}
-                            {/*/>*/}
+                            <ExperimentInput
+                                title={'Branch uid'}
+                                dataId={item.id}
+                                value={this.addDash(item.uid ?? item.name)}
+                                disabled={item.inactive_edit_uid ?? this.props.disabled}
+                                placeholder={'Branch uid'}
+                                onChange={e => this.changeBranchUid(e)}
+                            />
                             <div className="create-setting__item2">
                                 <div className="create-setting__item-digit">
                                     <label className="create-setting__label">Split</label>

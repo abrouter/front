@@ -8,7 +8,6 @@ import ExperimentInput from "./Inputs/ExperimentInput";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import Branch from "./Branch/Branch";
-import experimentValidation from "../validation/validation";
 
 class ExperimentsList extends React.Component {
     experimentStyleBlock = {'display': 'block'};
@@ -22,7 +21,7 @@ class ExperimentsList extends React.Component {
                 ? 'all'
                 : 'active',
             experiments: [],
-            displayExperiments: []
+            displayExperiments: [],
         }
         this.props = props;
         this.props.parent.experimentList = this;
@@ -39,10 +38,6 @@ class ExperimentsList extends React.Component {
                 isLoaded: 1
             });
         }
-    }
-
-    componentWillUnmount() {
-
     }
 
     load() {
@@ -143,14 +138,12 @@ class ExperimentsList extends React.Component {
     cancelEdit(e) {
         this.deleteClassEdit();
         e.preventDefault();
-        this.props.parent.appState.mode = 'create';
-        this.props.parent.appState.activeItem = {};
+        this.props.parent.refreshState();
         this.forceUpdate();
     }
 
     createExperiment(e) {
         this.deleteClassActive(e)
-        this.props.parent.refreshState();
         this.experimentStyleBlock = {'display': 'none'};
         this.props.parent.experimentCreate.createExperiment(e);
         this.forceUpdate();
@@ -333,6 +326,11 @@ class ExperimentsList extends React.Component {
         this.forceUpdate();
     }
 
+    changeBranchUid(e) {
+        this.props.parent.changeBranchUid(e);
+        this.forceUpdate();
+    }
+
     setActiveTab(tab) {
         this.setState({
             activeTab: tab
@@ -506,12 +504,14 @@ class ExperimentsList extends React.Component {
                                         <ExperimentInput
                                             title={'Experiment uid'}
                                             value={item.alias}
-                                            mode={this.props.parent.appState.mode}
+                                            disabled={this.props.parent.appState.mode === 'edit'}
                                         />
                                     </div>
                                     <Branch
                                         branches={this.props.parent.appState.activeItem.branches ?? []}
+                                        disabled={this.props.parent.appState.mode === 'edit'}
                                         onChangeBranchName={e => this.changeBranchName(e)}
+                                        onChangeBranchUid={e => this.changeBranchUid(e)}
                                         onChangePercent={e => this.changePercent(e)}
                                         onClickPercent={e => this.changePercent(e)}
                                         onClickRemoveBranch={e => this.removeBranch(e)}

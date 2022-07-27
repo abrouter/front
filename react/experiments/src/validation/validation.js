@@ -40,7 +40,8 @@ function experimentValidation (item) {
 
     for (let i = 0; i < item.length - 2; i++) {
         let branchName = item[i].children[0].children[1].value,
-            percent = item[i].children[1].children[0].children[1].children[1].children[0].value;
+            branchUid = item[i].children[0].children[1].value,
+            percent = item[i].children[2].children[0].children[1].children[1].children[0].value;
 
         if(branchName.length !== 0) {
             allBranchName.push(branchName);
@@ -55,6 +56,15 @@ function experimentValidation (item) {
                 'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
             );
             item[i].children[0].children[2].setAttribute('style', 'display:block');
+        }
+
+        if (branchUid.length === 0) {
+            window.mode !== 'feature-toggle' ? error = true : error = false;
+
+            item[i].children[1].children[1].setAttribute(
+                'style', 'box-shadow: inset 0 0 0 0.0625rem #dc3545, 0 0 0 0.25rem #e0e3e9'
+            );
+            item[i].children[1].children[2].setAttribute('style', 'display:block');
         }
 
         if (branchName.length === 0 && countPercentage === 100) {

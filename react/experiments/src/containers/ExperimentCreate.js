@@ -126,7 +126,8 @@ class ExperimentCreate extends React.Component {
         }
 
         this.props.parent.appState.activeItem.branches.push({
-            'id': Date.now().toString()
+            'id': Date.now().toString(),
+            'inactive_edit_uid': false
         });
 
         this.forceUpdate();
@@ -145,6 +146,7 @@ class ExperimentCreate extends React.Component {
 
     createExperiment(e) {
         this.styleCreateExperimentBlock = {'display':'block'};
+        this.props.parent.refreshState();
         this.createBranchId();
         this.forceUpdate();
     }
@@ -215,14 +217,13 @@ class ExperimentCreate extends React.Component {
                                 title={nameColumn}
                                 value={this.state.experimentName}
                                 placeholder={'Button color test'}
-                                mode={this.props.parent.appState.mode}
                                 onChange={e => this.changeName(e.target.value)}
                             />
                             <ExperimentInput
                                 title={nameUidColumn}
                                 value={this.state.experimentUid}
                                 placeholder={'Button'}
-                                mode={this.props.parent.appState.mode}
+                                disabled={this.props.parent.appState.mode === 'edit'}
                                 onChange={e => this.changeUid(e.target.value)}
                             />
                         </form>
@@ -234,6 +235,7 @@ class ExperimentCreate extends React.Component {
                         <form className="create-setting__form" id="create_branch" onSubmit={this.checkSendData.bind(this)}>
                             <Branch
                                 branches={branches}
+                                disabled={this.props.parent.appState.activeItem.mode === 'edit'}
                                 onChangeBranchName={e => this.changeBranchName(e)}
                                 onChangeBranchUid={e => this.changeBranchUid(e)}
                                 onChangePercent={e => this.changePercent(e)}

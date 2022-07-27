@@ -26,6 +26,7 @@ class App extends React.Component {
     edit(item) {
         this.appState.mode = 'edit';
         this.appState.activeItem = item;
+        this.forceUpdate()
     }
 
     changeName(value) {
@@ -65,7 +66,7 @@ class App extends React.Component {
 
         this.appState.activeItem.branches = this.appState.activeItem.branches.reduce(function (acc, branch) {
             if (branch.id === id) {
-                branch.uid = value;
+                branch.name = value;
             }
 
             acc.push(branch);

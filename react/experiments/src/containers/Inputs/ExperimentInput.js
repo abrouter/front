@@ -36,11 +36,10 @@ class ExperimentInput extends React.Component {
                     id={this.props.dataId}
                     autoComplete="off"
                     type="text"
-                    data-error="Ошибка"
                     placeholder={this.props.placeholder}
                     className="input create-setting__input"
                     value={this.props.value}
-                    disabled={this.props.mode === 'edit'}
+                    disabled={this.props.disabled}
                     data-id={this.props.dataId}
                     onChange={e => {
                         this.showError(e, e.target.value)
