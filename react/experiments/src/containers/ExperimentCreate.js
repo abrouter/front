@@ -95,6 +95,7 @@ class ExperimentCreate extends React.Component {
         for (let i = 0; i < 2; i++) {
             this.props.parent.appState.activeItem.branches.push({
                 'id': Date.now().toString(),
+                'name': branchUid[i],
                 'uid': branchUid[i],
                 'percent': percent[i],
             });
