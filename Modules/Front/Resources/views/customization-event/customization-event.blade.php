@@ -38,10 +38,6 @@ use Modules\Front\Internal\User;
 
 
                 </div>
-                <p>
-                    <br/><br/>
-                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
-                </p>
 
 
                 <div data-edit-flags class="setting__table table-setting table-setting_stat" id="all-events">
@@ -52,6 +48,11 @@ use Modules\Front\Internal\User;
                         </div>
                     </div>
                 </div>
+                <p>
+                    <br/><br/>
+                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
+                </p>
+
 
 
             </div>
