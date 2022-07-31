@@ -43,7 +43,7 @@
                         <tr class="table__thead-tr">
                             <th class="table__thead-th" scope="col">Event name
                             </th>
-                            <th class="table__thead-th" scope="col">Persentage
+                            <th class="table__thead-th" scope="col">Percentage
                             </th>
                             <th class="table__thead-th" scope="col">Counters
                             </th>
