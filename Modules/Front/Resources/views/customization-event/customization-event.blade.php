@@ -45,6 +45,12 @@ use Modules\Front\Internal\User;
                         </div>
                     </div>
                 </div>
+
+                <p>
+                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
+                </p>
+                <!--ZALUPA -->
+
             </div>
         </div>
     </div>
@@ -94,7 +100,7 @@ use Modules\Front\Internal\User;
                                         '<input ' +
                                             'autocomplete="off"' +
                                             'type="text"' +
-                                            'data-error="Ошибка"' +
+                                            'data-error="Error"' +
                                             'data-id="'+ eventId +'"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
@@ -191,7 +197,7 @@ use Modules\Front\Internal\User;
                                         '<input ' +
                                             'autocomplete="off"' +
                                             'type="text"' +
-                                            'data-error="Ошибка"' +
+                                            'data-error="Error"' +
                                             'data-id="'+ eventId +'"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
@@ -348,7 +354,7 @@ use Modules\Front\Internal\User;
                                 '<input ' +
                                     'autocomplete="off" ' +
                                     'type="text" ' +
-                                    'data-error="Ошибка" ' +
+                                    'data-error="Error" ' +
                                     'placeholder="open_contact_form" ' +
                                     'class="input create-setting__input"' +
                                     'id="create_event_name">' +
@@ -372,7 +378,4 @@ use Modules\Front\Internal\User;
             })
         });
     </script>
-    <p>
-    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
-    </p>
 @endsection
