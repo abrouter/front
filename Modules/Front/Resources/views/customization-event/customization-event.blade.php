@@ -373,6 +373,7 @@ use Modules\Front\Internal\User;
         });
     </script>
 
+</div>
 
     <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
 
