@@ -121,7 +121,7 @@ use Modules\Front\Internal\User;
                     if(response.data.length === 0){
                         $('#all-events').hide();
                         $('.setting__stat.stat').append('<div class="setting__top top-setting">' +
-                            '<div class="top-setting__info">You don\'t have event, yet.</div>' +
+                            '<div class="top-setting__info">You don\'t have any events, yet.</div>' +
                         '</div>' +
                             '<div class="setting__image">' +
                                 '<picture><source srcset="/img/png/setting.webp" type="image/webp"><img src="/img/png/setting.png?_v=1644581884261" alt="Image"></picture>' +
@@ -316,7 +316,7 @@ use Modules\Front\Internal\User;
 
                         if($('.table-setting__wrap').length === 0) {
                             $('.setting__stat.stat').append('<div class="setting__top top-setting">' +
-                                '<div class="top-setting__info">You don\'t have event, yet.</div>' +
+                                '<div class="top-setting__info"><br/>You don\'t have event, yet.</div>' +
                                 '</div>' +
                                 '<div class="setting__image">' +
                                     '<picture><source srcset="/img/png/setting.webp" type="image/webp"><img src="/img/png/setting.png?_v=1644581884261" alt="Image"></picture>' +
