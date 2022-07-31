@@ -30,17 +30,16 @@ class ExperimentInput extends React.Component {
         let title = String(this.props.title);
 
         return (
-            <div className="create-setting__item">
+            <div className="create-setting__item" style={this.props.style}>
                 <label className="create-setting__label">{title}</label>
                 <input
                     id={this.props.dataId}
                     autoComplete="off"
                     type="text"
-                    data-error="Ошибка"
                     placeholder={this.props.placeholder}
                     className="input create-setting__input"
                     value={this.props.value}
-                    disabled={this.props.mode === 'edit'}
+                    disabled={this.props.disabled}
                     data-id={this.props.dataId}
                     onChange={e => {
                         this.showError(e, e.target.value)

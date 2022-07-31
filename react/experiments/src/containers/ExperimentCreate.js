@@ -95,6 +95,7 @@ class ExperimentCreate extends React.Component {
         for (let i = 0; i < 2; i++) {
             this.props.parent.appState.activeItem.branches.push({
                 'id': Date.now().toString(),
+                'name': branchUid[i],
                 'uid': branchUid[i],
                 'percent': percent[i],
             });
@@ -126,7 +127,8 @@ class ExperimentCreate extends React.Component {
         }
 
         this.props.parent.appState.activeItem.branches.push({
-            'id': Date.now().toString()
+            'id': Date.now().toString(),
+            'inactive_edit_uid': false
         });
 
         this.forceUpdate();
@@ -145,6 +147,7 @@ class ExperimentCreate extends React.Component {
 
     createExperiment(e) {
         this.styleCreateExperimentBlock = {'display':'block'};
+        this.props.parent.refreshState();
         this.createBranchId();
         this.forceUpdate();
     }
@@ -200,7 +203,8 @@ class ExperimentCreate extends React.Component {
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [],
             nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name',
-            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid'
+            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid',
+            mode = this.props.parent.appState.mode;
 
         return (
             <>
@@ -212,17 +216,17 @@ class ExperimentCreate extends React.Component {
                         <form className="create-setting__form" id="create_experiment">
                             <div/>
                             <ExperimentInput
+                                style={{'margin-bottom': '1rem'}}
                                 title={nameColumn}
                                 value={this.state.experimentName}
                                 placeholder={'Button color test'}
-                                mode={this.props.parent.appState.mode}
                                 onChange={e => this.changeName(e.target.value)}
                             />
                             <ExperimentInput
                                 title={nameUidColumn}
                                 value={this.state.experimentUid}
                                 placeholder={'Button'}
-                                mode={this.props.parent.appState.mode}
+                                disabled={this.props.parent.appState.mode === 'edit'}
                                 onChange={e => this.changeUid(e.target.value)}
                             />
                         </form>
@@ -232,14 +236,17 @@ class ExperimentCreate extends React.Component {
                             Branches
                         </div>
                         <form className="create-setting__form" id="create_branch" onSubmit={this.checkSendData.bind(this)}>
-                            <Branch
-                                branches={branches}
-                                onChangeBranchName={e => this.changeBranchName(e)}
-                                onChangeBranchUid={e => this.changeBranchUid(e)}
-                                onChangePercent={e => this.changePercent(e)}
-                                onClickPercent={e => this.changePercent(e)}
-                                onClickRemoveBranch={e => this.removeBranch(e)}
-                            />
+                            {mode === 'create' &&
+                                <Branch
+                                    branches={branches}
+                                    disabled={this.props.parent.appState.activeItem.mode === 'edit'}
+                                    onChangeBranchName={e => this.changeBranchName(e)}
+                                    onChangeBranchUid={e => this.changeBranchUid(e)}
+                                    onChangePercent={e => this.changePercent(e)}
+                                    onClickPercent={e => this.changePercent(e)}
+                                    onClickRemoveBranch={e => this.removeBranch(e)}
+                                />
+                            }
                             <button onClick={this.addBranch.bind(this)} className="create-setting__button" style={displayAddBranch}>
                                 + Add another branch
                             </button>
