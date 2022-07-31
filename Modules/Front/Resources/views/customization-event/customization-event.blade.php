@@ -19,6 +19,13 @@ use Modules\Front\Internal\User;
                     </svg>
                     Back to statistics
                 </a>
+
+                <p>
+                    <br/><br/>
+                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
+                </p>
+
+
                 <div class="stat__head">
                     <div class="stat__title">
                         Funnel statistics
@@ -46,11 +53,6 @@ use Modules\Front\Internal\User;
                     </div>
                 </div>
 
-                <p>
-                    <br/><br/>
-                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
-                </p>
-                <!--ZALUPA -->
 
             </div>
         </div>
