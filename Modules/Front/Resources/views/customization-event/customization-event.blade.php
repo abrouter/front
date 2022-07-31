@@ -50,7 +50,7 @@ use Modules\Front\Internal\User;
                 </div>
                 <p>
                     <br/><br/>
-                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank" style="text-decoration: underline;">(!) Learn more about tracking A/B tests in the docs</a>
+                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank" style="text-decoration: underline;">(I) Learn more about tracking A/B tests in the docs</a>
                     <br/>
                     <br/>
                 </p>
