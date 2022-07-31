@@ -30,7 +30,7 @@ class ExperimentInput extends React.Component {
         let title = String(this.props.title);
 
         return (
-            <div className="create-setting__item">
+            <div className="create-setting__item" style={this.props.style}>
                 <label className="create-setting__label">{title}</label>
                 <input
                     id={this.props.dataId}

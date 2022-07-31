@@ -143,7 +143,8 @@ class ExperimentsList extends React.Component {
     }
 
     createExperiment(e) {
-        this.deleteClassActive(e)
+        this.deleteClassEdit();
+        this.deleteClassActive(e);
         this.experimentStyleBlock = {'display': 'none'};
         this.props.parent.experimentCreate.createExperiment(e);
         this.forceUpdate();
@@ -495,7 +496,7 @@ class ExperimentsList extends React.Component {
                                 <div className="table-setting__column1"/>
                                 <form className="create-setting__form" onSubmit={e => this.submitHandle(e)}>
                                     <div/>
-                                    <div className="create-setting__row">
+                                    <div className="create-setting__row" style={{"margin-bottom":"3rem"}}>
                                         <ExperimentInput
                                             title={'Experiment name'}
                                             value={experimentName}

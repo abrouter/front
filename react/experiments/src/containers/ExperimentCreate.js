@@ -203,7 +203,8 @@ class ExperimentCreate extends React.Component {
         const titleCreate = window.mode === 'feature-toggle' ? 'flag' : 'experiment';
         let branches = this.props.parent.appState.activeItem.branches ?? [],
             nameColumn = window.mode === 'feature-toggle' ? 'Feature flags name' : 'Experiment name',
-            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid'
+            nameUidColumn = window.mode === 'feature-toggle' ? 'Feature flags uid' : 'Experiment uid',
+            mode = this.props.parent.appState.mode;
 
         return (
             <>
@@ -215,6 +216,7 @@ class ExperimentCreate extends React.Component {
                         <form className="create-setting__form" id="create_experiment">
                             <div/>
                             <ExperimentInput
+                                style={{'margin-bottom': '1rem'}}
                                 title={nameColumn}
                                 value={this.state.experimentName}
                                 placeholder={'Button color test'}
@@ -234,15 +236,17 @@ class ExperimentCreate extends React.Component {
                             Branches
                         </div>
                         <form className="create-setting__form" id="create_branch" onSubmit={this.checkSendData.bind(this)}>
-                            <Branch
-                                branches={branches}
-                                disabled={this.props.parent.appState.activeItem.mode === 'edit'}
-                                onChangeBranchName={e => this.changeBranchName(e)}
-                                onChangeBranchUid={e => this.changeBranchUid(e)}
-                                onChangePercent={e => this.changePercent(e)}
-                                onClickPercent={e => this.changePercent(e)}
-                                onClickRemoveBranch={e => this.removeBranch(e)}
-                            />
+                            {mode === 'create' &&
+                                <Branch
+                                    branches={branches}
+                                    disabled={this.props.parent.appState.activeItem.mode === 'edit'}
+                                    onChangeBranchName={e => this.changeBranchName(e)}
+                                    onChangeBranchUid={e => this.changeBranchUid(e)}
+                                    onChangePercent={e => this.changePercent(e)}
+                                    onClickPercent={e => this.changePercent(e)}
+                                    onClickRemoveBranch={e => this.removeBranch(e)}
+                                />
+                            }
                             <button onClick={this.addBranch.bind(this)} className="create-setting__button" style={displayAddBranch}>
                                 + Add another branch
                             </button>
