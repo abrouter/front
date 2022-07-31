@@ -51,6 +51,7 @@ use Modules\Front\Internal\User;
                 <p>
                     <br/><br/>
                     <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank">Learn more about tracking A/B tests</a>
+                    <br/>
                 </p>
 
 
