@@ -65,6 +65,7 @@ use Modules\Front\Internal\User;
         gtag('js', new Date());
 
         gtag('config', 'G-M750FJFSKP');
+        gtag('config', 'AW-10955547660');
     </script>
 
     <!-- require daterangepicker -->
