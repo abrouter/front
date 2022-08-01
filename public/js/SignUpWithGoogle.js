@@ -24,7 +24,7 @@ function handleCredentialResponse(response) {
     ));
     xhr.onload = function() {
         let token = xhr.response.data.attributes.token;
-        let isNew = xhr.response.data.meta.isNew;
+        let isNew = xhr.response.meta.isNew;
         
         if (isNew) {
             window.location.href = '/en/redirect?token='+token + '&to=/en/board?signup_conversion=1';
