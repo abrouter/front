@@ -23,10 +23,13 @@ function handleCredentialResponse(response) {
     }
     ));
     xhr.onload = function() {
-        token = xhr.response.data.attributes.token;
+        let token = xhr.response.data.attributes.token;
+        let isNew = xhr.response.data.meta.isNew;
         
-        if (window.mode === 'signup') {
+        if (isNew) {
             window.location.href = '/en/redirect?token='+token + '&to=/en/board?signup_conversion=1';
-        } else window.location.href = '/en/redirect?token='+token + '&to=/en/board';
+        } else {
+            window.location.href = '/en/redirect?token='+token + '&to=/en/board';
+        }
     }; 
 }
