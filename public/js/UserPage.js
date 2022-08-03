@@ -457,7 +457,7 @@ $(document).ready(function () {
         $('#experiment_branches .select .select_dropdown ul').empty()
     })
 
-    $(document).on('click', '#remove_user_from_experiment', function (event) {
+    $(document).on('click', '#remove', function (event) {
         $('.loader').show()
 
         let userId = event.currentTarget.getAttribute('data-user-id'),
