@@ -679,9 +679,9 @@ function getUserStats (response, userId) {
             '</table>'
         )
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 50; i++) {
             if (response.data[i] === undefined) {
-                continue;
+                break;
             }
 
             let entry = response.data[i],
