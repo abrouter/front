@@ -457,7 +457,7 @@ $(document).ready(function () {
         $('#experiment_branches .select .select_dropdown ul').empty()
     })
 
-    $(document).on('click', '#remove_user_from_experiment', function (event) {
+    $(document).on('click', '#remove', function (event) {
         $('.loader').show()
 
         let userId = event.currentTarget.getAttribute('data-user-id'),
@@ -679,9 +679,9 @@ function getUserStats (response, userId) {
             '</table>'
         )
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 50; i++) {
             if (response.data[i] === undefined) {
-                continue;
+                break;
             }
 
             let entry = response.data[i],
