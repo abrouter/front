@@ -19,6 +19,8 @@ use Modules\Front\Internal\User;
                     </svg>
                     Back to statistics
                 </a>
+
+
                 <div class="stat__head">
                     <div class="stat__title">
                         Funnel statistics
@@ -32,7 +34,12 @@ use Modules\Front\Internal\User;
                         </svg>
                         <span>Add event </span>
                     </button>
+
+
+
                 </div>
+
+
                 <div data-edit-flags class="setting__table table-setting table-setting_stat" id="all-events">
                     <div class=" table-setting__head">
                         <div class="table-setting__column2 ">Event name</div>
@@ -41,6 +48,15 @@ use Modules\Front\Internal\User;
                         </div>
                     </div>
                 </div>
+                <p>
+                    <br/><br/>
+                    <a href="https://docs.abrouter.com/docs/managing/trackingabtests/" target="_blank" style="text-decoration: underline;">Learn more about tracking A/B tests in the docs</a>
+                    <br/>
+                    <br/>
+                </p>
+
+
+
             </div>
         </div>
     </div>
@@ -90,7 +106,7 @@ use Modules\Front\Internal\User;
                                         '<input ' +
                                             'autocomplete="off"' +
                                             'type="text"' +
-                                            'data-error="Ошибка"' +
+                                            'data-error="Error"' +
                                             'data-id="'+ eventId +'"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
@@ -107,7 +123,7 @@ use Modules\Front\Internal\User;
                     if(response.data.length === 0){
                         $('#all-events').hide();
                         $('.setting__stat.stat').append('<div class="setting__top top-setting">' +
-                            '<div class="top-setting__info">You don\'t have event, yet.</div>' +
+                            '<div class="top-setting__info">You don\'t have any events, yet.</div>' +
                         '</div>' +
                             '<div class="setting__image">' +
                                 '<picture><source srcset="/img/png/setting.webp" type="image/webp"><img src="/img/png/setting.png?_v=1644581884261" alt="Image"></picture>' +
@@ -187,7 +203,7 @@ use Modules\Front\Internal\User;
                                         '<input ' +
                                             'autocomplete="off"' +
                                             'type="text"' +
-                                            'data-error="Ошибка"' +
+                                            'data-error="Error"' +
                                             'data-id="'+ eventId +'"' +
                                             'placeholder="'+ eventName +'"' +
                                             'class="input create-setting__input"' +
@@ -302,7 +318,7 @@ use Modules\Front\Internal\User;
 
                         if($('.table-setting__wrap').length === 0) {
                             $('.setting__stat.stat').append('<div class="setting__top top-setting">' +
-                                '<div class="top-setting__info">You don\'t have event, yet.</div>' +
+                                '<div class="top-setting__info"><br/>You don\'t have event, yet.</div>' +
                                 '</div>' +
                                 '<div class="setting__image">' +
                                     '<picture><source srcset="/img/png/setting.webp" type="image/webp"><img src="/img/png/setting.png?_v=1644581884261" alt="Image"></picture>' +
@@ -344,7 +360,7 @@ use Modules\Front\Internal\User;
                                 '<input ' +
                                     'autocomplete="off" ' +
                                     'type="text" ' +
-                                    'data-error="Ошибка" ' +
+                                    'data-error="Error" ' +
                                     'placeholder="open_contact_form" ' +
                                     'class="input create-setting__input"' +
                                     'id="create_event_name">' +

@@ -39,9 +39,9 @@ function saveExperimentState(experiment) {
                 'id': branch.id,
                 'type': 'experiment_branches',
                 'attributes': {
-                    'name': branch.uid,
+                    'name': branch.name,
                     'percent': branch.percent,
-                    'uid': branch.uid,
+                    'uid': branch.uid ?? branch.name,
                     'config': {},
                 },
                 'relationships': {
