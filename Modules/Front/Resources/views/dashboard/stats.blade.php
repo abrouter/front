@@ -25,7 +25,7 @@
                                     type="text"
                                     data-error="Ошибка"
                                     placeholder=""
-                                    class="date__input"
+                                    class="date__input date-range"
                                     id="date_stats"
                                     name="dates"
                             >
@@ -116,6 +116,13 @@
         window.token='Bearer <?=request()->cookie('token')?>';
         window.onload = $('.loader').show();
         window.mode = 'stats';
+        $('.date-range[name="dates"]').daterangepicker({
+            startDate: moment().subtract(6, "days").format('MMM DD, YYYY'),
+            endDate: moment().format('MMM DD, YYYY'),
+            locale: {
+                format: 'MMMM DD, YYYY'
+            }
+        })
     </script>
     <script src="/js/Stats.js"></script>
 @endsection

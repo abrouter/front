@@ -93,7 +93,7 @@ use Modules\Front\Assets\Puller;
                                 type="text"
                                 data-error="Ошибка"
                                 placeholder=""
-                                class="date__input"
+                                class="date__input date-range"
                                 name="dates"
                                 id="date_filter_experiment"
                             >
@@ -218,6 +218,13 @@ use Modules\Front\Assets\Puller;
         window.token='Bearer <?=request()->cookie('token')?>';
         window.onload = $('.loader').show();
         window.mode = 'experiment_stats';
+        $('.date-range[name="dates"]').daterangepicker({
+            startDate: moment().subtract(6, "days").format('MMM DD, YYYY'),
+            endDate: moment().format('MMM DD, YYYY'),
+            locale: {
+                format: 'MMMM DD, YYYY'
+            }
+        })
     </script>
     <script src="/js/Stats.js"></script>
 @endsection
