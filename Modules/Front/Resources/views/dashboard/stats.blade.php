@@ -116,13 +116,6 @@
         window.token='Bearer <?=request()->cookie('token')?>';
         window.onload = $('.loader').show();
         window.mode = 'stats';
-        $('.date-range[name="dates"]').daterangepicker({
-            startDate: moment().subtract(6, "days").format('MMM DD, YYYY'),
-            endDate: moment().format('MMM DD, YYYY'),
-            locale: {
-                format: 'MMMM DD, YYYY'
-            }
-        })
     </script>
     <script src="/js/Stats.js"></script>
 @endsection

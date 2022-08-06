@@ -626,6 +626,12 @@ function getDateIntervals(id, startDate, endDate) {
 }
 
 $(document).ready(function () {
+    getDateIntervals(
+        '.date-range[name="dates"]',
+        moment().subtract(6, "days").format('MMM DD, YYYY'),
+        moment().format('MMM DD, YYYY')
+    )
+
     let dateInterval = $('#date_filter_experiment').val() ?? $('#event_track').val(),
         dateSplit = dateInterval.split('-'),
         dateFrom = convertDate(dateSplit[0]),
