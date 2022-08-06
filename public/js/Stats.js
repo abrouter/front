@@ -50,7 +50,8 @@ function getFunnelStats (
 ) {
     $.ajax({
         'method': "POST",
-        'url': "/api/v1/event/funnel",
+        'url': "/api/v1/event/funnel?filter[date_from]=" + dateFrom +
+            "&filter[date_to]=" + dateTo,
         'headers': {
             'Authorization': window.token,
         },
@@ -632,7 +633,7 @@ $(document).ready(function () {
         moment().format('MMM DD, YYYY')
     )
 
-    let dateInterval = $('#date_filter_experiment').val() ?? $('#event_track').val(),
+    let dateInterval = $('#date_filter_experiment').val() ?? $('#date_stats').val(),
         dateSplit = dateInterval.split('-'),
         dateFrom = convertDate(dateSplit[0]),
         dateTo = convertDate(dateSplit[1]),
@@ -651,8 +652,8 @@ $(document).ready(function () {
 
     window.mode === 'stats'
         ? getFunnelStats(
-            dateTo,
             dateFrom,
+            dateTo,
             dateIntervals
         )
         : (
