@@ -513,7 +513,7 @@ $(document).ready(function () {
     $(document).on('click', '.new_user_event_button', function (event) {
         let n = $('tr#event_tr').last().data('id'),
             i = n + 1,
-            loadEvents = n + 3;
+            loadEvents = n + 51;
 
         if (loadEvents === events.length || loadEvents > events.length) {
             $('.new_user_event_button').remove();
@@ -723,7 +723,7 @@ function getUserStats (response, userId) {
             )
         }
 
-        if (response.data.length > 2) {
+        if (response.data.length > 50) {
             $('.new_user_event').append(
                 '<div class="new_user_event_button">' +
                     '<button class="button">Load more</button>' +
