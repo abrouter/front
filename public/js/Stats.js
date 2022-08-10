@@ -236,7 +236,7 @@ function getExperimentStats (
                 for (let event in percentage[branchName]) {
                     let eventJoin = event.split('_').join(' '),
                         upperCaseBranch = eventJoin[0].toUpperCase() + eventJoin.substring(1)
-                    console.log(events)
+
                     if (n < events.length) {
                         n++;
 
