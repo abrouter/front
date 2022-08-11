@@ -1,7 +1,26 @@
 $(document).ready(function () {
     let experimentsBranches,
-        userId,
-        events;
+        url = new URL(window.location.href),
+        userId = url.searchParams.get('userId'),
+        dateFrom = url.searchParams.get('dateFrom'),
+        dateTo = url.searchParams.get('dateTo'),
+        load = 0;
+
+    if (
+        userId !== null &&
+        dateFrom !== null &&
+        dateTo !== null
+    ) {
+        $('#user_id').val(userId);
+
+        getUserData(
+            userId,
+            convertDate(dateFrom),
+            convertDate(dateTo),
+            dateFrom,
+            dateTo,
+        )
+    }
 
     $('.loader').hide();
 
@@ -44,176 +63,25 @@ $(document).ready(function () {
             return false;
         }
 
-        $('.loader').show();
-
         let dateFrom = $('#event_date_from').val(),
             dateTo = $('#event_date_to').val(),
             convertDateFrom = convertDate(dateFrom),
             convertDateTo = convertDate(dateTo);
 
-        $.ajax({
-            'async': false,
-            'method': "GET",
-            'url': "/api/v1/user-info/" + userId,
-            'headers': {
-                'Authorization': window.shortToken,
-            },
-            'success': function (response) {
-                let entry = response['data']['attributes'],
-                    createdAt = entry['created_at'],
-                    browser = entry['browser'] ?? '',
-                    platform = entry['platform'] ?? '',
-                    countryName = entry['country_name'] ?? '',
-                    date = getFullDate(createdAt);
+        url.searchParams.set('userId', userId);
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
 
-                if (createdAt !== null) {
-                    $('#add_user').show();
-                    $('#empty_user_info').remove();
+        window.history.replaceState({}, '', url);
 
-                    $('.new_user').append(
-                        '<div class="new_user_label" id="results">Results:</div>' +
-                        '<div class="new_user_title" id="user_info_title">User info</div>' +
-                        '<div class="new_user_info" id="user_info"></div>' +
-                        '<div class="new_user_title" id="experiments_title">Experiments</div>' +
-                        '<div class="new_user_experiment" id="new_user_experiment"></div>' +
-                        '<div class="new_user_title" id="user_events_title">User events</div>' +
-                        '<div class="new_user_event" id="new_user_event">' +
-                            '<label class="new_user_event_input">' +
-                                '<span class="lab">' +
-                                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" ' +
-                                         'xmlns="http://www.w3.org/2000/svg">' +
-                                        '<path ' +
-                                            'd="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8ZM9 14H7V12H9V14ZM13 14H11V12H13V14ZM17 14H15V12H17V14ZM9 18H7V16H9V18ZM13 18H11V16H13V18ZM17 18H15V16H17V18Z" ' +
-                                            'fill="#9699AB"/>' +
-                                    '</svg>' +
-                                    '<span>Date Range: </span>' +
-                                '</span>' +
-                                '<input class="input" type="text" value="' + dateFrom + ' - ' + dateTo + '" id="event_date">' +
-                            '</label>' +
-                        '</div>'
-                    )
+        $('.loader').show();
 
-                    $('.new_user_info').append(
-                        '<div class="new_user_info_li">' +
-                            '<span>Registered</span>' +
-                            '<p>' + date + '</p>' +
-                        '</div>' +
-                        '<div class="new_user_info_li">' +
-                            '<span>Browser</span>' +
-                            '<p>' + browser + '</p>' +
-                        '</div>' +
-                        '<div class="new_user_info_li">' +
-                            '<span>Platform</span>' +
-                            '<p>' + platform + '</p>' +
-                        '</div>' +
-                        '<div class="new_user_info_li">' +
-                            '<span>Country</span>' +
-                            '<p>' + countryName + '</p>' +
-                        '</div>'
-                    )
-                } else {
-                    $('#add_user').hide();
-
-                    $('.new_user').append(
-                        '<div class="new_user_label" id="empty_user_info">There is no user data yet</div>'
-                    )
-                }
-
-            }
-        });
-
-        $.ajax({
-            'async': false,
-            'method': "GET",
-            'url': "/api/v1/experiments/have-user/" + userId,
-            'headers': {
-                'Authorization': window.shortToken,
-            },
-            'success': function (response) {
-                if (response.data.length > 0) {
-                    $('.new_user_experiment').append(
-                        '<div class="new_user_experiment_net _top">' +
-                            '<div class="new_user_experiment_col">Experiment name</div>' +
-                            '<div class="new_user_experiment_col">Branch</div>' +
-                            '<div class="new_user_experiment_col">Got into the experiment at</div>' +
-                        '</div>'
-                    )
-
-                    for (let id in response.data) {
-                        let entry = response.data[id],
-                            experimentName = entry['attributes']['experiment-uid'],
-                            branchName = entry['attributes']['branch-uid'],
-                            experimentId = entry['relationships']['experiment_id']['data']['id'],
-                            branchId = entry['relationships']['experiment_branch_id']['data']['id'],
-                            createdAt = entry['attributes']['created_at'],
-                            date = getFullDate(createdAt);
-
-                        $('.new_user_experiment').append(
-                            '<div class="new_user_experiment_item new_user_experiment_net">' +
-                                '<div class="new_user_experiment_col">' +
-                                    '<span>Experiment name</span>' +
-                                    experimentName +
-                                '</div>' +
-                                '<div class="new_user_experiment_col">' +
-                                    '<span>Branch</span>' +
-                                    branchName +
-                                '</div>' +
-                                '<div class="new_user_experiment_col">' +
-                                    '<span>Got into the experiment at</span>' +
-                                    date +
-                                '</div>' +
-                                '<div class="new_user_experiment_col _del" id="remove" ' +
-                                    'data-user-id="' + userId + '" ' +
-                                    'data-experiment-branch-id="' + branchId + '" ' +
-                                    'data-experiment-id="' + experimentId +
-                                '">' +
-                                        '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" ' +
-                                             'xmlns="http://www.w3.org/2000/svg">' +
-                                            '<rect width="32" height="32" rx="10" fill="var(--bg)"/>' +
-                                            '<path ' +
-                                                'd="M10 23C10 24.1 10.9 25 12 25H20C21.1 25 22 24.1 22 23V13C22 11.9 21.1 11 20 11H12C10.9 11 10 11.9 10 13V23ZM13 13H19C19.55 13 20 13.45 20 14V22C20 22.55 19.55 23 19 23H13C12.45 23 12 22.55 12 22V14C12 13.45 12.45 13 13 13ZM19.5 8L18.79 7.29C18.61 7.11 18.35 7 18.09 7H13.91C13.65 7 13.39 7.11 13.21 7.29L12.5 8H10C9.45 8 9 8.45 9 9C9 9.55 9.45 10 10 10H22C22.55 10 23 9.55 23 9C23 8.45 22.55 8 22 8H19.5Z" ' +
-                                                'fill="var(--color)"/>' +
-                                        '</svg>' +
-                                '</div>' +
-                            '</div>'
-                        )
-                    }
-                } else {
-                    $('.new_user_experiment').append(
-                        '<div class="new_user_label" id="empty_experiment">There is no user data yet</div>'
-                    )
-                }
-            }
-        });
-
-        $.ajax({
-            'async': false,
-            'method': "GET",
-            'url': "/api/v1/statistics/user/"
-                + userId
-                + "?filter[date_from]=" + convertDateFrom +"&filter[date_to]="+ convertDateTo,
-            'headers': {
-                'Authorization': window.shortToken,
-            },
-            'success': function (response) {
-                getUserStats(response, userId)
-
-                events = response.data
-
-                $('#event_date').daterangepicker({
-                    singleDatePicker: false,
-                    showDropdowns: true,
-                    locale: {
-                        format: 'MMMM DD, YYYY'
-                    }
-                })
-            },
-            'complete': function () {
-                window.setTimeout(function () {
-                    $('.loader').hide()
-                }, 1000)
-            },
-        });
+        getUserData(
+            userId,
+            convertDateFrom,
+            convertDateTo,
+            dateFrom,
+            dateTo)
     })
 
     $(document).on('click','#add_user_to_experiment', function (event) {
@@ -421,7 +289,7 @@ $(document).ready(function () {
                                 '<span>Got into the experiment at</span>' +
                                 date +
                             '</div>' +
-                            '<div class="new_user_experiment_col _del" id="remove_user_from_experiment" ' +
+                            '<div class="new_user_experiment_col _del" id="remove" ' +
                                 'data-user-id="' + userId + '" ' +
                                 'data-experiment-branch-id="' + branchId + '" ' +
                                 'data-experiment-id="' + experimentId +
@@ -505,7 +373,7 @@ $(document).ready(function () {
                 }
 
                 toastr.options.positionClass = 'toast-top-left';
-                toastr.success('User has been deleted');
+                toastr.success('Experiment has been removed');
             }
         })
     })
@@ -520,11 +388,11 @@ $(document).ready(function () {
         }
 
         for (i; i < loadEvents; i++) {
-            if (events[i] === undefined) {
+            if (window.events[i] === undefined) {
                 continue;
             }
 
-            let entry = events[i],
+            let entry = window.events[i],
                 user = entry['attributes']['user_id'] ?? '',
                 event = entry['attributes']['event'] ?? '',
                 date = getFullDate(entry['attributes']['created_at']) ?? '',
@@ -565,11 +433,26 @@ $(document).ready(function () {
 
     })
 
+    $(document).on('click', '#event_date', function (event) {
+        load = 1;
+    });
+
     $(document).on('change', '#event_date', function (event) {
+        if (load === 0) {
+            return;
+        }
+
+        $('.loader').show();
+
         let dateInterval = event.currentTarget.value,
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]);
+
+        url.searchParams.set('dateFrom', dateSplit[0]);
+        url.searchParams.set('dateTo', dateSplit[1]);
+
+        window.history.replaceState({}, '', url);
 
         $('.new_user_event_button').remove();
         $('#empty_events').remove();
@@ -587,28 +470,33 @@ $(document).ready(function () {
             'success': function (response) {
                 getUserStats(response, userId);
 
-                events = response.data;
-            }
-        });
+                window.events = response.data;
+            },
+            'complete': function () {
+                window.setTimeout(function () {
+                    $('.loader').hide()
+                }, 1000)
+            },
+        })
     })
-})
 
-$('#event_date_from').daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: true,
-    startDate: getStartDate(),
-    locale: {
-        format: 'MMMM DD, YYYY'
-    }
-})
+    $('#event_date_from').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        startDate: dateFrom ?? getStartDate(),
+        locale: {
+            format: 'MMMM DD, YYYY'
+        }
+    })
 
-$('#event_date_to').daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: true,
-    startDate: getEndDate(),
-    locale: {
-        format: 'MMMM DD, YYYY'
-    }
+    $('#event_date_to').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        startDate: dateTo ?? getEndDate(),
+        locale: {
+            format: 'MMMM DD, YYYY'
+        }
+    })
 })
 
 function getStartDate() {
@@ -735,4 +623,178 @@ function getUserStats (response, userId) {
             '<div class="new_user_label" style="margin-top: 10px" id="empty_events">There is no user data yet</div>'
         )
     }
+}
+
+function getUserData(
+    userId,
+    dateFrom,
+    dateTo,
+    startDate,
+    endDate
+) {
+    $.ajax({
+        'async': false,
+        'method': "GET",
+        'url': "/api/v1/user-info/" + userId,
+        'headers': {
+            'Authorization': window.shortToken,
+        },
+        'success': function (response) {
+            let entry = response['data']['attributes'],
+                createdAt = entry['created_at'],
+                browser = entry['browser'] ?? '',
+                platform = entry['platform'] ?? '',
+                countryName = entry['country_name'] ?? '',
+                date = getFullDate(createdAt);
+
+            if (createdAt !== null) {
+                $('#add_user').show();
+                $('#empty_user_info').remove();
+
+                $('.new_user').append(
+                    '<div class="new_user_label" id="results">Results:</div>' +
+                    '<div class="new_user_title" id="user_info_title">User info</div>' +
+                    '<div class="new_user_info" id="user_info"></div>' +
+                    '<div class="new_user_title" id="experiments_title">Experiments</div>' +
+                    '<div class="new_user_experiment" id="new_user_experiment"></div>' +
+                    '<div class="new_user_title" id="user_events_title">User events</div>' +
+                    '<div class="new_user_event" id="new_user_event">' +
+                        '<label class="new_user_event_input">' +
+                            '<span class="lab">' +
+                                '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" ' +
+                                'xmlns="http://www.w3.org/2000/svg">' +
+                                    '<path ' +
+                                    'd="M19 4H18V2H16V4H8V2H6V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 20H5V10H19V20ZM19 8H5V6H19V8ZM9 14H7V12H9V14ZM13 14H11V12H13V14ZM17 14H15V12H17V14ZM9 18H7V16H9V18ZM13 18H11V16H13V18ZM17 18H15V16H17V18Z" ' +
+                                    'fill="#9699AB"/>' +
+                                '</svg>' +
+                                '<span>Date Range: </span>' +
+                            '</span>' +
+                            '<input class="input" type="text" id="event_date">' +
+                        '</label>' +
+                    '</div>'
+                )
+
+                $('.new_user_info').append(
+                    '<div class="new_user_info_li">' +
+                        '<span>Registered</span>' +
+                        '<p>' + date + '</p>' +
+                    '</div>' +
+                    '<div class="new_user_info_li">' +
+                        '<span>Browser</span>' +
+                        '<p>' + browser + '</p>' +
+                    '</div>' +
+                    '<div class="new_user_info_li">' +
+                        '<span>Platform</span>' +
+                        '<p>' + platform + '</p>' +
+                    '</div>' +
+                        '<div class="new_user_info_li">' +
+                        '<span>Country</span>' +
+                        '<p>' + countryName + '</p>' +
+                    '</div>'
+                )
+            } else {
+                $('#add_user').hide();
+
+                $('.new_user').append(
+                    '<div class="new_user_label" id="empty_user_info">There is no user data yet</div>'
+                )
+            }
+
+        }
+    });
+
+    $.ajax({
+        'async': false,
+        'method': "GET",
+        'url': "/api/v1/experiments/have-user/" + userId,
+        'headers': {
+            'Authorization': window.shortToken,
+        },
+        'success': function (response) {
+            if (response.data.length > 0) {
+                $('.new_user_experiment').append(
+                    '<div class="new_user_experiment_net _top">' +
+                    '<div class="new_user_experiment_col">Experiment name</div>' +
+                    '<div class="new_user_experiment_col">Branch</div>' +
+                    '<div class="new_user_experiment_col">Got into the experiment at</div>' +
+                    '</div>'
+                )
+
+                for (let id in response.data) {
+                    let entry = response.data[id],
+                        experimentName = entry['attributes']['experiment-uid'],
+                        branchName = entry['attributes']['branch-uid'],
+                        experimentId = entry['relationships']['experiment_id']['data']['id'],
+                        branchId = entry['relationships']['experiment_branch_id']['data']['id'],
+                        createdAt = entry['attributes']['created_at'],
+                        date = getFullDate(createdAt);
+
+                    $('.new_user_experiment').append(
+                        '<div class="new_user_experiment_item new_user_experiment_net">' +
+                        '<div class="new_user_experiment_col">' +
+                        '<span>Experiment name</span>' +
+                        experimentName +
+                        '</div>' +
+                        '<div class="new_user_experiment_col">' +
+                        '<span>Branch</span>' +
+                        branchName +
+                        '</div>' +
+                        '<div class="new_user_experiment_col">' +
+                        '<span>Got into the experiment at</span>' +
+                        date +
+                        '</div>' +
+                        '<div class="new_user_experiment_col _del" id="remove" ' +
+                        'data-user-id="' + userId + '" ' +
+                        'data-experiment-branch-id="' + branchId + '" ' +
+                        'data-experiment-id="' + experimentId +
+                        '">' +
+                        '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" ' +
+                        'xmlns="http://www.w3.org/2000/svg">' +
+                        '<rect width="32" height="32" rx="10" fill="var(--bg)"/>' +
+                        '<path ' +
+                        'd="M10 23C10 24.1 10.9 25 12 25H20C21.1 25 22 24.1 22 23V13C22 11.9 21.1 11 20 11H12C10.9 11 10 11.9 10 13V23ZM13 13H19C19.55 13 20 13.45 20 14V22C20 22.55 19.55 23 19 23H13C12.45 23 12 22.55 12 22V14C12 13.45 12.45 13 13 13ZM19.5 8L18.79 7.29C18.61 7.11 18.35 7 18.09 7H13.91C13.65 7 13.39 7.11 13.21 7.29L12.5 8H10C9.45 8 9 8.45 9 9C9 9.55 9.45 10 10 10H22C22.55 10 23 9.55 23 9C23 8.45 22.55 8 22 8H19.5Z" ' +
+                        'fill="var(--color)"/>' +
+                        '</svg>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                }
+            } else {
+                $('.new_user_experiment').append(
+                    '<div class="new_user_label" id="empty_experiment">There is no user data yet</div>'
+                )
+            }
+        }
+    });
+
+    $.ajax({
+        'async': false,
+        'method': "GET",
+        'url': "/api/v1/statistics/user/"
+            + userId
+            + "?filter[date_from]=" + dateFrom +"&filter[date_to]="+ dateTo,
+        'headers': {
+            'Authorization': window.shortToken,
+        },
+        'success': function (response) {
+            getUserStats(response, userId)
+
+            window.events = response.data
+
+            $('#event_date').daterangepicker({
+                singleDatePicker: false,
+                showDropdowns: true,
+                startDate: startDate,
+                endDate: endDate,
+                locale: {
+                    format: 'MMMM DD, YYYY'
+                }
+            })
+        },
+        'complete': function () {
+            window.setTimeout(function () {
+                $('.loader').hide()
+            }, 1000)
+        },
+    });
 }
