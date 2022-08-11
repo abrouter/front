@@ -233,9 +233,10 @@ function getExperimentStats (
 
                 backgroundBranchColorNumber++;
 
-                for (let event in percentage[branchName]) {
-                    let eventJoin = event.split('_').join(' '),
-                        upperCaseBranch = eventJoin[0].toUpperCase() + eventJoin.substring(1)
+                for (let id in events) {
+                    let eventJoin = events[id].split('_').join(' '),
+                        upperCaseBranch = eventJoin[0].toUpperCase() + eventJoin.substring(1),
+                        percent = percentage[branchName][events[id]] ?? 0;
 
                     if (n < events.length) {
                         n++;
@@ -248,8 +249,8 @@ function getExperimentStats (
                     }
 
                     $('#' + branchReplace).append(
-                        '<td class="table__column" data-label="' + event + '">' +
-                        percentage[branchName][event] + '%' +
+                        '<td class="table__column" data-label="' + events[id] + '">' +
+                        percent + '%' +
                         '</td>'
                     );
                 }
