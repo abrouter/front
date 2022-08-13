@@ -115,16 +115,16 @@ use Modules\Front\Assets\Puller;
                 <div class="track__tags">
 
                 </div>
-                <table class="table table_ap">
-                    <thead class="table__thead">
-                        <tr class="table__thead-tr">
+{{--                <table class="table table_ap">--}}
+{{--                    <thead class="table__thead">--}}
+{{--                        <tr class="table__thead-tr">--}}
 
-                        </tr>
-                    </thead>
-                    <tbody class="table__body">
+{{--                        </tr>--}}
+{{--                    </thead>--}}
+{{--                    <tbody class="table__body">--}}
 
-                    </tbody>
-                </table>
+{{--                    </tbody>--}}
+{{--                </table>--}}
             </div>
             <div class="setting__dashboard dashboard">
                 <div class="dashboard__head">

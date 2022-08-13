@@ -145,16 +145,8 @@ function getExperimentStats (
             $('.loader').hide();
             $('.dashboard__labels').children().remove();
             $('.dashboard__grid').children().remove();
-            $('.table__row').remove();
-            $('.table.table_ap').show();
-            $('.table__thead-th').remove();
             $('.setting__dashboard.dashboard').show();
             $('.setting__track.track').children('.top-setting__info').remove();
-            $('.table__thead-tr').append(
-                '<th class="table__thead-th" scope="col">' +
-                'Variation' +
-                '</th>'
-            );
             $('#is_running').empty();
             $('span.breadcrumb__current').empty();
             $('#experiment_name').empty();
@@ -212,26 +204,24 @@ function getExperimentStats (
                 }
             }
 
+            let needTable = Math.ceil(events.length / 6);
+
+            createTable(needTable);
+
             for (let branchName in percentage) {
                 branch.push(branchName);
                 branchReplace = branchName.split(' ').join('_');
 
-                $('tbody.table__body').append(
-                    '<tr class="table__row" id=' + branchReplace + '>' +
-                        '<td class="table__column" data-label="Variation ">' +
-                            '<div class="table__flex">' +
-                                '<span ' +
-                                'style="background:' +
-                                backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                                'class="table__color"' +
-                                '></span>' +
-                                branchName +
-                            '</div>' +
-                        '</td>' +
-                    '</tr>'
-                );
+                createTableBody(
+                    branchReplace,
+                    backgroundBranchColors[backgroundBranchColorNumber],
+                    branchName,
+                    needTable,
+                )
 
                 backgroundBranchColorNumber++;
+
+                let num = 0;
 
                 for (let id in events) {
                     let eventJoin = events[id].split('_').join(' '),
@@ -241,18 +231,22 @@ function getExperimentStats (
                     if (n < events.length) {
                         n++;
 
-                        $('.table__thead-tr').append(
+                        $('.table__thead-tr.' + num).append(
                             '<th class="table__thead-th" scope="col">' +
                             upperCaseBranch +
                             '</th>'
                         );
                     }
 
-                    $('#' + branchReplace).append(
+                    $('#' + branchReplace + '_' + num).append(
                         '<td class="table__column" data-label="' + events[id] + '">' +
                         percent + '%' +
                         '</td>'
                     );
+
+                    if (Number(id) !== 0 && id % 5 === 0) {
+                        num++;
+                    }
                 }
             }
 
@@ -265,6 +259,44 @@ function getExperimentStats (
             )
         },
     });
+}
+
+function createTable(number) {
+    for (let i = 0; i < number; i++) {
+        $('.setting__track.track').append(
+            '<table class="table table_ap" style="margin-bottom: 10px">' +
+                '<thead class="table__thead">' +
+                    '<tr class="table__thead-tr '+ i +'">' +
+                        '<th class="table__thead-th" scope="col">Variation</th>' +
+                    '</tr>' +
+                '</thead>' +
+                '<tbody class="table__body '+ i +'"></tbody>' +
+            '</table>'
+        )
+    }
+}
+
+function createTableBody(
+    branchReplace,
+    color,
+    branchName,
+    number
+) {
+    for (let i = 0; i < number; i++) {
+        $('tbody.table__body.' + i).append(
+            '<tr class="table__row" id=' + branchReplace + '_' + i + '>' +
+                '<td class="table__column" data-label="Variation ">' +
+                    '<div class="table__flex">' +
+                        '<span ' +
+                        'style="background:' + color + ';" ' +
+                        'class="table__color"' +
+                        '></span>' +
+                        branchName +
+                    '</div>' +
+                '</td>' +
+            '</tr>'
+        );
+    }
 }
 
 function getTags () {
@@ -675,6 +707,8 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
+        $('.table.table_ap').remove();
+
         getExperimentStats(
             experimentId,
             dateIntervals,
@@ -705,6 +739,8 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
+        $('.table.table_ap').remove();
+
         getExperimentStats(
             experimentId,
             dateIntervals,
@@ -727,6 +763,8 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo),
             tag = event.currentTarget.innerText;
+
+        $('.table.table_ap').remove();
 
         getExperimentStats(
             experimentId,
