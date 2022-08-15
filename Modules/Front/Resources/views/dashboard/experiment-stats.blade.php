@@ -93,7 +93,7 @@ use Modules\Front\Assets\Puller;
                                 type="text"
                                 data-error="Ошибка"
                                 placeholder=""
-                                class="date__input"
+                                class="date__input date-range"
                                 name="dates"
                                 id="date_filter_experiment"
                             >

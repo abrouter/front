@@ -50,7 +50,8 @@ function getFunnelStats (
 ) {
     $.ajax({
         'method': "POST",
-        'url': "/api/v1/event/funnel",
+        'url': "/api/v1/event/funnel?filter[date_from]=" + dateFrom +
+            "&filter[date_to]=" + dateTo,
         'headers': {
             'Authorization': window.token,
         },
@@ -128,11 +129,15 @@ function getFunnelStats (
 function getExperimentStats (
     experimentId,
     datesIntervals,
-    backgroundBranchColors
+    backgroundBranchColors,
+    dateFrom = null,
+    dateTo = null
 ) {
     $.ajax({
         'method': "GET",
-        'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId,
+        'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId +
+            "&filter[date_from]=" + dateFrom +
+            "&filter[date_to]=" + dateTo,
         'headers': {
             'Authorization': window.token
         },
@@ -364,7 +369,7 @@ function addChartStats (
                 },
             },
         });
-    };
+    }
 
     let eventsFromCounters = Object
         .keys(counters)
@@ -603,11 +608,35 @@ function addChartExperimentsStats (
     }
 }
 
+function getDateIntervals(id, startDate, endDate) {
+    $(id).daterangepicker({
+        startDate: moment(startDate).format('MMM DD, YYYY'),
+        endDate: moment(endDate).format('MMM DD, YYYY'),
+        locale: {
+            format: 'MMM DD, YYYY'
+        },
+        ranges: {
+            Today: [moment(), moment()],
+            Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
+            "Last 7 Days": [moment().subtract(6, "days"), moment()],
+            "Last 30 Days": [moment().subtract(29, "days"), moment()],
+            "This Month": [moment().startOf("month"), moment().endOf("month")],
+            "Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+        }
+    })
+}
+
 $(document).ready(function () {
-    let dateFrom = convertDate(new Date()),
-        dateFromSplit = dateFrom.split('-'),
-        dateCount = Number(dateFromSplit[1]) + 1,
-        dateTo = [dateFromSplit[0], dateCount, dateFromSplit[2]].join('-'),
+    getDateIntervals(
+        '.date-range[name="dates"]',
+        moment().subtract(6, "days").format('MMM DD, YYYY'),
+        moment().format('MMM DD, YYYY')
+    )
+
+    let dateInterval = $('#date_filter_experiment').val() ?? $('#date_stats').val(),
+        dateSplit = dateInterval.split('-'),
+        dateFrom = convertDate(dateSplit[0]),
+        dateTo = convertDate(dateSplit[1]),
         dateIntervals = getDateInterval(dateFrom, dateTo),
         url = new URL(window.location.href),
         experimentId = url.searchParams.get("experimentId"),
@@ -623,8 +652,8 @@ $(document).ready(function () {
 
     window.mode === 'stats'
         ? getFunnelStats(
-            dateTo,
             dateFrom,
+            dateTo,
             dateIntervals
         )
         : (
@@ -632,7 +661,9 @@ $(document).ready(function () {
             getExperimentStats(
                 experimentId,
                 dateIntervals,
-                backgroundBranchColors
+                backgroundBranchColors,
+                dateFrom,
+                dateTo,
             )
         )
 
@@ -643,6 +674,8 @@ $(document).ready(function () {
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]);
+
+        getDateIntervals('#date_filter_funnel_dashboard', dateSplit[0], dateSplit[1])
 
         $.ajax({
             'method': "POST",
@@ -699,6 +732,8 @@ $(document).ready(function () {
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
+
+        getDateIntervals('#date_stats', dateSplit[0], dateSplit[1]);
 
         $.ajax({
             'method': "POST",
@@ -761,6 +796,8 @@ $(document).ready(function () {
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]);
+
+        getDateIntervals('#date_filter_dashboard', dateSplit[0], dateSplit[1]);
 
         $.ajax({
             'method': "GET",
@@ -861,6 +898,7 @@ $(document).ready(function () {
             }
         });
     })
+
     $(document).on('change', '#date_filter_dashboard', function (event) {
         window.onload = $('.loader').show();
 
@@ -869,6 +907,8 @@ $(document).ready(function () {
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
             datesIntervals = getDateInterval(dateFrom, dateTo);
+
+        getDateIntervals('#date_filter_experiment', dateSplit[0], dateSplit[1]);
 
         $.ajax({
             'method': "GET",
@@ -923,6 +963,7 @@ $(document).ready(function () {
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
+            datesIntervals = getDateInterval(dateFrom, dateTo),
             tag = event.currentTarget.innerText;
 
         $.ajax({
@@ -935,7 +976,10 @@ $(document).ready(function () {
                 'Authorization': window.token
             },
             'success': function (response) {
-                let percentage = response.percentage;
+                let percentage = response.percentage,
+                    eventsCountersWithDates = response.eventCountersWithDate,
+                    events = [],
+                    branch = [];
 
                 $('.loader').hide();
                 $('.table__row').remove();
@@ -965,7 +1009,6 @@ $(document).ready(function () {
 
                     if (percentage[i].length === 0) {
                         $('.table.table_ap').hide();
-                        console.log()
 
                         if (Object.keys($('#empty_track_events')).length === 0) {
                             $('.setting__track.track').append(
@@ -1015,6 +1058,32 @@ $(document).ready(function () {
                         );
                     }
                 }
+
+                if (eventsCountersWithDates.length === 0) {
+                    $('.dashboard__labels').children().remove();
+                    $('.dashboard__grid').children().remove();
+                    $('.dashboard__grid').append(
+                        '<div class="top-setting__info" id="empty_dashboard">Nothing found in this date range.</div>'
+                    );
+                } else {
+                    $('.dashboard__labels').children().remove();
+                    $('.dashboard__grid').children().remove();
+                }
+
+                for (let branchName in percentage) {
+                    branch.push(branchName);
+                    for (let event in percentage[branchName]) {
+                        events.push(event);
+                    }
+                }
+
+                addChartExperimentsStats(
+                    eventsCountersWithDates,
+                    events,
+                    branch,
+                    datesIntervals,
+                    backgroundBranchColors
+                )
             },
         });
     })
