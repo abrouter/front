@@ -370,6 +370,7 @@ use Modules\Front\Internal\User;
                                 '<select id="event_type" class="select_type_event">' +
                                     '<option value="incremental">Incremental</option>' +
                                     '<option value="summarizable">Summarizable</option>' +
+                                    '<option value="incremental-unique">Incremental unique</option>' +
                                 '</select>' +
                             '</div>' +
                             '<div class="create-setting__bottom">' +

@@ -1,9 +1,11 @@
-function getSummarizableEvent (counters, percentage) {
+function getEvents (counters, percentage = []) {
     let eventsFromCounters = Object
         .keys(counters)
         .filter(
             event => counters[event] instanceof Object
         )
+
+    let percent;
 
     if (eventsFromCounters.length > 0) {
         let events = {};
@@ -12,29 +14,18 @@ function getSummarizableEvent (counters, percentage) {
             events[eventsFromCounters[event]] = 0
 
             for (let date in counters[eventsFromCounters[event]]) {
-                if (date.indexOf('-') !== -1) {
-                    events[eventsFromCounters[event]] += counters[eventsFromCounters[event]][date]
-
-                } else {
-                    $('#stats').append(
-                        '<tr class="table__row">' +
-                        '<td class="table__column" data-label="Event name">' + eventsFromCounters[event] +
-                        '</td>' +
-                        '<td class="table__column" data-label="Persentage">' + percentage[eventsFromCounters[event]] + '%</td>' +
-                        '<td class="table__column" data-label="Counters">' + counters[eventsFromCounters[event]][date] + '</td>' +
-                        '</tr>'
-                    )
-                }
+                events[eventsFromCounters[event]] += counters[eventsFromCounters[event]][date];
             }
         }
 
         eventsFromCounters.forEach(
             event => [
+                percent = percentage[event] ?? 0,
                 $('#stats').append(
                     '<tr class="table__row">' +
                     '<td class="table__column" data-label="Event name">' + event +
                     '</td>' +
-                    '<td class="table__column" data-label="Persentage">' + 0 + '%</td>' +
+                    '<td class="table__column" data-label="Persentage">' + percent +'%</td>' +
                     '<td class="table__column" data-label="Counters">' + events[event] + '</td>' +
                     '</tr>'
                 )
@@ -50,59 +41,63 @@ function getFunnelStats (
 ) {
     $.ajax({
         'method': "POST",
-        'url': "/api/v1/event/funnel?filter[date_from]=" + dateFrom +
-            "&filter[date_to]=" + dateTo,
+        'url': "/api/v1/event/funnel?filter[date_from]="+ dateFrom +"&filter[date_to]="+ dateTo,
         'headers': {
             'Authorization': window.token,
         },
         'success': function (response) {
             $('.loader').hide();
+            $('.table__thead').show();
+            $('.table__body').show();
+            $('#emptyStats').remove();
+            $('#stats').children().remove()
+            $('div.dashboard__grid').children().remove();
+            $('#referrers').children().remove();
+            $('#emptyReferrers').remove();
 
             let percentage = response.percentage,
                 counters = response.counters,
                 referrersCounters = response.referrersCounters,
-                referrersPercentage = response.referrersPercentage,
-                eventCountersWithDate = response.eventCountersWithDate;
+                referrersPercentage = response.referrersPercentage;
 
-            if (counters.length < 1) {
+            if (
+                counters.incremental.length < 1 &&
+                counters.incrementalUnique.length < 1 &&
+                counters.summarizable.length < 1
+            ) {
                 $('.table__thead').hide();
                 $('.table__body').hide();
                 $('#stats_info').append(
                     '<div class="top-setting__info" id="emptyStats">Nothing found in this date range.</div>'
                 )
-            }
 
-            for (let i in counters) {
-                if (counters[i] instanceof Object) {
-                    continue;
-                }
-
-                $('#stats').append(
-                    '<tr class="table__row">' +
-                    '<td class="table__column" data-label="Event name">' + i +
-                    '</td>' +
-                    '<td class="table__column" data-label="Persentage">' + (percentage[i] ?? 0) + '%</td>' +
-                    '<td class="table__column" data-label="Counters">' + (counters[i] ?? 0) + '</td>' +
-                    '</tr>'
-                );
-            }
-
-            getSummarizableEvent(
-                counters,
-                percentage
-            )
-
-            if (eventCountersWithDate.length < 1) {
                 $('div.dashboard__grid').append(
                     '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
                 )
             }
 
-            addChartStats(
-                eventCountersWithDate,
-                counters,
-                dateIntervals
-            )
+            for (let i in counters) {
+                let percentages;
+
+                if (counters[i].length < 1) {
+                    continue;
+                }
+
+                if (i === 'incrementalUnique') {
+                    percentages = percentage;
+                }
+
+                getEvents(
+                    counters[i],
+                    percentages
+                )
+
+                addChartStats(
+                    counters[i],
+                    i,
+                    dateIntervals
+                )
+            }
 
             if (referrersCounters.length < 1) {
                 $('#head_top_referrers').hide();
@@ -112,6 +107,9 @@ function getFunnelStats (
             }
 
             for (let i in referrersCounters) {
+                $('#head_top_referrers').show();
+                $('#emptyReferrers').remove();
+
                 $('#referrers').append(
                     '<tr class="table__row">' +
                     '<td class="table__column" data-label="Referrer">' +
@@ -129,32 +127,46 @@ function getFunnelStats (
 function getExperimentStats (
     experimentId,
     datesIntervals,
+    dateFrom,
+    dateTo,
     backgroundBranchColors,
-    dateFrom = null,
-    dateTo = null
+    tag = ''
 ) {
     $.ajax({
         'method': "GET",
         'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId +
             "&filter[date_from]=" + dateFrom +
-            "&filter[date_to]=" + dateTo,
+            "&filter[date_to]=" + dateTo +
+            "&filter[tag]=" + tag,
         'headers': {
             'Authorization': window.token
         },
         'success': function (response) {
+            $('.loader').hide();
+            $('.dashboard__labels').children().remove();
+            $('.dashboard__grid').children().remove();
+            $('.setting__dashboard.dashboard').show();
+            $('.setting__track.track').children('.top-setting__info').remove();
+            $('#is_running').empty();
+            $('span.breadcrumb__current').empty();
+            $('#experiment_name').empty();
+            $('#total_users').empty();
+            $('#days_running').empty();
+
             let percentage = response.percentage,
-                eventsCountersWithDates = response.eventCountersWithDate,
+                counters = response.counters,
                 experiment = response.experiment;
 
-            $('.loader').hide();
+            for (let branchName in counters.incrementalUnique) {
+                if (counters.incrementalUnique[branchName].length < 1) {
+                    delete percentage[branchName];
+                    delete counters.incrementalUnique[branchName];
+                }
+            }
+
             $('span.breadcrumb__current').html(experiment.name);
             $('#experiment_name').append(experiment.name);
             $('#total_users').append(experiment.total_users);
-            $('.table__thead-tr').append(
-                '<th class="table__thead-th" scope="col">' +
-                'Variation' +
-                '</th>'
-            );
 
             if (experiment.is_enabled) {
                 $('#is_running').append('Running');
@@ -166,7 +178,7 @@ function getExperimentStats (
                 $('#days_running').append('0 days');
             }
 
-            if (percentage.length === 0) {
+            if (Object.keys(percentage).length === 0 && Object.keys(counters.incrementalUnique).length === 0) {
                 $('.table.table_ap').hide();
                 $('.setting__track.track').append(
                     '<div class="top-setting__info">Nothing found in this date range.</div>'
@@ -184,55 +196,62 @@ function getExperimentStats (
 
             for (let branch in percentage) {
                 for (let event in percentage[branch]) {
+                    if (events.includes(event)) {
+                        continue;
+                    }
+
                     events.push(event);
                 }
             }
+
+            let needTable = Math.ceil(events.length / 6);
+
+            createTable(needTable);
 
             for (let branchName in percentage) {
                 branch.push(branchName);
                 branchReplace = branchName.split(' ').join('_');
 
-                $('tbody.table__body').append(
-                    '<tr class="table__row" id=' + branchReplace + '>' +
-                        '<td class="table__column" data-label="Variation ">' +
-                            '<div class="table__flex">' +
-                                '<span ' +
-                                'style="background:' +
-                                backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                                'class="table__color"' +
-                                '></span>' +
-                                branchName +
-                            '</div>' +
-                        '</td>' +
-                    '</tr>'
-                );
+                createTableBody(
+                    branchReplace,
+                    backgroundBranchColors[backgroundBranchColorNumber],
+                    branchName,
+                    needTable,
+                )
 
                 backgroundBranchColorNumber++;
 
-                for (let event in percentage[branchName]) {
-                    let eventJoin = event.split('_').join(' '),
-                        upperCaseBranch = eventJoin[0].toUpperCase() + eventJoin.substring(1)
+                let num = 0;
+
+                for (let id in events) {
+                    let eventJoin = events[id].split('_').join(' '),
+                        upperCaseBranch = eventJoin[0].toUpperCase() + eventJoin.substring(1),
+                        percent = percentage[branchName][events[id]] ?? 0;
 
                     if (n < events.length) {
                         n++;
 
-                        $('.table__thead-tr').append(
+                        $('.table__thead-tr.' + num).append(
                             '<th class="table__thead-th" scope="col">' +
                             upperCaseBranch +
                             '</th>'
                         );
                     }
 
-                    $('#' + branchReplace).append(
-                        '<td class="table__column" data-label="' + event + '">' +
-                        percentage[branchName][event] + '%' +
+                    $('#' + branchReplace + '_' + num).append(
+                        '<td class="table__column" data-label="' + events[id] + '">' +
+                        percent + '%' +
                         '</td>'
                     );
+
+                    if (Number(id) !== 0 && id % 5 === 0) {
+                        num++;
+                    }
                 }
             }
 
             addChartExperimentsStats(
-                eventsCountersWithDates,
+                counters.incrementalUnique,
                 events,
                 branch,
                 datesIntervals,
@@ -240,6 +259,44 @@ function getExperimentStats (
             )
         },
     });
+}
+
+function createTable(number) {
+    for (let i = 0; i < number; i++) {
+        $('.setting__track.track').append(
+            '<table class="table table_ap" style="margin-bottom: 10px">' +
+                '<thead class="table__thead">' +
+                    '<tr class="table__thead-tr '+ i +'">' +
+                        '<th class="table__thead-th" scope="col">Variation</th>' +
+                    '</tr>' +
+                '</thead>' +
+                '<tbody class="table__body '+ i +'"></tbody>' +
+            '</table>'
+        )
+    }
+}
+
+function createTableBody(
+    branchReplace,
+    color,
+    branchName,
+    number
+) {
+    for (let i = 0; i < number; i++) {
+        $('tbody.table__body.' + i).append(
+            '<tr class="table__row" id=' + branchReplace + '_' + i + '>' +
+                '<td class="table__column" data-label="Variation ">' +
+                    '<div class="table__flex">' +
+                        '<span ' +
+                        'style="background:' + color + ';" ' +
+                        'class="table__color"' +
+                        '></span>' +
+                        branchName +
+                    '</div>' +
+                '</td>' +
+            '</tr>'
+        );
+    }
 }
 
 function getTags () {
@@ -285,21 +342,21 @@ function getDateInterval(dateFrom, dateTo) {
 }
 
 function addChartStats (
-    eventCountersWithDate,
     counters,
+    eventType,
     dateIntervals
 ) {
-    for (let i in eventCountersWithDate) {
+    for (let i in counters) {
         let numberEvent = [];
 
         for (let n = 0; n < dateIntervals.length; n++) {
-            numberEvent.push(eventCountersWithDate[i][dateIntervals[n]] ?? 0)
+            numberEvent.push(counters[i][dateIntervals[n]] ?? 0)
         }
 
         $('div.dashboard__grid').append(
             '<div class="dashboard__item">' +
                 '<div class="dashboard__diagram">' +
-                    '<canvas id="' + i + '"></canvas>' +
+                    '<canvas id="' + i + '_' + eventType + '"></canvas>' +
                 '</div>' +
             '</div>'
         )
@@ -314,7 +371,7 @@ function addChartStats (
             );
         };
 
-        const e = document.getElementById(i);
+        const e = document.getElementById(i + '_' + eventType);
 
         new Chart(e, {
             type: "line",
@@ -370,101 +427,10 @@ function addChartStats (
             },
         });
     }
-
-    let eventsFromCounters = Object
-        .keys(counters)
-        .filter(
-            event => counters[event] instanceof Object
-        )
-
-    if (eventsFromCounters.length > 0) {
-        for (let event in eventsFromCounters) {
-            let numberEvent = [];
-
-            for (let n = 0; n < dateIntervals.length; n++) {
-                numberEvent.push(counters[eventsFromCounters[event]][dateIntervals[n]] ?? 0)
-            }
-
-            $('div.dashboard__grid').append(
-                '<div class="dashboard__item">' +
-                    '<div class="dashboard__diagram">' +
-                        '<canvas id="' + eventsFromCounters[event] + '_sum' + '"></canvas>' +
-                    '</div>' +
-                '</div>'
-            )
-
-            const gt = (e) => {
-                let t = 0;
-                return (
-                    e.forEach(function (e) {
-                        t += e.parsed.y;
-                    }),
-                    "Users: " + t
-                );
-            };
-
-            const e = document.getElementById(eventsFromCounters[event] + '_sum');
-
-            new Chart(e, {
-                type: "line",
-                data: {
-                    labels: dateIntervals,
-                    datasets: [
-                        {
-                            label: !1,
-                            borderWidth: 3,
-                            data: numberEvent,
-                            borderColor: "#9699AB",
-                            pointStyle: "circle",
-                            pointBorderColor: "rgba(0,0,0,0)",
-                            pointBackgroundColor: "rgba(0,0,0,0)",
-                            pointRadius: 7,
-                            pointHoverBorderColor: "#9699AB",
-                            pointHoverBackgroundColor: "#fff",
-                        },
-                    ],
-                },
-                options: {
-                    scales: {
-                        x: {
-                            type: 'time',
-                            time: {
-                                unit: 'day'
-                            }
-                        }
-                    },
-                    animations: {
-                        radius: {
-                            duration: 400,
-                            easing: "linear",
-                            loop: (e) => e.active
-                        }
-                    },
-                    responsive: !0,
-                    plugins: {
-                        legend: {display: !1, labels: {font: {color: "#0B0E37", weight: "600"}}},
-                        tooltip: {callbacks: {footer: gt}},
-                        title: {
-                            display: !0,
-                            text: eventsFromCounters[event]
-                                + ' (' + numberEvent.reduce((a, b) => a + b) + ')',
-                            align: "start",
-                            color: "#0B0E37",
-                            font: function (e) {
-                                var t = e.chart.width;
-                                return {size: Math.round(t / 32), weight: 600};
-                            },
-                            padding: {bottom: 30},
-                        }
-                    },
-                },
-            });
-        }
-    }
 }
 
 function addChartExperimentsStats (
-    eventsCountersWithDates,
+    counters,
     events,
     branch,
     datesIntervals,
@@ -488,7 +454,7 @@ function addChartExperimentsStats (
         );
     };
 
-    for (let i in eventsCountersWithDates) {
+    for (let i in counters) {
         $('.dashboard__labels').append(
             '<div class="dashboard__label">' +
                 '<span style="background:' + backgroundBranchColors[backgroundBranchColorNumber]+';" ' +
@@ -515,9 +481,9 @@ function addChartExperimentsStats (
             let numberEvent = [];
 
             for (let m = 0; m < datesIntervals.length; m++) {
-                if (eventsCountersWithDates[branch[n]][uniqueEvents[i]]) {
+                if (counters[branch[n]][uniqueEvents[i]]) {
                     numberEvent.push(
-                        eventsCountersWithDates[branch[n]][uniqueEvents[i]][datesIntervals[m]] ?? 0
+                        counters[branch[n]][uniqueEvents[i]][datesIntervals[m]] ?? 0
                     );
                 } else {
                     numberEvent.push(0);
@@ -648,7 +614,8 @@ $(document).ready(function () {
             '#578365',
             '#47C6C1',
             '#495152'
-        ];
+        ],
+        load = 0;
 
     window.mode === 'stats'
         ? getFunnelStats(
@@ -661,70 +628,21 @@ $(document).ready(function () {
             getExperimentStats(
                 experimentId,
                 dateIntervals,
-                backgroundBranchColors,
                 dateFrom,
                 dateTo,
+                backgroundBranchColors
             )
         )
 
-    $(document).on('change', '#date_stats', function(event) {
-        $('.loader').show();
-
-        let dateInterval = event.currentTarget.value,
-            dateSplit = dateInterval.split('-'),
-            dateFrom = convertDate(dateSplit[0]),
-            dateTo = convertDate(dateSplit[1]);
-
-        getDateIntervals('#date_filter_funnel_dashboard', dateSplit[0], dateSplit[1])
-
-        $.ajax({
-            'method': "POST",
-            'url': "/api/v1/event/funnel?filter[date_from]="+ dateFrom +"&filter[date_to]="+ dateTo,
-            'headers': {
-                'Authorization': window.token,
-            },
-            'success': function (response) {
-                $('.loader').hide();
-                $('.table__thead').show();
-                $('.table__body').show();
-                $('#emptyStats').remove();
-                $('#stats').children().remove()
-
-                let percentage = response.percentage,
-                    counters = response.counters;
-
-                if (counters.length < 1) {
-                    $('.table__thead').hide();
-                    $('.table__body').hide();
-                    $('#stats_info').append(
-                        '<div class="top-setting__info" id="emptyStats">Nothing found in this date range.</div>'
-                    )
-                }
-
-                for (let i in counters) {
-                    if (counters[i] instanceof Object) {
-                        continue;
-                    }
-
-                    $('#stats').append(
-                        '<tr class="table__row">' +
-                            '<td class="table__column" data-label="Event name">' + i +
-                            '</td>' +
-                            '<td class="table__column" data-label="Persentage">' + (percentage[i] ?? 0) + '%</td>' +
-                            '<td class="table__column" data-label="Counters">' + counters[i] + '</td>' +
-                        '</tr>'
-                    );
-                }
-
-                getSummarizableEvent(
-                    counters,
-                    percentage
-                )
-            }
-        });
+    $(document).on('click', '#date_stats', function(event) {
+        load = 1;
     });
 
-    $(document).on('change', '#date_filter_funnel_dashboard', function(event) {
+    $(document).on('change', '#date_stats', function(event) {
+        if (load === 0) {
+            return
+        }
+
         $('.loader').show();
 
         let dateInterval = event.currentTarget.value,
@@ -733,227 +651,107 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
-        getDateIntervals('#date_stats', dateSplit[0], dateSplit[1]);
+        getFunnelStats(
+            dateFrom,
+            dateTo,
+            dateIntervals
+        )
 
-        $.ajax({
-            'method': "POST",
-            'url': "/api/v1/event/funnel?filter[date_from]="+ dateFrom +"&filter[date_to]="+ dateTo,
-            'headers': {
-                'Authorization': window.token,
-            },
-            'success': function (response) {
-                $('.loader').hide();
-                $('div.dashboard__grid').children().remove();
-                $('#referrers').children().remove();
+        load = 0;
 
-                let eventCountersWithDate = response.eventCountersWithDate,
-                    counters = response.counters,
-                    referrersCounters = response.referrersCounters,
-                    referrersPercentage = response.referrersPercentage;
-
-                if (eventCountersWithDate.length < 1 && counters.length < 1) {
-                    $('div.dashboard__grid').append(
-                        '<div class="top-setting__info" id="emptyDashboard">Nothing found in this date range.</div>'
-                    )
-                }
-
-                if (referrersCounters.length < 1) {
-                    $('#head_top_referrers').hide();
-                    $('#emptyReferrers').remove();
-                    $('#top_referrers').append(
-                        '<div class="top-setting__info" id="emptyReferrers">Nothing found in this date range.</div>'
-                    )
-                }
-
-                addChartStats(
-                    eventCountersWithDate,
-                    counters,
-                    dateIntervals
-                )
-
-                for (let i in referrersCounters) {
-                    $('#head_top_referrers').show();
-                    $('#emptyReferrers').remove();
-
-                    $('#referrers').append(
-                        '<tr class="table__row">' +
-                            '<td class="table__column" data-label="Referrer">' +
-                                i +
-                            '</td>' +
-                            '<td class="table__column" data-label="Users">' + (referrersCounters[i] ?? 0) + '</td>' +
-                            '<td class="table__column" data-label="">' + referrersPercentage[i] + '% </td>' +
-                        '</tr>'
-                    );
-                }
-            }
-        });
+        getDateIntervals('#date_filter_funnel_dashboard', dateSplit[0], dateSplit[1])
     });
 
+    $(document).on('click', '#date_filter_funnel_dashboard', function(event) {
+        load = 1;
+    });
+
+    $(document).on('change', '#date_filter_funnel_dashboard', function(event) {
+        if (load === 0) {
+            return
+        }
+
+        $('.loader').show();
+
+        let dateInterval = event.currentTarget.value,
+            dateSplit = dateInterval.split('-'),
+            dateFrom = convertDate(dateSplit[0]),
+            dateTo = convertDate(dateSplit[1]),
+            dateIntervals = getDateInterval(dateFrom, dateTo);
+
+        getFunnelStats(
+            dateFrom,
+            dateTo,
+            dateIntervals
+        )
+
+        load = 0;
+
+        getDateIntervals('#date_stats', dateSplit[0], dateSplit[1])
+    });
+
+    $(document).on('click', '#date_filter_experiment', function (event) {
+        load = 1
+    })
+
     $(document).on('change', '#date_filter_experiment', function (event) {
+        if (load === 0) {
+            return;
+        }
+
         window.onload = $('.loader').show();
 
         let dateInterval = event.currentTarget.value,
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
-            dateTo = convertDate(dateSplit[1]);
+            dateTo = convertDate(dateSplit[1]),
+            dateIntervals = getDateInterval(dateFrom, dateTo);
 
-        getDateIntervals('#date_filter_dashboard', dateSplit[0], dateSplit[1]);
+        $('.table.table_ap').remove();
 
-        $.ajax({
-            'method': "GET",
-            'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId +
-                "&filter[date_from]=" + dateFrom +
-                "&filter[date_to]=" + dateTo +
-                "&filter[tag]=",
-            'headers': {
-                'Authorization': window.token,
-            },
-            'success': function (response) {
-                let percentage = response.percentage;
+        getExperimentStats(
+            experimentId,
+            dateIntervals,
+            dateFrom,
+            dateTo,
+            backgroundBranchColors
+        )
 
-                $('.loader').hide();
-                $('.table__row').remove();
-                $('.table.table_ap').show();
-                $('.table__thead-th').remove();
-                $('.setting__dashboard.dashboard').show();
-                $('.setting__track.track').children('.top-setting__info').remove();
-                $('.table__thead-tr').append(
-                    '<th class="table__thead-th" scope="col">' +
-                    'Variation' +
-                    '</th>'
-                );
+        load = 0;
 
-                if (percentage.length === 0) {
-                    $('.table.table_ap').hide();
-                    $('.setting__track.track').append(
-                        '<div class="top-setting__info" id="empty_track_events">Nothing found in this date range.</div>'
-                    );
-                }
+        getDateIntervals('#date_filter_dashboard', dateSplit[0], dateSplit[1])
+    })
 
-                let n = 0,
-                    backgroundBranchColorNumber = 0,
-                    events = {};
-
-                for (let branch in percentage) {
-                    for (let event in percentage[branch]) {
-                        events[event] = event;
-                    }
-                }
-
-                for (let i in percentage) {
-                    let length = Object.keys(percentage[i]).length,
-                        branch = i.split(' ').join('_');
-
-                    if (percentage[i].length === 0) {
-                        $('.table.table_ap').hide();
-
-                        if (Object.keys($('#empty_track_events')).length === 0) {
-                            $('.setting__track.track').append(
-                                '<div class="top-setting__info" id="empty_track_events">Nothing found in this date range.</div>'
-                            );
-                        }
-
-                        continue;
-                    }
-
-                    $('tbody.table__body').append(
-                        '<tr class="table__row" id=' + branch + '>' +
-                            '<td class="table__column" data-label="Variation ">' +
-                                '<div class="table__flex">' +
-                                    '<span ' +
-                                    'style="background:' +
-                                    backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                                    'class="table__color"' +
-                                    '>' +
-                                    '</span>' +
-                                    i +
-                                '</div>' +
-                            '</td>' +
-                        '</tr>'
-                    );
-
-                    backgroundBranchColorNumber++;
-
-                    for (let eventName in events) {
-                        let event = eventName.split('_').join(' '),
-                            upperCaseEventName = event[0].toUpperCase() + event.substring(1);
-
-                        if (n < length) {
-                            n++;
-
-                            $('.table__thead-tr').append(
-                                '<th class="table__thead-th" scope="col">' +
-                                upperCaseEventName +
-                                '</th>'
-                            );
-                        }
-
-                        $('#' + branch).append(
-                            '<td class="table__column" data-label="' + event + '">' +
-                            (percentage[i][events[eventName]] ?? 0) + '%' +
-                            '</td>'
-                        );
-                    }
-                }
-            }
-        });
+    $(document).on('click', '#date_filter_dashboard', function (event) {
+        load = 1;
     })
 
     $(document).on('change', '#date_filter_dashboard', function (event) {
+        if (load === 0) {
+            return;
+        }
+
         window.onload = $('.loader').show();
 
         let dates = event.currentTarget.value,
             dateSplit = dates.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
-            datesIntervals = getDateInterval(dateFrom, dateTo);
+            dateIntervals = getDateInterval(dateFrom, dateTo);
 
-        getDateIntervals('#date_filter_experiment', dateSplit[0], dateSplit[1]);
+        $('.table.table_ap').remove();
 
-        $.ajax({
-            'method': "GET",
-            'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId +
-                "&filter[date_from]=" + dateFrom +
-                "&filter[date_to]=" + dateTo +
-                "&filter[tag]=",
-            'headers': {
-                'Authorization': window.token,
-            },
-            'success': function (response) {
-                $('.loader').hide();
+        getExperimentStats(
+            experimentId,
+            dateIntervals,
+            dateFrom,
+            dateTo,
+            backgroundBranchColors
+        )
 
-                let percentage = response.percentage,
-                    eventsCountersWithDates = response.eventCountersWithDate,
-                    events = [],
-                    branch = [];
+        load = 0;
 
-                if (eventsCountersWithDates.length === 0) {
-                    $('.dashboard__labels').children().remove();
-                    $('.dashboard__grid').children().remove();
-                    $('.dashboard__grid').append(
-                        '<div class="top-setting__info" id="empty_dashboard">Nothing found in this date range.</div>'
-                    );
-                } else {
-                    $('.dashboard__labels').children().remove();
-                    $('.dashboard__grid').children().remove();
-                }
-
-                for (let branchName in percentage) {
-                    branch.push(branchName);
-                    for (let event in percentage[branchName]) {
-                        events.push(event);
-                    }
-                }
-
-                addChartExperimentsStats(
-                    eventsCountersWithDates,
-                    events,
-                    branch,
-                    datesIntervals,
-                    backgroundBranchColors
-                )
-            }
-        });
+        getDateIntervals('#date_filter_experiment', dateSplit[0], dateSplit[1])
     })
 
     $(document).on('click', '.track__item-tag', function (event) {
@@ -963,128 +761,18 @@ $(document).ready(function () {
             dateSplit = dateInterval.split('-'),
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
-            datesIntervals = getDateInterval(dateFrom, dateTo),
+            dateIntervals = getDateInterval(dateFrom, dateTo),
             tag = event.currentTarget.innerText;
 
-        $.ajax({
-            'method': "GET",
-            'url': "/api/v1/experiments/stats?filter[experimentId]=" + experimentId +
-                "&filter[date_from]=" + dateFrom +
-                "&filter[date_to]=" + dateTo +
-                "&filter[tag]=" + tag,
-            'headers': {
-                'Authorization': window.token
-            },
-            'success': function (response) {
-                let percentage = response.percentage,
-                    eventsCountersWithDates = response.eventCountersWithDate,
-                    events = [],
-                    branch = [];
+        $('.table.table_ap').remove();
 
-                $('.loader').hide();
-                $('.table__row').remove();
-                $('.table.table_ap').show();
-                $('.table__thead-th').remove();
-                $('.setting__dashboard.dashboard').show();
-                $('.setting__track.track').children('.top-setting__info').remove();
-                $('.table__thead-tr').append(
-                    '<th class="table__thead-th" scope="col">' +
-                        'Variation' +
-                    '</th>'
-                );
-
-                if (percentage.length === 0) {
-                    $('.table.table_ap').hide();
-                    $('.setting__track.track').append(
-                        '<div class="top-setting__info" id="empty_track_events">Nothing found in this date range.</div>'
-                    );
-                }
-
-                let n = 0,
-                    backgroundBranchColorNumber = 0;
-
-                for (let i in percentage) {
-                    let length = Object.keys(percentage[i]).length,
-                        branch = i.split(' ').join('_');
-
-                    if (percentage[i].length === 0) {
-                        $('.table.table_ap').hide();
-
-                        if (Object.keys($('#empty_track_events')).length === 0) {
-                            $('.setting__track.track').append(
-                                '<div class="top-setting__info" id="empty_track_events">Nothing found in this date range.</div>'
-                            );
-                        }
-
-                        continue;
-                    }
-
-                    $('tbody.table__body').append(
-                        '<tr class="table__row" id=' + branch + '>' +
-                            '<td class="table__column" data-label="Variation ">' +
-                                '<div class="table__flex">' +
-                                    '<span ' +
-                                    'style="background:' +
-                                    backgroundBranchColors[backgroundBranchColorNumber] + ';" ' +
-                                    'class="table__color"' +
-                                    '>' +
-                                    '</span>' +
-                                    i +
-                                '</div>' +
-                            '</td>' +
-                        '</tr>'
-                    );
-
-                    backgroundBranchColorNumber++;
-
-                    for (let eventName in percentage[i]) {
-                        let event = eventName.split('_').join(' '),
-                            upperCaseEventName = event[0].toUpperCase() + event.substring(1);
-
-                        if (n < length) {
-                            n++;
-
-                            $('.table__thead-tr').append(
-                                '<th class="table__thead-th" scope="col">' +
-                                upperCaseEventName +
-                                '</th>'
-                            );
-                        }
-
-                        $('#' + branch).append(
-                            '<td class="table__column" data-label="' + eventName + '">' +
-                            percentage[i][eventName] + '%' +
-                            '</td>'
-                        );
-                    }
-                }
-
-                if (eventsCountersWithDates.length === 0) {
-                    $('.dashboard__labels').children().remove();
-                    $('.dashboard__grid').children().remove();
-                    $('.dashboard__grid').append(
-                        '<div class="top-setting__info" id="empty_dashboard">Nothing found in this date range.</div>'
-                    );
-                } else {
-                    $('.dashboard__labels').children().remove();
-                    $('.dashboard__grid').children().remove();
-                }
-
-                for (let branchName in percentage) {
-                    branch.push(branchName);
-                    for (let event in percentage[branchName]) {
-                        events.push(event);
-                    }
-                }
-
-                addChartExperimentsStats(
-                    eventsCountersWithDates,
-                    events,
-                    branch,
-                    datesIntervals,
-                    backgroundBranchColors
-                )
-            },
-        });
+        getExperimentStats(
+            experimentId,
+            dateIntervals,
+            dateFrom,
+            dateTo,
+            backgroundBranchColors,
+            tag
+        )
     })
 });
