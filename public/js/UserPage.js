@@ -6,6 +6,8 @@ $(document).ready(function () {
         dateTo = url.searchParams.get('dateTo'),
         load = 0;
 
+    dateInput(dateFrom, dateTo);
+
     if (
         userId !== null &&
         dateFrom !== null &&
@@ -430,7 +432,6 @@ $(document).ready(function () {
                 '</tr>'
             )
         }
-
     })
 
     $(document).on('click', '#event_date', function (event) {
@@ -478,12 +479,15 @@ $(document).ready(function () {
                 }, 1000)
             },
         })
+        dateInput(dateSplit[0], dateSplit[1]);
     })
+})
 
+function dateInput(dateFrom, dateTo) {
     $('#event_date_from').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
-        startDate: dateFrom ?? getStartDate(),
+        startDate: dateFrom === null ? getStartDate() : dateFrom,
         locale: {
             format: 'MMMM DD, YYYY'
         }
@@ -492,12 +496,12 @@ $(document).ready(function () {
     $('#event_date_to').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
-        startDate: dateTo ?? getEndDate(),
+        startDate: dateTo === null ? getEndDate() : dateTo,
         locale: {
             format: 'MMMM DD, YYYY'
         }
     })
-})
+}
 
 function getStartDate() {
     let dateNow = Date.now(),
