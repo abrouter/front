@@ -229,11 +229,14 @@ $(document).ready(function () {
             'headers': {
                 'Authorization': window.shortToken,
             },
-            'data': {
+            'dataType': "json",
+            'contentType': "application/json",
+            'data': JSON.stringify({
                 'data': {
                     'type': 'experiment_users',
                     'attributes': {
-                        'user_signature': userId
+                        'user_signature': userId,
+                        'forced': true,
                     },
                     'relationships': {
                         'experiments': {
@@ -250,7 +253,7 @@ $(document).ready(function () {
                         }
                     }
                 }
-            },
+            }),
             'success': function (response) {
                 $('.loader').hide();
                 $('#empty_experiment').remove();
@@ -263,58 +266,50 @@ $(document).ready(function () {
                     branchId = entry.relationships['experiment_branch_id']['data']['id'],
                     date = getFullDate(createdAt);
 
-                let experiments = $('.new_user_experiment_item ._del'),
-                    userHasExperiments = true;
+                $('.new_user_add_form').hide();
 
-                let experimentsFilter = experiments.filter((id, experiment) =>
+                let experiments = $('.new_user_experiment_item ._del')
+
+                let filteredExperiments = experiments.filter((id, experiment) =>
                     experiment.getAttribute('data-experiment-id') === experimentId
                 );
 
-                if (experimentsFilter.length === 0) {
-                    userHasExperiments = false
+                if (filteredExperiments.length > 0) {
+                    filteredExperiments.closest('.new_user_experiment_item').remove();
                 }
 
-                if (!userHasExperiments) {
-                    $('.new_user_add_form').hide();
+                $('.new_user_experiment').append(
+                    '<div class="new_user_experiment_item new_user_experiment_net">' +
+                        '<div class="new_user_experiment_col">' +
+                            '<span>Experiment name</span>' +
+                            experimentName +
+                        '</div>' +
+                        '<div class="new_user_experiment_col">' +
+                            '<span>Branch</span>' +
+                            branchName +
+                        '</div>' +
+                        '<div class="new_user_experiment_col">' +
+                            '<span>Got into the experiment at</span>' +
+                            date +
+                        '</div>' +
+                        '<div class="new_user_experiment_col _del" id="remove" ' +
+                            'data-user-id="' + userId + '" ' +
+                            'data-experiment-branch-id="' + branchId + '" ' +
+                            'data-experiment-id="' + experimentId +
+                        '">' +
+                            '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" ' +
+                            'xmlns="http://www.w3.org/2000/svg">' +
+                                '<rect width="32" height="32" rx="10" fill="var(--bg)"/>' +
+                                '<path ' +
+                                'd="M10 23C10 24.1 10.9 25 12 25H20C21.1 25 22 24.1 22 23V13C22 11.9 21.1 11 20 11H12C10.9 11 10 11.9 10 13V23ZM13 13H19C19.55 13 20 13.45 20 14V22C20 22.55 19.55 23 19 23H13C12.45 23 12 22.55 12 22V14C12 13.45 12.45 13 13 13ZM19.5 8L18.79 7.29C18.61 7.11 18.35 7 18.09 7H13.91C13.65 7 13.39 7.11 13.21 7.29L12.5 8H10C9.45 8 9 8.45 9 9C9 9.55 9.45 10 10 10H22C22.55 10 23 9.55 23 9C23 8.45 22.55 8 22 8H19.5Z" ' +
+                                'fill="var(--color)"/>' +
+                            '</svg>' +
+                        '</div>' +
+                    '</div>'
+                )
 
-                    $('.new_user_experiment').append(
-                        '<div class="new_user_experiment_item new_user_experiment_net">' +
-                            '<div class="new_user_experiment_col">' +
-                                '<span>Experiment name</span>' +
-                                experimentName +
-                            '</div>' +
-                            '<div class="new_user_experiment_col">' +
-                                '<span>Branch</span>' +
-                                branchName +
-                            '</div>' +
-                            '<div class="new_user_experiment_col">' +
-                                '<span>Got into the experiment at</span>' +
-                                date +
-                            '</div>' +
-                            '<div class="new_user_experiment_col _del" id="remove" ' +
-                                'data-user-id="' + userId + '" ' +
-                                'data-experiment-branch-id="' + branchId + '" ' +
-                                'data-experiment-id="' + experimentId +
-                            '">' +
-                                '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" ' +
-                                'xmlns="http://www.w3.org/2000/svg">' +
-                                    '<rect width="32" height="32" rx="10" fill="var(--bg)"/>' +
-                                    '<path ' +
-                                    'd="M10 23C10 24.1 10.9 25 12 25H20C21.1 25 22 24.1 22 23V13C22 11.9 21.1 11 20 11H12C10.9 11 10 11.9 10 13V23ZM13 13H19C19.55 13 20 13.45 20 14V22C20 22.55 19.55 23 19 23H13C12.45 23 12 22.55 12 22V14C12 13.45 12.45 13 13 13ZM19.5 8L18.79 7.29C18.61 7.11 18.35 7 18.09 7H13.91C13.65 7 13.39 7.11 13.21 7.29L12.5 8H10C9.45 8 9 8.45 9 9C9 9.55 9.45 10 10 10H22C22.55 10 23 9.55 23 9C23 8.45 22.55 8 22 8H19.5Z" ' +
-                                    'fill="var(--color)"/>' +
-                                '</svg>' +
-                            '</div>' +
-                        '</div>'
-                    )
-
-                    toastr.options.positionClass = 'toast-top-left';
-                    toastr.success('User added');
-                }
-
-                if (userHasExperiments) {
-                    toastr.options.positionClass = 'toast-top-left';
-                    toastr.warning('User already added');
-                }
+                toastr.options.positionClass = 'toast-top-left';
+                toastr.success('User added');
             }
         });
     })
@@ -341,7 +336,9 @@ $(document).ready(function () {
             'headers': {
                 'Authorization': window.shortToken,
             },
-            'data': {
+            'dataType': "json",
+            'contentType': "application/json",
+            'data': JSON.stringify({
                 'data': {
                     'type': 'experiment_users',
                     'attributes': {
@@ -362,7 +359,7 @@ $(document).ready(function () {
                         }
                     }
                 }
-            },
+            }),
             'success': function () {
                 experimentItem.remove();
 
