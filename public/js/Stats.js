@@ -204,7 +204,7 @@ function getExperimentStats (
                 }
             }
 
-            let needTable = Math.ceil(events.length / 6);
+            let needTable = Math.ceil(events.length / 5);
 
             createTable(needTable);
 
@@ -244,7 +244,7 @@ function getExperimentStats (
                         '</td>'
                     );
 
-                    if (Number(id) !== 0 && id % 5 === 0) {
+                    if (++id % 5 === 0) {
                         num++;
                     }
                 }
