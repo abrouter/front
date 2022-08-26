@@ -361,7 +361,7 @@ function addChartStats (
             '</div>'
         )
 
-        const gt = (e) => {
+        const footer = (e) => {
             let t = 0;
             return (
                 e.forEach(function (e) {
@@ -369,6 +369,19 @@ function addChartStats (
                 }),
                 "Users: " + t
             );
+        };
+
+        const title = (e) => {
+            let date = e[0].label.substring(0, e[0].label.length-15),
+                now = moment(new Date()).isSame(new Date(date), 'day');
+
+            if (now) {
+                date = moment(new Date()).format('MMMM DD, YYYY HH:mm:ss');
+            } else {
+                date = moment(date + ' 23:59:59').format('MMMM DD, YYYY HH:mm:ss')
+            }
+
+            return date
         };
 
         const e = document.getElementById(i + '_' + eventType);
@@ -411,7 +424,12 @@ function addChartStats (
                 responsive: !0,
                 plugins: {
                     legend: { display: !1, labels: { font: { color: "#0B0E37", weight: "600" } } },
-                    tooltip: { callbacks: { footer: gt } },
+                    tooltip: {
+                        callbacks: {
+                            title: title,
+                            footer: footer
+                        }
+                    },
                     title: {
                         display: !0,
                         text: i + ' (' + numberEvent.reduce((a,b) => a + b) + ')',
@@ -444,7 +462,7 @@ function addChartExperimentsStats (
 
     let uniqueEvents = events.filter(onlyUnique);
 
-    const gt = (e) => {
+    const footer = (e) => {
         let t = 0;
         return (
             e.forEach(function (e) {
@@ -452,6 +470,19 @@ function addChartExperimentsStats (
             }),
             "Users: " + t
         );
+    };
+
+    const title = (e) => {
+        let date = e[0].label.substring(0, e[0].label.length-15),
+            now = moment(new Date()).isSame(new Date(date), 'day');
+
+        if (now) {
+            date = moment(new Date()).format('MMMM DD, YYYY HH:mm:ss');
+        } else {
+            date = moment(date + ' 23:59:59').format('MMMM DD, YYYY HH:mm:ss')
+        }
+
+        return date
     };
 
     for (let i in counters) {
@@ -549,7 +580,8 @@ function addChartExperimentsStats (
                     },
                     tooltip: {
                         callbacks: {
-                            footer: gt,
+                            title: title,
+                            footer: footer
                         }
                     },
                     title: {
