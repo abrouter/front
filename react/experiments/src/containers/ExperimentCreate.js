@@ -35,14 +35,29 @@ class ExperimentCreate extends React.Component {
         this.props.parent.appState.adding=true;
         this.forceUpdate();
 
-        saveExperimentState(this.props.parent.appState.activeItem).then(response => {
-            this.props.parent.experimentList.load();
-            this.showNotifications();
-            this.redirectToExperiments();
-            this.props.parent.refreshState();
-            this.props.parent.appState.adding=false;
-            this.forceUpdate();
-        });
+        saveExperimentState(this.props.parent.appState.activeItem)
+            .then(response => {
+                this.props.parent.experimentList.load();
+                this.showNotifications();
+                this.redirectToExperiments();
+                this.props.parent.refreshState();
+                this.props.parent.appState.adding=false;
+                this.forceUpdate();
+            })
+            .catch(response => {
+                response.json.then(error => {
+                    let textError = error.data.attributes.message.substring(0, 46),
+                        experimentForm = document.getElementById('create_experiment');
+
+                    experimentForm
+                        .children[0]
+                        .className = 'alert';
+
+                    experimentForm
+                        .children[0]
+                        .innerHTML += '<p>'+ textError +'</p>';
+                })
+            });
 
         return false;
     }
