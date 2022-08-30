@@ -35,6 +35,8 @@ class PercentInput extends React.Component {
         if (e.target.value.length === 0) {
             this.setState({
                 percent: 0
+            }, () => {
+                this.onChange(e);
             })
         }
     }

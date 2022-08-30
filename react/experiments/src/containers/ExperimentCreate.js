@@ -33,7 +33,6 @@ class ExperimentCreate extends React.Component {
 
     submitHandle(event) {
         this.props.parent.appState.adding=true;
-        this.forceUpdate();
 
         saveExperimentState(this.props.parent.appState.activeItem)
             .then(response => {
@@ -42,7 +41,10 @@ class ExperimentCreate extends React.Component {
                 this.redirectToExperiments();
                 this.props.parent.refreshState();
                 this.props.parent.appState.adding=false;
-                this.forceUpdate();
+                this.setState({
+                    experimentName: '',
+                    experimentUid: '',
+                })
             })
             .catch(response => {
                 response.json.then(error => {
