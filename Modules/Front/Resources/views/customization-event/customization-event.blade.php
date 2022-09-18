@@ -68,7 +68,7 @@ use Modules\Front\Internal\User;
         $(document).ready(function () {
             $.ajax({
                 'method': "GET",
-               'url': "/api/v1/user-events",
+               'url': "/api/v1/display-user-events",
                 'headers': {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -140,7 +140,7 @@ use Modules\Front\Internal\User;
 
                 $.ajax({
                     'method': 'POST',
-                    'url': "/api/v1/user-events",
+                    'url': "/api/v1/display-user-events",
                     'headers': {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
@@ -230,7 +230,7 @@ use Modules\Front\Internal\User;
 
                 $.ajax({
                     'method': 'PATCH',
-                    'url': "/api/v1/user-events/" + dataId,
+                    'url': "/api/v1/display-user-events/" + dataId,
                     'headers': {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
@@ -290,7 +290,7 @@ use Modules\Front\Internal\User;
 
                 $.ajax({
                     'method': "DELETE",
-                    'url': "/api/v1/user-events/" + id,
+                    'url': "/api/v1/display-user-events/" + id,
                     'headers': {
                         'Authorization': window.token,
                     },
