@@ -625,18 +625,33 @@ function getDateIntervals(id, startDate, endDate) {
 }
 
 $(document).ready(function () {
+    let url = new URL(window.location.href),
+        dateFrom = url.searchParams.get('dateFrom'),
+        dateTo = url.searchParams.get('dateTo'),
+        dateInterval,
+        dateSplit;
+
     getDateIntervals(
         '.date-range[name="dates"]',
-        moment().subtract(6, "days").format('MMM DD, YYYY'),
-        moment().format('MMM DD, YYYY')
+        dateFrom ?? moment().subtract(6, "days").format('MMM DD, YYYY'),
+        dateTo ?? moment().format('MMM DD, YYYY')
     )
 
-    let dateInterval = $('#date_filter_experiment').val() ?? $('#date_stats').val(),
+    if (
+        dateFrom === null &&
+        dateTo === null
+    ) {
+        dateInterval = $('#date_filter_experiment').val() ?? $('#date_stats').val(),
         dateSplit = dateInterval.split('-'),
         dateFrom = convertDate(dateSplit[0]),
-        dateTo = convertDate(dateSplit[1]),
-        dateIntervals = getDateInterval(dateFrom, dateTo),
-        url = new URL(window.location.href),
+        dateTo = convertDate(dateSplit[1]);
+
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
+    }
+
+    let dateIntervals = getDateInterval(dateFrom, dateTo),
         experimentId = url.searchParams.get("experimentId"),
         backgroundBranchColors = [
             '#F07D5F',
@@ -683,6 +698,10 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
+
         getFunnelStats(
             dateFrom,
             dateTo,
@@ -711,6 +730,10 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
+
         getFunnelStats(
             dateFrom,
             dateTo,
@@ -738,6 +761,10 @@ $(document).ready(function () {
             dateFrom = convertDate(dateSplit[0]),
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
+
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
 
         $('.table.table_ap').remove();
 
@@ -771,6 +798,10 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo);
 
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
+
         $('.table.table_ap').remove();
 
         getExperimentStats(
@@ -795,6 +826,10 @@ $(document).ready(function () {
             dateTo = convertDate(dateSplit[1]),
             dateIntervals = getDateInterval(dateFrom, dateTo),
             tag = event.currentTarget.innerText;
+
+        url.searchParams.set('dateFrom', dateFrom);
+        url.searchParams.set('dateTo', dateTo);
+        window.history.replaceState({}, '', url);
 
         $('.table.table_ap').remove();
 
