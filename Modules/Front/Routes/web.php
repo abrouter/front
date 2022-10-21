@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\Router;
 
@@ -29,7 +30,7 @@ Route::group($group, function (Router $router) {
     $router->get('/en/feature-toggle', 'DashboardController@featureToggle');
     $router->get('/en/feature-toggle/run-feature-flag', 'DashboardController@runFeatureFlag');
     $router->get('/en/docs', 'DashboardController@docs');
-    $router->get('/en/stats', 'DashboardController@stats');
+    $router->get('/en/stats', 'DashboardController@stats')->name('stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
     $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats');
     $router->get('/en/board/run-experiment', 'DashboardController@runExperiment');

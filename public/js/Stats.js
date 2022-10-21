@@ -631,6 +631,14 @@ $(document).ready(function () {
         dateInterval,
         dateSplit;
 
+    const shareData = {
+        url: window.url
+    }
+
+    $(document).on('click', '#share_page', function () {
+        navigator.share(shareData);
+    })
+
     getDateIntervals(
         '.date-range[name="dates"]',
         dateFrom ?? moment().subtract(6, "days").format('MMM DD, YYYY'),

@@ -9,6 +9,7 @@ use Modules\Front\Internal\User;
             <a href="/" class="header-profile__logo">
                 <picture><source srcset="/img/logo.svg" type="image/webp"><img src="/img/logo.svg" alt="Logo"></picture>
             </a>
+            @if(\Modules\Front\Internal\User::isAuthorized())
             <button type="button" class="menu__icon icon-menu"><span></span></button>
             <div class="header-profile__menu">
                 <div class="header-profile__token token-header">
@@ -64,6 +65,7 @@ use Modules\Front\Internal\User;
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </header>
 @endsection

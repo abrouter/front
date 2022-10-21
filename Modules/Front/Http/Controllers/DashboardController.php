@@ -26,8 +26,12 @@ class DashboardController
         return response()->redirectTo('https://docs.abrouter.com')->send();
     }
 
-    public function stats()
+    public function stats(Request $request)
     {
+        if ($request->hasValidSignature()){
+            return view('front::dashboard/stats');
+        }
+
         $this->enforceAuth();
         return view('front::dashboard/stats');
     }
