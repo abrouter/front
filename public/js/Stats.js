@@ -37,13 +37,17 @@ function getEvents (counters, percentage = []) {
 function getFunnelStats (
     dateFrom,
     dateTo,
-    dateIntervals
+    dateIntervals,
+    userId
 ) {
     $.ajax({
         'method': "POST",
         'url': "/api/v1/event/funnel?filter[date_from]="+ dateFrom +"&filter[date_to]="+ dateTo,
         'headers': {
             'Authorization': window.token,
+        },
+        'data': {
+            'userId': userId
         },
         'success': function (response) {
             $('.loader').hide();
@@ -130,7 +134,8 @@ function getExperimentStats (
     dateFrom,
     dateTo,
     backgroundBranchColors,
-    tag = ''
+    userId,
+    tag = '',
 ) {
     $.ajax({
         'method': "GET",
@@ -140,6 +145,9 @@ function getExperimentStats (
             "&filter[tag]=" + tag,
         'headers': {
             'Authorization': window.token
+        },
+        'data': {
+            'userId': userId
         },
         'success': function (response) {
             $('.loader').hide();
@@ -629,7 +637,8 @@ $(document).ready(function () {
         dateFrom = url.searchParams.get('dateFrom'),
         dateTo = url.searchParams.get('dateTo'),
         dateInterval,
-        dateSplit;
+        dateSplit,
+        userId = new URL(window.location.href).searchParams.get('userId');
 
     const shareData = {
         url: window.url
@@ -676,7 +685,8 @@ $(document).ready(function () {
         ? getFunnelStats(
             dateFrom,
             dateTo,
-            dateIntervals
+            dateIntervals,
+            userId
         )
         : (
             getTags(),
@@ -685,7 +695,8 @@ $(document).ready(function () {
                 dateIntervals,
                 dateFrom,
                 dateTo,
-                backgroundBranchColors
+                backgroundBranchColors,
+                userId
             )
         )
 
@@ -713,7 +724,8 @@ $(document).ready(function () {
         getFunnelStats(
             dateFrom,
             dateTo,
-            dateIntervals
+            dateIntervals,
+            userId
         )
 
         load = 0;
@@ -745,7 +757,8 @@ $(document).ready(function () {
         getFunnelStats(
             dateFrom,
             dateTo,
-            dateIntervals
+            dateIntervals,
+            userId
         )
 
         load = 0;
@@ -781,7 +794,8 @@ $(document).ready(function () {
             dateIntervals,
             dateFrom,
             dateTo,
-            backgroundBranchColors
+            backgroundBranchColors,
+            userId
         )
 
         load = 0;
@@ -817,7 +831,8 @@ $(document).ready(function () {
             dateIntervals,
             dateFrom,
             dateTo,
-            backgroundBranchColors
+            backgroundBranchColors,
+            userId
         )
 
         load = 0;
@@ -847,6 +862,7 @@ $(document).ready(function () {
             dateFrom,
             dateTo,
             backgroundBranchColors,
+            userId,
             tag
         )
     })

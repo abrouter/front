@@ -32,7 +32,8 @@ Route::group($group, function (Router $router) {
     $router->get('/en/docs', 'DashboardController@docs');
     $router->get('/en/stats', 'DashboardController@stats')->name('stats');
     $router->get('/en/stats/customization-event', 'CustomizationEventController@index');
-    $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats');
+    $router->get('/en/board/experiment-stats', 'DashboardController@experimentStats')
+        ->name('experiment-stats');
     $router->get('/en/board/run-experiment', 'DashboardController@runExperiment');
     $router->get('/en/user-page', 'DashboardController@userPage');
 

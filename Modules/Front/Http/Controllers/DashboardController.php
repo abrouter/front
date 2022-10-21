@@ -36,8 +36,12 @@ class DashboardController
         return view('front::dashboard/stats');
     }
 
-    public function experimentStats()
+    public function experimentStats(Request $request)
     {
+        if ($request->hasValidSignature()) {
+            return view('front::dashboard/experiment-stats');
+        }
+
         $this->enforceAuth();
         return view('front::dashboard/experiment-stats');
     }

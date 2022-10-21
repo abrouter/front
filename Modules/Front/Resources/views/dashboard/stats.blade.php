@@ -39,11 +39,11 @@ use Modules\Front\Internal\User;
                         <button class="track__add" id="share_page">
                             Share page
                         </button>
-                    <a href="/en/stats/customization-event" class="track__add">
-                        Add events <svg class="track__add-icon">
-                            <use href="/img/icons/icons.svg#arrow-blue"></use>
-                        </svg>
-                    </a>
+                        <a href="/en/stats/customization-event" class="track__add">
+                            Add events <svg class="track__add-icon">
+                                <use href="/img/icons/icons.svg#arrow-blue"></use>
+                            </svg>
+                        </a>
                     @endif
                 </div>
 
