@@ -1,6 +1,6 @@
 <?php
 use Modules\Front\Internal\User;
-use Modules\Front\Assets\Puller;
+use Illuminate\Support\Facades\URL;
 ?>
 @extends('front::layouts.settings')
 
@@ -105,12 +105,17 @@ use Modules\Front\Assets\Puller;
                             Add a tag
                         </button>
                     </form>
-                    <a href="/en/stats/customization-event" class="track__add">
-                        Add events
-                        <svg class="track__add-icon">
-                            <use href="/img/icons/icons.svg#arrow-blue"></use>
-                        </svg>
-                    </a>
+                    @if(\Modules\Front\Internal\User::isAuthorized())
+                        <button class="track__add" id="share_page">
+                            Share page
+                        </button>
+                        <a href="/en/stats/customization-event" class="track__add">
+                            Add events
+                            <svg class="track__add-icon">
+                                <use href="/img/icons/icons.svg#arrow-blue"></use>
+                            </svg>
+                        </a>
+                    @endif
                 </div>
                 <div class="track__tags">
 
@@ -218,6 +223,21 @@ use Modules\Front\Assets\Puller;
         window.token='Bearer <?=request()->cookie('token')?>';
         window.onload = $('.loader').show();
         window.mode = 'experiment_stats';
+        <?php if (User::isAuthorized()):?>
+            window.url = getShareUrl();
+
+        function getShareUrl() {
+            return '<?=URL::temporarySignedRoute(
+                'experiment-stats', now()->addMinutes(30),
+                [
+                    'userId' => User::me()['data']['id'],
+                    'experimentId' => request()->get('experimentId'),
+                    'dateFrom' => request()->get('dateFrom'),
+                    'dateTo' => request()->get('dateTo')
+                ])
+                ?>';
+        }
+        <?php endif;?>
     </script>
     <script src="/js/Stats.js"></script>
 @endsection

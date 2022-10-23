@@ -1,3 +1,7 @@
+<?php
+use Illuminate\Support\Facades\URL;
+use Modules\Front\Internal\User;
+?>
 @extends('front::layouts.settings')
 
 @section('settings')
@@ -31,11 +35,16 @@
                             >
                         </div>
                     </form>
-                    <a href="/en/stats/customization-event" class="track__add">
-                        Add events <svg class="track__add-icon">
-                            <use href="/img/icons/icons.svg#arrow-blue"></use>
-                        </svg>
-                    </a>
+                    @if(\Modules\Front\Internal\User::isAuthorized())
+                        <button class="track__add" id="share_page">
+                            Share page
+                        </button>
+                        <a href="/en/stats/customization-event" class="track__add">
+                            Add events <svg class="track__add-icon">
+                                <use href="/img/icons/icons.svg#arrow-blue"></use>
+                            </svg>
+                        </a>
+                    @endif
                 </div>
 
                 <table class="table table_info" id="stats_info">
@@ -116,6 +125,20 @@
         window.token='Bearer <?=request()->cookie('token')?>';
         window.onload = $('.loader').show();
         window.mode = 'stats';
+        <?php if (User::isAuthorized()):?>
+            window.url = getShareUrl();
+
+            function getShareUrl() {
+                return '<?=URL::temporarySignedRoute(
+                    'stats', now()->addMinutes(30),
+                    [
+                        'userId' => User::me()['data']['id'],
+                        'dateFrom' => request()->get('dateFrom'),
+                        'dateTo' => request()->get('dateTo')
+                    ])
+                    ?>';
+            }
+        <?php endif;?>
     </script>
     <script src="/js/Stats.js"></script>
 @endsection
