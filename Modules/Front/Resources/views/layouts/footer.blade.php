@@ -111,8 +111,8 @@ use Modules\Front\Internal\User;
 
 
                         <li class="top-footer__item">
-                            <a href="mailto:abrouter@prixedmail.com" class="top-footer__link">
-                                abrouter@prixedmail.com
+                            <a href="mailto:abrouter@proxiedmail.com" class="top-footer__link">
+                                abrouter@proxiedmail.com
                             </a>
                         </li>
                     </ul>
