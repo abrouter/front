@@ -176,7 +176,7 @@ use Modules\Front\Internal\User;
         </div>
         <div class="footer__bottom bottom-footer">
             <div class="bottom-footer__copy">
-                © ABROUTER 2022. All rights reserved.
+                © ABROUTER 2024. All rights reserved.
             </div>
             <ul class="bottom-footer__list">
                 <li class="bottom-footer__item">
